@@ -11,11 +11,13 @@ export default hopeTheme({
         url: "https://mister-hope.com",
     },
 
-    logo: "/logo.png",
+    logo: "/logo.svg",
 
     repo: "vuepress-theme-hope/vuepress-theme-hope",
 
     docsDir: "src",
+
+    favicon: "/favicon.ico",
 
     blog: {
         medias: {
@@ -71,7 +73,7 @@ export default hopeTheme({
 
             blog: {
                 name: "Jianshu.Shi (ADaMiaoXi)",
-                avatar: "logo.png",
+                avatar: "logo.svg",
                 description:
                     "Master of Engineering, FrontEnd TL, Senior developer",
                 intro: "/intro.html",
@@ -98,7 +100,7 @@ export default hopeTheme({
 
             blog: {
                 name: "Jianshu.Shi (大喵喜)",
-                avatar: "logo.png",
+                avatar: "logo.svg",
                 description: "工程硕士, 前端组长,  高级开发工程师",
                 intro: "/zh/intro.html",
             },
