@@ -9,20 +9,20 @@ heroFullScreen: false
 bgImage: /assets/images/bg_Image.jpg
 tagline: 这里放了一些技术相关东西...
 projects:
-  - icon: folder-open
-    name: 项目名称
-    desc: 项目详细描述
-    link: https://你的项目链接
+  - icon: https://github.githubassets.com/favicons/favicon.png
+    name: Github
+    desc: github 地址
+    link: https://github.com/ADaMiaoXi
 
-  - icon: link
-    name: 链接名称
-    desc: 链接详细描述
-    link: https://链接地址
+  - icon: https://gitee.com/favicon.ico
+    name: Gitte
+    desc: gitte 码云地址
+    link: https://gitee.com/damiaoxi
 
-  - icon: book
-    name: 书籍名称
-    desc: 书籍详细描述
-    link: https://你的书籍链接
+  - icon: ri:computer-line
+    name: 电脑监控器
+    desc: 使用 Electron 构建的电脑状态监控器
+    link: https://github.com/ADaMiaoXi/computer-monitor
 
   - icon: newspaper
     name: 文章名称

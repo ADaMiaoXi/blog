@@ -8,7 +8,7 @@ heroText: The name of your blog
 tagline: You can put your slogan here
 heroFullScreen: false
 projects:
-  - icon: folder-open
+  - icon: octicon:mark-github-16
     name: project name
     desc: project detailed description
     link: https://your.project.link
