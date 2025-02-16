@@ -2,51 +2,32 @@
 home: true
 layout: BlogHome
 icon: house
-title: Blog Home
+title: 主页
 heroImage: /assets/images/miaoxi_night.png
-heroText: The name of your blog
-tagline: You can put your slogan here
+heroText: 这里是喵喜铺子！
 heroFullScreen: false
+bgImage: /assets/images/bg_Image.jpg
+tagline: 这里放了一些技术相关东西...
 projects:
-  - icon: octicon:mark-github-16
-    name: project name
-    desc: project detailed description
-    link: https://your.project.link
+  - icon: https://github.githubassets.com/favicons/favicon.png
+    name: Github
+    desc: github 地址
+    link: https://github.com/ADaMiaoXi
 
-  - icon: link
-    name: link name
-    desc: link detailed description
-    link: https://link.address
+  - icon: https://gitee.com/favicon.ico
+    name: Gitte
+    desc: gitte 码云地址
+    link: https://gitee.com/damiaoxi
 
-  - icon: book
-    name: book name
-    desc: Detailed description of the book
-    link: https://link.to.your.book
-
-  - icon: newspaper
-    name: article name
-    desc: Detailed description of the article
-    link: https://link.to.your.article
-
-  - icon: user-group
-    name: friend name
-    desc: Detailed description of friend
-    link: https://link.to.your.friend
-
-  - icon: https://theme-hope-assets.vuejs.press/logo.svg
-    name: custom item
-    desc: Detailed description of this custom item
-    link: https://link.to.your.friend
-
-footer: customize your footer text
+  - icon: /assets/icon/monitor.ico
+    name: 电脑监控器
+    desc: 使用 Electron 构建的电脑状态监控器
+    link: https://github.com/ADaMiaoXi/computer-monitor
+footer: 星星点点，别让它们丢了...
 ---
 
-This is a blog home page demo.
+<!-- 这是一个博客主页的案例。 -->
 
-To use this layout, you should set both `layout: BlogHome` and `home: true` in the page front matter.
+<!-- 要使用此布局，你应该在页面前端设置 `layout: BlogHome` 和 `home: true`。 -->
 
-For related configuration docs, please see [blog homepage](https://theme-hope.vuejs.press/guide/blog/home.html).
-
-# Guide:
-# Icon Repository: https://iconify.design
-# VuePress Ecosystem: https://ecosystem.vuejs.press
+<!-- 相关配置文档请见 [博客主页](https://theme-hope.vuejs.press/zh/guide/blog/home.html)。 -->

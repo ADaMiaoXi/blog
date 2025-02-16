@@ -1,7 +1,7 @@
 import { hopeTheme } from "vuepress-theme-hope";
 
-import { enNavbar, zhNavbar } from "./navbar/index.js";
-import { enSidebar, zhSidebar } from "./sidebar/index.js";
+import { zhNavbar } from "./navbar/index.js";
+import { zhSidebar } from "./sidebar/index.js";
 
 export default hopeTheme({
     hostname: "https://mister-hope.github.io",
@@ -60,34 +60,10 @@ export default hopeTheme({
     },
 
     locales: {
-        "/": {
-            // navbar
-            navbar: enNavbar,
-
-            // sidebar
-            sidebar: enSidebar,
-
-            footer: "Default footer",
-
-            displayFooter: true,
-
-            blog: {
-                name: "Jianshu.Shi (ADaMiaoXi)",
-                avatar: "logo.svg",
-                description:
-                    "Master of Engineering, FrontEnd TL, Senior developer",
-                intro: "/intro.html",
-            },
-
-            metaLocales: {
-                editLink: "Edit this page on GitHub",
-            },
-        },
-
         /**
          * Chinese locale config
          */
-        "/zh/": {
+        "/": {
             // navbar
             navbar: zhNavbar,
 
@@ -104,6 +80,8 @@ export default hopeTheme({
                 description: "工程硕士, 前端组长,  高级开发工程师",
                 intro: "/zh/intro.html",
             },
+
+            editLink: false,
 
             // page meta
             metaLocales: {
