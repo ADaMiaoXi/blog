@@ -12,6 +12,11 @@ export const zhNavbar = navbar([
                 icon: "https://www.runoob.com/wp-content/uploads/2013/07/js-logo.png",
                 link: "javaScript/",
             },
+            {
+                text: "前端工程化",
+                link: "frontendEngineering/",
+                icon: "eos-icons:organisms",
+            },
         ],
     },
     {

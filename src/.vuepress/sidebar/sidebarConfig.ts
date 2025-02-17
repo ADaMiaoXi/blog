@@ -16,6 +16,13 @@ export const zhSidebar = sidebar({
                     collapsible: true,
                     children: "structure",
                 },
+                {
+                    text: "前端工程化",
+                    prefix: "frontendEngineering",
+                    icon: "eos-icons:organisms",
+                    collapsible: true,
+                    children: "structure",
+                },
             ],
         },
         {
@@ -43,7 +50,7 @@ export const zhSidebar = sidebar({
                     prefix: "designMode",
                     icon: "mdi:lightbulb-on-10",
                     collapsible: true,
-                    children: [],
+                    children: "structure",
                 },
             ],
         },
