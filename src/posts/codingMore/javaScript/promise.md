@@ -3,7 +3,7 @@ title: Promise
 icon: gears
 order: 19
 category:
-  - javaScript
+  - JavaScript
 ---
 
 8888

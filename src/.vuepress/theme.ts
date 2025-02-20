@@ -77,7 +77,7 @@ export default hopeTheme({
             blog: {
                 name: "Jianshu.Shi (大喵喜)",
                 avatar: "logo.svg",
-                description: "工程硕士, 前端组长,  高级开发工程师",
+                description: "高级开发工程师，工程硕士",
                 intro: "/zh/intro.html",
             },
 

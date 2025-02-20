@@ -11,7 +11,7 @@ export const zhSidebar = sidebar({
             children: [
                 {
                     text: "JavaScript",
-                    prefix: "javaScript",
+                    prefix: "JavaScript",
                     icon: "https://www.runoob.com/wp-content/uploads/2013/07/js-logo.png",
                     collapsible: true,
                     children: "structure",

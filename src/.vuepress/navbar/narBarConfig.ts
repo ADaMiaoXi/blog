@@ -10,7 +10,7 @@ export const zhNavbar = navbar([
             {
                 text: "JavaScript",
                 icon: "https://www.runoob.com/wp-content/uploads/2013/07/js-logo.png",
-                link: "javaScript/",
+                link: "JavaScript/",
             },
             {
                 text: "前端工程化",
