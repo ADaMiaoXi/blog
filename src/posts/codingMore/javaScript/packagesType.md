@@ -5,7 +5,7 @@ order: 3
 category:
   - JavaScript
 ---
-
+## 1. 解释
 在 *ES* 中，数据的分类分为**基本数据类型**和**引用类型**。
 
 按照最新 *ES* 标准定义，基本数据类型（*primitive value*）包括 `undefined`、`null`、`boolean`、`number`、`symbol`、`string`。
@@ -111,7 +111,7 @@ str.last(); // 5 执行到这一句，后台依然会偷偷的干这些事
 )
 ````
 
-### 3.3 真题解答
+## 2. 真题解答
 
 - 是否了解 *JavaScript* 中的包装类型？
 
