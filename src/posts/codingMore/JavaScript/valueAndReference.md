@@ -1,6 +1,6 @@
 ---
 title: 值和引用
-icon: gears
+icon: ic:baseline-insert-link
 order: 2
 category:
   - JavaScript
