@@ -103,7 +103,7 @@ innerSay(); // 脚本错误
 
 我们看个例子，用泡泡来比喻作用域可能好理解一点：
 
-![image-20211001231740498](./assets/scopeAndScopeChain/pic_1.png)
+![image-20211001231740498](../../../../src/.vuepress/public/assets/images/JavaScript/scopeAndScopeChain/pic_1.png)
 
 最后输出的结果为 *2、4、12*
 

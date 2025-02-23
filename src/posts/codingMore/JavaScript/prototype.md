@@ -88,7 +88,7 @@ console.log(person.isPrototypeOf(zhangxiaosan)); // true
 
 来看下面的图：
 
-![](./assets/prototype/pic_1.png)
+![](../../../../src/.vuepress/public/assets/images/JavaScript/prototype/pic_1.png)
 
 这就是 *JavaScript* 中最原始的创建对象的方式，一个对象是通过克隆另外一个对象所得到的。就像克隆羊多莉一样，通过克隆可以创造一个一模一样的对象，被克隆的对象是新对象的原型对象。
 
@@ -128,7 +128,7 @@ huawei.showSth(); // 这是一台华为电脑
 
 这个 *Computer.prototype* 实际上就是 *Computer* 实例对象的原型对象。要搞清楚这个，看下面的图：
 
-![](./assets/prototype/pic_2.png)
+![](../../../../src/.vuepress/public/assets/images/JavaScript/prototype/pic_2.png)
 
 这是最重要的一个三角关系，也是我往往要求学生记下来的三角关系。
 
@@ -197,7 +197,7 @@ console.log(Computer.__proto__); // {}
 
 如果你还想继续往下深究，那么上面的图可以扩展成这样：
 
-![image-20211027144428458](./assets/prototype/pic_3.png)
+![image-20211027144428458](../../../../src/.vuepress/public/assets/images/JavaScript/prototype/pic_3.png)
 
 在 *JavaScript* 中，每一个对象，都有一个原型对象。而原型对象上面也有一个自己的原型对象，一层一层向上找，最终会到达 *null*。
 
@@ -225,7 +225,7 @@ console.log(apple.__proto__.__proto__ === Object.prototype); // true
 
 但是目前来看我们这个图还是不完整，既然构造函数的原型对象也是对象，那么必然该对象也有自己的原型，所以完整的图其实如下：
 
-![image-20211027152845110](./assets/prototype/pic_4.png)
+![image-20211027152845110](../../../../src/.vuepress/public/assets/images/JavaScript/prototype/pic_4.png)
 
 下面可以简单验证一下，如下：
 

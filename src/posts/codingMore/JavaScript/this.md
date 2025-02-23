@@ -178,7 +178,7 @@ colorList.addEventListener("click", function (event) {
 
 当我点击如下位置时打印出来的信息如下：
 
-![image-20210928113303839](./assets/this/pic_1.png)
+![image-20210928113303839](../../../../src/.vuepress/public/assets/images/JavaScript/this/pic_1.png)
 
 有些时候我们会遇到一些困扰，比如在 *div* 节点的事件函数内部，有一个局部的 *callback* 方法，该方法被作为普通函数调用时，*callback* 内部的  `this` 是指向全局对象  `window` 的
 

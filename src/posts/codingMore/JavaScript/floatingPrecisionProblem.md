@@ -70,7 +70,7 @@ console.log((1.335).toFixed(2)); // 1.33
 
 先看下面一张图：
 
-![](./assets/floatingPrecisionProblem/pic_1.png)
+![](../../../../src/.vuepress/public/assets/images/JavaScript/floatingPrecisionProblem/pic_1.png)
 
 该规范定义了浮点数的格式，对于 *64* 位的浮点数在内存中的表示，最高的 *1* 位是符号位，接着的 *11* 位是指数，剩下的 *52* 位为有效数字，具体如下：
 

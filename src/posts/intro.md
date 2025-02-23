@@ -1,6 +1,6 @@
 ---
 icon: circle-info
-cover: /assets/images/cover3.jpg
+cover: ../../../../src/.vuepress/public/assets/images/cover3.jpg
 ---
 
 # 介绍页
