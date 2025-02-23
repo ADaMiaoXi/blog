@@ -1,6 +1,6 @@
 ---
 title: 运算符
-icon: gears
+icon: fa:wrench
 order: 5
 category:
   - JavaScript
