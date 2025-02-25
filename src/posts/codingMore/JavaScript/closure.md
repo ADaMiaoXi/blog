@@ -42,13 +42,13 @@ category:
 
 真的是这样么？下面我们可以证明一下：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/closure/code_3.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/closure/code_3.png)
 
 在上面的代码中，我们在函数 `a` 中定义了一个变量  `i`，然后打印这个  `i` 变量。对于 `a` 这个函数来讲，自己的函数作用域中存在  `i` 这个变量，所以我们在调试时可以看到 *Local* 中存在变量  `i`。
 
 下面我们将上面的代码稍作修改，如下图：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/closure/code_4.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/closure/code_4.png)
 
 在上面的代码中，我们将声明  `i` 这个变量的动作放到了 `a` 函数外面，也就是说 `a` 函数在自己的作用域已经找不到这个  `i` 变量了，它会怎么办？
 
@@ -60,13 +60,13 @@ category:
 
 “闭”可以理解为“封闭，闭环”，“包”可以理解为“一个类似于包裹的空间”，因此闭包实际上可以看作是一个封闭的空间，那么这个空间用来干啥呢？实际上就是用来存储变量的。
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/closure/box.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/closure/box.png)
 
 那么是一个函数下所有的变量声明都会被放入到闭包这个封闭的空间里面么？
 
 倒也不是，放不放入到闭包中，要看其他地方有没有对这个变量进行引用，例如：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/closure/code_1.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/closure/code_1.png)
 
 在上面的代码中，函数 c 中一个变量都没有创建，却要打印 `i`、`j`、`k` 和 `x`，这些变量分别存在于 `a`、`b` 函数以及全局作用域中，因此创建了 *3* 个闭包，全局闭包里面存储了  `i` 的值，闭包 `a` 中存储了变量 `j` 和 `k` 的值，闭包 `b` 中存储了变量 `x` 的值。
 
@@ -76,7 +76,7 @@ category:
 
 实际上，如果是自动形成的闭包，是会被销毁掉的。例如：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/closure/code_2.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/closure/code_2.png)
 
 在上面的代码中，我们在第 *16* 行尝试打印输出变量 `k`，显然这个时候是会报错的，在第 *16* 行打一个断点调试就可以清楚的看到，此时已经没有任何闭包存在，垃圾回收器会自动回收没有引用的变量，不会有任何内存占用的情况。
 

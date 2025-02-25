@@ -36,7 +36,7 @@ category:
 
 要简单理解栈的存取方式，我们可以通过类比乒乓球盒子来分析。如下图：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/ExecutionStackAndContext/pic_1.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/ExecutionStackAndContext/pic_1.png)
 
 栈遵循**“先进后出，后进先出”**的规则，或称 ***LIFO*** （”*Last In First Out*“）规则。
 
@@ -75,7 +75,7 @@ foo();
 
 对应图解如下：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/ExecutionStackAndContext/pic_2.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/ExecutionStackAndContext/pic_2.png)
 
 **执行上下文的数量限制（堆栈溢出）**
 

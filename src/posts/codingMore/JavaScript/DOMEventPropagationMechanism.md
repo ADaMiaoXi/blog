@@ -97,7 +97,7 @@ window.onclick = function () {
 
 如下图所示：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/DOMEventPropagationMechanism/pic_1.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/DOMEventPropagationMechanism/pic_1.png)
 
 ### 1.3 事件捕获流
 
@@ -162,7 +162,7 @@ window.addEventListener('click', function () {
 
 效果如下图所示：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/DOMEventPropagationMechanism/pic_2.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/DOMEventPropagationMechanism/pic_2.png)
 
 ### 1.4 标准 *DOM* 事件流
 
@@ -174,7 +174,7 @@ window.addEventListener('click', function () {
 
 *DOM* 事件流示意图：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/DOMEventPropagationMechanism/pic_3.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/DOMEventPropagationMechanism/pic_3.png)
 
 *DOM* 标准规定事件流包括三个阶段：**事件捕获阶段**、**处于目标阶段**和**事件冒泡阶段**。
 

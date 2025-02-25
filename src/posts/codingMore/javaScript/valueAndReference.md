@@ -35,7 +35,7 @@ object
 由于原始数据类型的数据大小是固定的，所以**原始数据类型的数据是存储于内存中的栈区里面的。**
 
 要简单理解栈的存取方式，我们可以通过类比乒乓球盒子来分析。如下图：
-![](../../../../src/.vuepress/public/assets/images/JavaScript/valueAndReference/stack.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/valueAndReference/stack.png)
 
 下面是具体的代码示例：
 
@@ -105,7 +105,7 @@ console.log(typeof undef); // undefined
 
 如下图所示：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/valueAndReference/heap.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/valueAndReference/heap.png)
 
 下面是具体的代码示例：
 

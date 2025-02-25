@@ -16,7 +16,7 @@ category:
 
 进程是 *CPU* 资源分配的最小单位，而线程是 *CPU* 调度的最小单位。举个例子，看下面的图：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/eventLoop/pic_1.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/eventLoop/pic_1.png)
 
 - 进程好比图中的工厂，有单独的专属自己的工厂资源。
 - 线程好比图中的工人，多个工人在一个工厂中协作工作，工厂与工人是 *1:n* 的关系。也就是说**一个进程由一个或多个线程组成，线程是一个进程中代码的不同执行路线**。
@@ -30,7 +30,7 @@ category:
 
 以 *Chrome* 浏览器中为例，当你打开一个 *Tab* 页时，其实就是创建了一个进程。
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/eventLoop/pic_2.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/eventLoop/pic_2.png)
 
 一个进程中可以有多个线程，比如渲染线程、*JS* 引擎线程、*HTTP* 请求线程等等。当你发起一个请求时，其实就是创建了一个线程，当请求结束后，该线程可能就会被销毁。
 
@@ -89,7 +89,7 @@ category:
 
 一个完整的事件循环过程，可以概括为以下阶段：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/eventLoop/pic_3.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/eventLoop/pic_3.png)
 
 - 一开始执行栈空，我们可以把**执行栈认为是一个存储函数调用的栈结构，遵循先进后出的原则**。微任务队列空，宏任务队列里有且只有一个 *script* 脚本（整体代码）。
 - 全局上下文（ *script* 标签）被推入执行栈，同步代码执行。在执行的过程中，会判断是同步任务还是异步任务，通过对一些接口的调用，可以产生新的宏任务与微任务，它们会分别被推入各自的任务队列里。同步代码执行完了，*script* 脚本会被移出宏任务队列，这个过程本质上是队列的宏任务的执行和出队的过程。
@@ -104,7 +104,7 @@ category:
 
 执行流程如下图所示：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/eventLoop/pic_4.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/eventLoop/pic_4.png)
 
 这里我们可以来看两道具体的代码题目加深理解：
 
@@ -173,7 +173,7 @@ setTimeout2
 
 *Node.js* 采用 *V8* 作为 *JS* 的解析引擎，而 *I/O* 处理方面使用了自己设计的 *libuv*，*libuv* 是一个基于事件驱动的跨平台抽象层，封装了不同操作系统一些底层特性，对外提供统一的 *API*，事件循环机制也是它里面的实现。
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/eventLoop/pic_5.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/eventLoop/pic_5.png)
 
 可以看出 *Node.JS* 的事件循环比浏览器端复杂很多。*Node.js* 的运行机制如下:
 
@@ -184,13 +184,13 @@ setTimeout2
 
 整个架构图如下所示：
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/eventLoop/pic_6.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/eventLoop/pic_6.png)
 
 ##### 事件循环的 *6* 个阶段
 
 其中 *libuv* 引擎中的事件循环分为 *6* 个阶段，它们会按照顺序反复运行。每当进入某一个阶段的时候，都会从对应的回调队列中取出函数去执行。当队列为空或者执行的回调函数数量到达系统设定的阈值，就会进入下一阶段。
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/eventLoop/pic_7.jpg)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/eventLoop/pic_7.jpg)
 
 从上图中，大致看出 *Node.js* 中的事件循环的顺序：
 
@@ -373,7 +373,7 @@ setTimeout(()=>{
 
 在 *Node.js* 中，每个任务队列的每个任务执行完毕之后，就会清空这个微任务队列。
 
-![](../../../../src/.vuepress/public/assets/images/JavaScript/eventLoop/pic_8.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/eventLoop/pic_8.png)
 
 ##  2. 真题解答
 
