@@ -416,7 +416,7 @@ http.createServer(function (req, res) {
 
 效果如下：
 
-![2021-12-03 14.02.26](../../../../src/.vuepress/public/assets/images/moreThanCode/browser/browserCache/gif_1.gif)
+![](../../../../src/.vuepress/public/assets/images/moreThanCode/browser/browserCache/gif_1.gif)
 
 
 
