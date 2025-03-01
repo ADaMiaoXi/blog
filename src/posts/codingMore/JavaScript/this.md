@@ -178,7 +178,7 @@ colorList.addEventListener("click", function (event) {
 
 当我点击如下位置时打印出来的信息如下：
 
-![image-20210928113303839](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/this/pic_1.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/this/pic_1.png)
 
 有些时候我们会遇到一些困扰，比如在 *div* 节点的事件函数内部，有一个局部的 *callback* 方法，该方法被作为普通函数调用时，*callback* 内部的  `this` 是指向全局对象  `window` 的
 
@@ -648,7 +648,7 @@ obj.test();
 
 方法很简单，将这段代码放入浏览器运行，在浏览器中用 *var* 所声明的变量会成为全局对象  `window` 的一个属性，如下：
 
-![image-20210928132058878](https://xiejie-typora.oss-cn-chengdu.aliyuncs.com/2021-09-28-052059.png)
+![](../../../../src/.vuepress/public/assets/images/codingMore/JavaScript/this/pic_2.png)
 
 接下来我们再来看一个例子，来证明箭头函数的  `this` 指向始终是指向的外层作用域。
 
@@ -693,7 +693,7 @@ const Test = (name, age) => {
     this.name = name;
     this.age = age;
 };
-const test = new Test("xiejie", 18);
+const test = new Test("Andy", 18);
 // TypeError: Test is not a constructor
 ```
 

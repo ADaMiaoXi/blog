@@ -111,7 +111,7 @@ db.transaction(function (tx) {
 我们也可以使用动态值来插入数据：
 
 ```js
-var stuName = "谢杰";
+var stuName = "张三";
 var stuAge = 18;
 var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
 db.transaction(function (tx) {
@@ -137,7 +137,7 @@ db.transaction(function (tx) {
 ```
 
 ```js
-var stuName = "谢杰";
+var stuName = "张三";
 var stuAge = 18;
 // 打开数据库
 var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
@@ -503,7 +503,7 @@ function addData(db, storeName, data) {
     <script>
         openDB('stuDB', 1)
             .then((db) => {
-                addData(db, "stu", { "stuId": 1, "stuName": "谢杰", "stuAge": 18 });
+                addData(db, "stu", { "stuId": 1, "stuName": "张三", "stuAge": 18 });
                 addData(db, "stu", { "stuId": 2, "stuName": "雅静", "stuAge": 20 });
                 addData(db, "stu", { "stuId": 3, "stuName": "谢希之", "stuAge": 4 });
             })
@@ -562,7 +562,7 @@ function getDataByKey(db, storeName, key) {
     <script>
         openDB('stuDB', 1)
             .then((db) => {
-                addData(db, "stu", { "stuId": 1, "stuName": "谢杰", "stuAge": 18 });
+                addData(db, "stu", { "stuId": 1, "stuName": "张三", "stuAge": 18 });
                 addData(db, "stu", { "stuId": 2, "stuName": "雅静", "stuAge": 20 });
                 addData(db, "stu", { "stuId": 3, "stuName": "谢希之", "stuAge": 4 });
                 return getDataByKey(db, "stu", 2);
@@ -600,7 +600,7 @@ function getDataByKey(db, storeName, key) {
 ```js
 openDB('stuDB', 1)
 .then((db) => {
-    addData(db, "stu", { "stuId": 1, "stuName": "谢杰", "stuAge": 18 });
+    addData(db, "stu", { "stuId": 1, "stuName": "张三", "stuAge": 18 });
     addData(db, "stu", { "stuId": 2, "stuName": "雅静", "stuAge": 20 });
     addData(db, "stu", { "stuId": 3, "stuName": "谢希之", "stuAge": 4 });
     return getDataByKey(db, "stu");
@@ -648,7 +648,7 @@ function cursorGetData(db, storeName) {
 ```js
 openDB('stuDB', 1)
 .then((db) => {
-    addData(db, "stu", { "stuId": 1, "stuName": "谢杰", "stuAge": 18 });
+    addData(db, "stu", { "stuId": 1, "stuName": "张三", "stuAge": 18 });
     addData(db, "stu", { "stuId": 2, "stuName": "雅静", "stuAge": 20 });
     addData(db, "stu", { "stuId": 3, "stuName": "谢希之", "stuAge": 4 });
     return cursorGetData(db, "stu");
@@ -951,7 +951,7 @@ function updateDB(db, storeName, data) {
 ```js
 openDB('stuDB', 1)
     .then((db) => {
-        return updateDB(db, "stu", {stuId: 1, stuName: '谢杰2', stuAge: 19});
+        return updateDB(db, "stu", {stuId: 1, stuName: '张三2', stuAge: 19});
     }).then(({message}) => {
         console.log(message); 
     })

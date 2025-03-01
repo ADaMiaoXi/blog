@@ -203,7 +203,7 @@ async function method(){
 method(); // 输出： 失败 123
 ```
 
-## 5. Promise相关面试题(1:01:00)
+## 5. Promise相关问答
 
 ### 5.1 Promise的基本概念
 
@@ -326,7 +326,7 @@ method(); // 输出： 失败 123
 - `requestAnimationFrame`的回调，宏任务（macro task）
 - 事件处理函数，宏任务(macro task)
 
-### 5.6 面试题
+### 5.6 问答
 
 1. 下面代码的输出结果是什么
 

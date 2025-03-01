@@ -171,7 +171,7 @@ self.addEventListener("message",async event=>{
 ```html
 <body>
     <script>
-        localStorage.name = "谢杰";
+        localStorage.name = "张三";
         localStorage.age = 20;
         console.log("信息已经设置!");
     </script>

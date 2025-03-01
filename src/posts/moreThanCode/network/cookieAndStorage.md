@@ -18,7 +18,7 @@ category:
 
 <img src="../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220175318476.png" alt="image-20240220175318476"  />
 
-![image-20240220175349560](../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220175349560.png)
+![](../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220175349560.png)
 
 
 
@@ -31,9 +31,9 @@ category:
 1. 客户端登陆成功后，服务器会给客户端一个出入证
 2. 后续客户端的每次请求，都必须要附带这个出入证
 
-![image-20240220175016861](../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220175016861.png)
+![](../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220175016861.png)
 
-![image-20240220175107524](../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220175107524.png)
+![](../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220175107524.png)
 
 服务器发扬了认证不认人的优良传统，就可以很轻松的识别身份了。
 
@@ -63,7 +63,7 @@ cookie 是浏览器中特有的一个概念，它就像浏览器的专属卡包�
 
 下图是百度首页所用到的 cookies
 
-![image-20240220211742241](../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220211742241.png)
+![](../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220211742241.png)
 
 当浏览器向服务器发送一个请求的时候，它会瞄一眼自己的卡包，看看哪些卡包适合附带捎给服务器
 
@@ -88,7 +88,7 @@ cookie 是浏览器中特有的一个概念，它就像浏览器的专属卡包�
 
 具体的加入方式是：**浏览器会将符合条件的 cookie，自动放置到请求头中**，例如，当我们访问百度的时候，它在请求头中附带了下面的 cookie：
 
-![image-20240220221525105](../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220221525105.png)
+![](../../../../src/.vuepress/public/assets/images/moreThanCode/network/cookieAndStorage/image-20240220221525105.png)
 
 这部分就是通过请求头 `cookie` 发送到服务器的，发送的格式为 `key=value; key=value; key=value; ...`，每一个键值对就是一个符合条件的 cookie。
 
@@ -224,7 +224,7 @@ document.cookie = "键=值; path=?; domain=? expire=?; max-age=? secure";
 1. 浏览器发送请求到服务器，希望添加一个管理员，并将 cookie 自动附带到请求中
 2. 服务器先获取 cookie，验证 cookie 中的信息是否正确，如果不正确，不予以操作，如果正确，完成正常的业务流程。
 
-## 面试题
+## 问答
 
 cookie/session Storage/local Storage 的区别
 

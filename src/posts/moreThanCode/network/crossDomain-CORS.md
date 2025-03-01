@@ -202,7 +202,7 @@ fetch('http://crossdomain.com/api/user', {
 
    服务器收到预检请求后，可以检查预检请求中包含的信息，如果允许这样的请求，需要响应下面的消息格式
 
-   ````ymal
+   ````yaml
    HTTP/1.1 200 OK
    Date: Tue, 21 Apr 2020 08:03:35 GMT
    Access-Control-Allow-Origin: http://my.com
