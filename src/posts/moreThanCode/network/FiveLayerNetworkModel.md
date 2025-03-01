@@ -7,7 +7,7 @@ category:
 ---
 ## 五层网络模型
 
-![]( ../../../../src/.vuepress/public/assets/images/moreThanCode/network/FiveLayerNetworkModel/image-20240219161952103.png)
+![]( ../../../../src/.vuepress/public/assets/images/moreThanCode/network/fiveLayerNetworkModel/image-20240219161952103.png)
 
 - **应用层**：**我给你发的是个啥**。前端开发只接触应用层
 
@@ -43,13 +43,13 @@ category:
 
 ## 数据的封装和解封装
 
-![]( ../../../../src/.vuepress/public/assets/images/moreThanCode/network/FiveLayerNetworkModel/image-20240219165328543.png)
+![]( ../../../../src/.vuepress/public/assets/images/moreThanCode/network/fiveLayerNetworkModel/image-20240219165328543.png)
 
 
 
 ## 四层、五层、六层
 
-![]( ../../../../src/.vuepress/public/assets/images/moreThanCode/network/FiveLayerNetworkModel/image-20240219165942164.png)
+![]( ../../../../src/.vuepress/public/assets/images/moreThanCode/network/fiveLayerNetworkModel/image-20240219165942164.png)
 
 TCP/IP 四层模型是一直在使用的模型。
 
