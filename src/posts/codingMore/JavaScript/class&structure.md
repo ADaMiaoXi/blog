@@ -1,6 +1,6 @@
 ---
 title: Class和普通构造器
-icon: gears
+icon: oui:token-class
 order: 18
 category:
   - JavaScript

@@ -1,6 +1,6 @@
 ---
 title: 同源策略
-icon: gears
+icon: fluent-mdl2:view-original
 order: 7
 category:
   - 网络

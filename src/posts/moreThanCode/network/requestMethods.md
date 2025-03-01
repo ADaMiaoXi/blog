@@ -1,6 +1,6 @@
 ---
 title: 常见请求方法
-icon: gears
+icon: tabler:http-post
 order: 2
 category:
   - 网络

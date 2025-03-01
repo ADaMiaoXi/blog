@@ -1,6 +1,6 @@
 ---
 title: 浏览器离线存储
-icon: gears
+icon: material-symbols:database-outline
 order: 4
 category:
   - 浏览器

@@ -8,11 +8,6 @@ export const zhNavbar = navbar([
         icon: 'proicons:code',
         children: [
             {
-                text: '数据结构与算法',
-                icon: '/assets/icon/data-structure.png',
-                link: 'dataStructure/'
-            },
-            {
                 text: 'JavaScript',
                 icon: 'https://www.runoob.com/wp-content/uploads/2013/07/js-logo.png',
                 link: 'JavaScript/'

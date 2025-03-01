@@ -1,6 +1,6 @@
 ---
 title: 阻止事件默认行为
-icon: gears
+icon: tabler:forbid
 order: 12
 category:
   - JavaScript

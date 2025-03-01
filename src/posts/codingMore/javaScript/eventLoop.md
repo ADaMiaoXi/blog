@@ -1,6 +1,6 @@
 ---
 title: 事件循环
-icon: gears
+icon: streamline:loop-1
 order: 16
 category:
   - JavaScript

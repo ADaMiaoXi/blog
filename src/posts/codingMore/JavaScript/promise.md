@@ -1,6 +1,6 @@
 ---
 title: Promise
-icon: gears
+icon: logos:promises
 order: 19
 category:
   - JavaScript

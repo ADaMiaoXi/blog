@@ -1,6 +1,6 @@
 ---
 title: HTTP各版本差异
-icon: gears
+icon: carbon:http
 order: 23
 category:
   - 网络

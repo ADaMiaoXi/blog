@@ -1,6 +1,6 @@
 ---
 title: 栈结构
-icon: gears
+icon: fluent:stack-add-20-regular
 order: 1
 category:
   - 数据结构与算法
@@ -10,11 +10,11 @@ category:
 
 **特点：后进先出 Last In First Out (LIFO)**
 
-<img src="../../../.vuepress/public/assets/images/dataStructure/image-20230503215901052-1705847565766-1.png" alt="image-20230503215901052" style="zoom: 67%;" />
+<img src="../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20230503215901052-1705847565766-1.png" alt="image-20230503215901052" style="zoom: 67%;" />
 
 **函数调用栈**
 
-<img src="../../../.vuepress/public/assets/images/dataStructure/image-20230503220103789-1705847565766-2.png" alt="image-20230503220103789" style="zoom: 33%;" />
+<img src="../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20230503220103789-1705847565766-2.png" alt="image-20230503220103789" style="zoom: 33%;" />
 
 ## 栈结构的封装
 

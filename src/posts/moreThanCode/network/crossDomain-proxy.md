@@ -1,6 +1,6 @@
 ---
 title: 跨域-代理
-icon: gears
+icon: carbon:server-proxy
 order: 8
 category:
   - 网络

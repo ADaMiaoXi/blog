@@ -1,6 +1,6 @@
 ---
 title: 树
-icon: gears
+icon: tabler:binary-tree
 order: 6
 category:
   - 数据结构与算法
@@ -8,7 +8,7 @@ category:
 
 > 树是一种分层数据的抽象模型
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20230527213343473-1705847565767-10.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20230527213343473-1705847565767-10.png)
 
 ## 二叉树
 
@@ -91,19 +91,19 @@ export default class BinarySearchTree {
 
   > 中序遍历是一种从小至大顺序访问 BST 所有节点的遍历方式。因此可以用用于对树种内容进行排序。
 
-​	![](../../../.vuepress/public/assets/images/dataStructure/20191116231558874-1705847565767-11.gif)
+​	![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/20191116231558874-1705847565767-11.gif)
 
 - 先序遍历（DLR）--- 中左右
 
   > 先序遍历是以优先于后代节点的顺序访问每个节点。先序遍历的应用是打印一个结构化的文档
 
-  ![](../../../.vuepress/public/assets/images/dataStructure/20191116224133284-1705847565767-12.gif)
+  ![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/20191116224133284-1705847565767-12.gif)
 
 - 后序遍历（LRD）--- 左右中
 
   > 后序遍历则是优先访问节点的后代节点，在访问节点本身。后序遍历的一个应用是计算一个目录及其子目录中所有文件所占空间的大小。
 
-  ![](../../../.vuepress/public/assets/images/dataStructure/20191116233040840-1705847565767-13.gif)
+  ![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/20191116233040840-1705847565767-13.gif)
 
 ````javascript
 /**
@@ -190,7 +190,7 @@ postOrderMap(callback){
 
 #### 广度优先遍历
 
-![](../../../.vuepress/public/assets/images/dataStructure/20191116235854465-1705847565767-14.gif)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/20191116235854465-1705847565767-14.gif)
 
 ### 搜索
 
@@ -286,15 +286,15 @@ getMinimum() {
 
 - 情形二：需要删除的节点正好没有任何子节点，直接将该节点删除（将该节点置为null返回给上个节点的分支）。
 
-  ![](../../../.vuepress/public/assets/images/dataStructure/image-20231219101428356-1705847565767-15.png)
+  ![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20231219101428356-1705847565767-15.png)
 
 - 情形三：需要删除的节点只有一侧子节点，将该侧自己点赋给该节点的上层节点。
 
-  ![](../../../.vuepress/public/assets/images/dataStructure/image-20231219101836935-1705847565767-16.png)
+  ![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20231219101836935-1705847565767-16.png)
 
 - 情形四：需要删除的节点有两侧子节点，找出右侧节点中最小的那个节点，用该节点的值替换需要删除节点的值，再删除掉右侧最小节点。
 
-  ![](../../../.vuepress/public/assets/images/dataStructure/image-20231219104306259-1705847565767-17.png)
+  ![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20231219104306259-1705847565767-17.png)
 
 ````javascript
 /**

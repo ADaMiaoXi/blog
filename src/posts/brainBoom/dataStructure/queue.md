@@ -1,6 +1,6 @@
 ---
 title: 队列
-icon: gears
+icon: mdi:queue-first-in-last-out
 order: 2
 category:
   - 数据结构与算法
@@ -10,9 +10,9 @@ category:
 
 队列的数据元素又称为队列元素。在队列中插入一个队列元素叫做**入队**，从队列中删除一个队列元素将成为**出队**。因为队列只允许在一端插入，在另一端删除，所以只有最早进入队列的元素最先从队列中删除，故队列又称为**先进先出**（FIFO --- First In First Out）线性表。
 
-<img src="../../../.vuepress/public/assets/images/dataStructure/image-20230504215747053-1705847565766-3.png" alt="image-20230504215747053" style="zoom:50%;" />
+<img src="../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20230504215747053-1705847565766-3.png" alt="image-20230504215747053" style="zoom:50%;" />
 
-<img src="../../../.vuepress/public/assets/images/dataStructure/image-20230504215910674-1705847565767-4.png" alt="image-20230504215910674" style="zoom: 67%;" />
+<img src="../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20230504215910674-1705847565767-4.png" alt="image-20230504215910674" style="zoom: 67%;" />
 
 ## 队列的封装
 

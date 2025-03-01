@@ -28,7 +28,7 @@ export const zhSidebar = sidebar({
         {
             text: '不止代码',
             prefix: 'posts/moreThanCode/',
-            icon: 'eos-icons:neural-network',
+            icon: 'material-symbols:code-off-rounded',
             collapsible: true,
             children: [
                 {
@@ -62,10 +62,32 @@ export const zhSidebar = sidebar({
                 },
                 {
                     text: '设计模式',
-                    prefix: 'designPatterns',
+                    prefix: 'designPatterns/',
                     icon: 'mdi:lightbulb-on-10',
                     collapsible: true,
-                    children: 'structure'
+                    children: [
+                        {
+                            text: '创建型模式',
+                            icon: 'material-symbols:new-window-rounded',
+                            prefix: 'creational/',
+                            collapsible: true,
+                            children: 'structure'
+                        },
+                        {
+                            text: '结构型模式',
+                            icon: 'material-symbols:view-in-ar-outline-rounded',
+                            prefix: 'structural/',
+                            collapsible: true,
+                            children: 'structure'
+                        },
+                        {
+                            text: '行为型模式',
+                            icon: 'material-symbols:partner-exchange-rounded',
+                            prefix: 'behavioral/',
+                            collapsible: true,
+                            children: 'structure'
+                        }
+                    ]
                 }
             ]
         }

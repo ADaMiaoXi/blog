@@ -1,6 +1,6 @@
 ---
 title: 加密
-icon: gears
+icon: hugeicons:encrypt
 order: 5
 category:
   - 网络

@@ -1,6 +1,6 @@
 ---
 title: 值和引用
-icon: ic:baseline-insert-link
+icon: carbon:data-reference
 order: 2
 category:
   - JavaScript

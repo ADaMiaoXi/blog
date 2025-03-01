@@ -1,6 +1,6 @@
 ---
 title: 查找
-icon: gears
+icon: zondicons:search
 order: 10
 category:
   - 数据结构与算法
@@ -8,7 +8,7 @@ category:
 
 ## 二分查找
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20240111135627556.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20240111135627556.png)
 
 ````javascript
 /**

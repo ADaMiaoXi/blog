@@ -1,6 +1,6 @@
 ---
 title: cookie和storage
-icon: gears
+icon: majesticons:browser-cookie
 order: 4
 category:
   - 网络

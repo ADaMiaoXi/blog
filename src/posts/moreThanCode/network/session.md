@@ -1,6 +1,6 @@
 ---
 title: session
-icon: gears
+icon: carbon:mobile-session
 order: 14
 category:
   - 网络

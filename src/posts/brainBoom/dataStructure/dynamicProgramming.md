@@ -1,6 +1,6 @@
 ---
 title: 动态规划
-icon: gears
+icon: lsicon:thermo-dynamic-filled
 order: 11
 category:
   - 数据结构与算法
@@ -10,7 +10,7 @@ category:
 
 > 背包问题是一个组合优化问题，它可以描述如下：给定一个固定大小，能够携带重量为 capacity 的背包，以及一组有价值和重量的物品，找出一个最佳解决方案，使得装入背包的物品总重量不超过 capacity，且总价值最大。
 
-<img src="../../../.vuepress/public/assets/images/dataStructure/image-20240118220630864.png" alt="image-20240118220630864" style="zoom:50%;" />
+<img src="../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20240118220630864.png" alt="image-20240118220630864" style="zoom:50%;" />
 
 | 重量 | 价值 | 物品id | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   |
 | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -84,7 +84,7 @@ console.log(`背包最多放下价值为 ${result} 的货物`)
 
 测试结果：
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20240118221222372.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20240118221222372.png)
 
 ## 最大子字符串
 
@@ -92,9 +92,9 @@ console.log(`背包最多放下价值为 ${result} 的货物`)
 >
 > 在两个字符串序列中以相同顺序出现，但不要求连续（非字符串子串）的字符串序列
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20240119173737228.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20240119173737228.png)
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20240119173802588.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20240119173802588.png)
 
 ````javascript
 /**

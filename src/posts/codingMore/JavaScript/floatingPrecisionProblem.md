@@ -1,6 +1,6 @@
 ---
 title: 浮点数精度问题
-icon: gears
+icon: tabler:circle-dashed-number-1
 order: 13
 category:
   - JavaScript

@@ -1,6 +1,6 @@
 ---
 title: 浏览器的组成部分
-icon: gears
+icon: icon-park-outline:browser
 order: 3
 category:
   - 浏览器

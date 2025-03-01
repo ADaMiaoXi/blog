@@ -1,6 +1,6 @@
 ---
 title: 跨域-CORS
-icon: gears
+icon: mage:television-cross
 order: 9
 category:
   - 网络

@@ -1,6 +1,6 @@
 ---
 title: 集合
-icon: gears
+icon: eos-icons:stateful-set-outlined
 order: 4
 category:
   - 数据结构与算法
@@ -102,4 +102,4 @@ console.log('差集为：', difference(setA, setB))
 </script>
 ````
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20230514160523036-1705847565767-8.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20230514160523036-1705847565767-8.png)

@@ -1,6 +1,6 @@
 ---
 title: HTTP缓存协议（协商缓存）
-icon: gears
+icon: octicon:cache-24
 order: 15
 category:
   - 网络

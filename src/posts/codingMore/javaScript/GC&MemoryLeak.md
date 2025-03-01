@@ -1,6 +1,6 @@
 ---
 title: 垃圾回收与内存泄漏
-icon: gears
+icon: mdi:garbage-can-outline
 order: 15
 category:
   - JavaScript

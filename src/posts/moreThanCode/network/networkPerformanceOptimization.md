@@ -1,6 +1,6 @@
 ---
 title: 网络性能优化
-icon: gears
+icon: ix:optimize
 order: 19
 category:
   - 网络

@@ -1,6 +1,6 @@
 ---
 title: 回溯算法
-icon: gears
+icon: arcticons:libretrack
 order: 13
 category:
   - 数据结构与算法
@@ -21,7 +21,7 @@ const board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
 const work = "ABCCED"
 ````
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20240121222028827.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20240121222028827.png)
 
 ````javascript
 /**

@@ -1,6 +1,6 @@
 ---
 title: 包装类型
-icon: gears
+icon: mynaui:letter-p-circle-solid
 order: 3
 category:
   - JavaScript

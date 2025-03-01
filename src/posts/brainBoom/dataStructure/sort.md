@@ -1,6 +1,6 @@
 ---
 title: 排序
-icon: gears
+icon: iconoir:sort
 order: 9
 category:
   - 数据结构与算法
@@ -10,7 +10,7 @@ category:
 
 > 冒泡排序将数组中所有相邻的两项进行比较，如果前一个比后一个大（小），则交换它们的位置。元素向上移动至最后的位置而完成排序。
 
-![](../../../.vuepress/public/assets/images/dataStructure/bubbleSort.gif)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/bubbleSort.gif)
 
 ````javascript
 /**
@@ -35,7 +35,7 @@ export const bubbleSort = arr => {
 
 > 选择排序是一种原址比较排序算法。选择排序大致的思路是找到数据结构中的最小值并将其放置在第一位，接着找到第二小的值并将其放在第二位，以此类推。
 
-![](../../../.vuepress/public/assets/images/dataStructure/selectionSort.gif)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/selectionSort.gif)
 
 ````javascript
 /**
@@ -66,7 +66,7 @@ export const selectionSort = arr => {
 
 > 插入排序将数组中每个元素取出，并挨个与前面的数据进行对比，如果比前面的数据小（大），则将前面的数据往后挪位置，直到找到前面比该值小（大）的数据，则将取出数据插入到该值后面，从而实现升（降）序排序。
 
-![insertionSort](../../../.vuepress/public/assets/images/dataStructure/insertionSort.gif)
+![insertionSort](../../../.vuepress/public/assets/images/brainBoom/dataStructure/insertionSort.gif)
 
 ````javascript
 /**
@@ -97,9 +97,9 @@ export const insertSort = arr => {
 > - 将原数组无限二分成小数组，直至子数组只有一个元素.
 > - 再将子数组合并并排序，直到再将所有子数组合并成一个大数组。
 
-<img src="../../../.vuepress/public/assets/images/dataStructure/image-20240105222323108.png" alt="image-20240105222323108" style="zoom:50%;" />
+<img src="../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20240105222323108.png" alt="image-20240105222323108" style="zoom:50%;" />
 
-![mergeSort](../../../.vuepress/public/assets/images/dataStructure/mergeSort.gif)
+![mergeSort](../../../.vuepress/public/assets/images/brainBoom/dataStructure/mergeSort.gif)
 
 ````javascript
 /**
@@ -142,7 +142,7 @@ const mergeArray = (left, right) => {
 
 > 快速排序需要先设定一个基准，然后根据基准将数组分成两部分（大于基准的一部分和小于基准的一部分），然后递归对两部分进行快速排序，再将两部分和基准拼接起来，就可以完成排序。
 
-![quickSort](../../../.vuepress/public/assets/images/dataStructure/quickSort.gif)
+![quickSort](../../../.vuepress/public/assets/images/brainBoom/dataStructure/quickSort.gif)
 
 ````javascript
 /**
@@ -248,7 +248,7 @@ export const bucketSort = (arr, bucketSize) => {
 
 > 基数排序（radix sort）属于“分配式排序”（distribution sort），又称“桶子法”（bucket sort）或bin sort，顾名思义，它是透过键值的部份资讯，将要排序的[元素分配](https://baike.baidu.com/item/元素分配/2107419?fromModule=lemma_inlink)至某些“桶”中，藉以达到排序的作用，基数排序法是属于稳定性的排序，其[时间复杂度](https://baike.baidu.com/item/时间复杂度/1894057?fromModule=lemma_inlink)为O (nlog(r)m)，其中r为所采取的基数，而m为堆数，在某些时候，基s数排序法的效率高于其它的稳定性排序法。
 
-![](../../../.vuepress/public/assets/images/dataStructure/radixSort.gif)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/radixSort.gif)
 
 ````javascript
 /**

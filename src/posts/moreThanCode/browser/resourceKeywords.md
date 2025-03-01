@@ -1,6 +1,6 @@
 ---
 title: 资源提示关键词
-icon: gears
+icon: nonicons:keyword-16
 order: 2
 category:
   - 浏览器

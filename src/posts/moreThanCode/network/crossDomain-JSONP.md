@@ -1,6 +1,6 @@
 ---
 title: 跨域-JSONP
-icon: gears
+icon: tabler:json
 order: 10
 category:
   - 网络

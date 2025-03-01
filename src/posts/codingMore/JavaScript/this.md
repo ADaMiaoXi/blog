@@ -1,6 +1,6 @@
 ---
 title: this指向
-icon: gears
+icon: tabler:pointer
 order: 9
 category:
   - JavaScript

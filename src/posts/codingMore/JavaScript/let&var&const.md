@@ -1,6 +1,6 @@
 ---
 title: let、var、const
-icon: gears
+icon: mynaui:letter-l-circle
 order: 1
 category:
   - JavaScript

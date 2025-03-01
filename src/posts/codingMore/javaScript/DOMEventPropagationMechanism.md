@@ -1,6 +1,6 @@
 ---
 title: DOM 事件的传播机制
-icon: gears
+icon: tabler:broadcast
 order: 11
 category:
   - JavaScript

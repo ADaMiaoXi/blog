@@ -1,6 +1,6 @@
 ---
 title: 链表
-icon: gears
+icon: akar-icons:link-chain
 order: 3
 category:
   - 数据结构与算法
@@ -19,7 +19,7 @@ category:
 
 > 每个节点只包含一个指针，即后继指针
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20230509211755741-1705847565767-5.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20230509211755741-1705847565767-5.png)
 
 ````javascript
 class Node {
@@ -196,7 +196,7 @@ module.exports = class LinkedList {
 
 > 节点除了存储数据外，还有两个指针分别指向前一个节点地址（前驱指针 prev）和下一个节点地址（后续指针 next）。
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20230513222612884-1705847565767-6.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20230513222612884-1705847565767-6.png)
 
 ````javascript
 class DoblyNode {
@@ -367,7 +367,7 @@ export default class DoublyList {
 
 > 循环链表和链表之间唯一的区别在于：最后一个元素指向下一个元素的指针（tail.next）不是 null，而是指向第一个元素（head）
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20230514131113921-1705847565767-7.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20230514131113921-1705847565767-7.png)
 
 ````javascript
 class Node {

@@ -1,6 +1,6 @@
 ---
 title: XSS攻击
-icon: gears
+icon: mdi:bug-outline
 order: 18
 category:
   - 网络

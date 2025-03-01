@@ -1,6 +1,6 @@
 ---
 title: 跨标签页通信
-icon: line-md:arrows-horizontal
+icon: icon-park-outline:communication
 order: 8
 category:
   - 浏览器

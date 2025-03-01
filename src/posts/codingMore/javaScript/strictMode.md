@@ -1,6 +1,6 @@
 ---
 title: 严格模式
-icon: gears
+icon: fluent-mdl2:protect-restrict
 order: 14
 category:
   - JavaScript

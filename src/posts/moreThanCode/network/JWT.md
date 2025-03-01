@@ -1,6 +1,6 @@
 ---
 title: JWT
-icon: gears
+icon: material-symbols:token-outline
 order: 6
 category:
   - 网络

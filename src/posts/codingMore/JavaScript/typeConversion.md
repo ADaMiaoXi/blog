@@ -1,6 +1,6 @@
 ---
 title: 数据类型的转换
-icon: gears
+icon: simple-icons:convertio
 order: 4
 category:
   - JavaScript

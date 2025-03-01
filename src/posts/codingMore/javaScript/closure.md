@@ -1,6 +1,6 @@
 ---
 title: 闭包
-icon: gears
+icon: file-icons:closuretemplate
 order: 17
 category:
   - JavaScript

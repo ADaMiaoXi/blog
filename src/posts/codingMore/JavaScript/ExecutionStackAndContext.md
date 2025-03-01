@@ -1,6 +1,6 @@
 ---
 title: 执行栈和执行上下文
-icon: gears
+icon: carbon:executable-program
 order: 7
 category:
   - JavaScript

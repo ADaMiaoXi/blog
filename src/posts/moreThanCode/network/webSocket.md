@@ -1,6 +1,6 @@
 ---
 title: WebSocket
-icon: gears
+icon: logos:websocket
 order: 24
 category:
   - 网络

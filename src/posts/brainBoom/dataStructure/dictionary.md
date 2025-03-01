@@ -1,6 +1,6 @@
 ---
 title: 字典
-icon: gears
+icon: streamline:dictionary-language-book
 order: 5
 category:
   - 数据结构与算法
@@ -93,7 +93,7 @@ class ValuePair {
 
 > HashMap类是一种 Dictionary 类的一种散列表实现方式，散列表算法的作用是尽可能快地在数据结构中找到一个值。
 
-![](../../../.vuepress/public/assets/images/dataStructure/image-20230515212757647-1705847565767-9.png)
+![](../../../.vuepress/public/assets/images/brainBoom/dataStructure/image-20230515212757647-1705847565767-9.png)
 
 ````javascript
 export class HashMap {

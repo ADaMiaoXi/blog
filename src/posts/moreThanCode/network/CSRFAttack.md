@@ -1,6 +1,6 @@
 ---
 title: CSRF攻击
-icon: gears
+icon: mdi:bug
 order: 17
 category:
   - 网络

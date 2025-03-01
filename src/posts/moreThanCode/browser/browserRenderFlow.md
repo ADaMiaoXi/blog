@@ -1,6 +1,6 @@
 ---
 title: 浏览器渲染流程
-icon: gears
+icon: hugeicons:ai-browser
 order: 1
 category:
   - 浏览器
