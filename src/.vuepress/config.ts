@@ -4,7 +4,7 @@ import theme from './theme.js'
 
 export default defineUserConfig({
     base: '/blog/',
-
+    port: 8090,
     locales: {
         '/': {
             lang: 'zh-CN',
