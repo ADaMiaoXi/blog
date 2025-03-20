@@ -63,6 +63,140 @@ category:
 4. **主管** （Director） 类定义调用构造步骤的顺序， 这样你就可以创建和复用特定的产品配置。
 5. **客户端** （Client） 必须将某个生成器对象与主管类关联。 一般情况下， 你只需通过主管类构造函数的参数进行一次性关联即可。 此后主管类就能使用生成器对象完成后续所有的构造任务。 但在客户端将生成器对象传递给主管类制造方法时还有另一种方式。 在这种情况下， 你在使用主管类生产产品时每次都可以使用不同的生成器。
 
+## 伪代码
+
+下面关于生成器模式的例子演示了你可以如何复用相同的对象构造代码来生成不同类型的产品——例如汽车 （Car）——及其相应的使用手册 （Manual）。
+
+![分步骤制造汽车并制作对应型号用户使用手册的示例](../../../../.vuepress/public/assets/images/brainBoom/designPatterns/creational/builder/example-zh.png)
+
+汽车是一个复杂对象， 有数百种不同的制造方法。 我们没有在 汽车类中塞入一个巨型构造函数， 而是将汽车组装代码抽取到单独的汽车生成器类中。 该类中有一组方法可用来配置汽车的各种部件。
+
+如果客户端代码需要组装一辆与众不同、 精心调教的汽车， 它可以直接调用生成器。 或者， 客户端可以将组装工作委托给主管类， 因为主管类知道如何使用生成器制造最受欢迎的几种型号汽车。
+
+你或许会感到吃惊， 但确实每辆汽车都需要一本使用手册 （说真的， 谁会去读它们呢？）。 使用手册会介绍汽车的每一项功能， 因此不同型号的汽车， 其使用手册内容也不一样。 因此， 你可以复用现有流程来制造实际的汽车及其对应的手册。 当然， 编写手册和制造汽车不是一回事， 所以我们需要另外一个生成器对象来专门编写使用手册。 该类与其制造汽车的兄弟类都实现了相同的制造方法， 但是其功能不是制造汽车部件， 而是描述每个部件。 将这些生成器传递给相同的主管对象， 我们就能够生成一辆汽车或是一本使用手册了。
+
+最后一个部分是获取结果对象。 尽管金属汽车和纸质手册存在关联， 但它们却是完全不同的东西。 我们无法在主管类和具体产品类不发生耦合的情况下， 在主管类中提供获取结果对象的方法。 因此， 我们只能通过负责制造过程的生成器来获取结果对象。
+
+```py
+# 只有当产品较为复杂且需要详细配置时，使用生成器模式才有意义。下面的两个
+# 产品尽管没有同样的接口，但却相互关联。
+class Car is
+    # 一辆汽车可能配备有 GPS 设备、行车电脑和几个座位。不同型号的汽车（
+    # 运动型轿车、SUV 和敞篷车）可能会安装或启用不同的功能。
+
+class Manual is
+    # 用户使用手册应该根据汽车配置进行编制，并介绍汽车的所有功能。
+
+
+# 生成器接口声明了创建产品对象不同部件的方法。
+interface Builder is
+    method reset()
+    method setSeats(……)
+    method setEngine(……)
+    method setTripComputer(……)
+    method setGPS(……)
+
+# 具体生成器类将遵循生成器接口并提供生成步骤的具体实现。你的程序中可能会
+# 有多个以不同方式实现的生成器变体。
+class CarBuilder implements Builder is
+    private field car:Car
+
+    # 一个新的生成器实例必须包含一个在后续组装过程中使用的空产品对象。
+    constructor CarBuilder() is
+        this.reset()
+
+    # reset（重置）方法可清除正在生成的对象。
+    method reset() is
+        this.car = new Car()
+
+    # 所有生成步骤都会与同一个产品实例进行交互。
+    method setSeats(……) is
+        # 设置汽车座位的数量。
+
+    method setEngine(……) is
+        # 安装指定的引擎。
+
+    method setTripComputer(……) is
+        # 安装行车电脑。
+
+    method setGPS(……) is
+        # 安装全球定位系统。
+
+    # 具体生成器需要自行提供获取结果的方法。这是因为不同类型的生成器可能
+    # 会创建不遵循相同接口的、完全不同的产品。所以也就无法在生成器接口中
+    # 声明这些方法（至少在静态类型的编程语言中是这样的）。
+    //
+    # 通常在生成器实例将结果返回给客户端后，它们应该做好生成另一个产品的
+    # 准备。因此生成器实例通常会在 `getProduct（获取产品）`方法主体末尾
+    # 调用重置方法。但是该行为并不是必需的，你也可让生成器等待客户端明确
+    # 调用重置方法后再去处理之前的结果。
+    method getProduct():Car is
+        product = this.car
+        this.reset()
+        return product
+
+# 生成器与其他创建型模式的不同之处在于：它让你能创建不遵循相同接口的产品。
+class CarManualBuilder implements Builder is
+    private field manual:Manual
+
+    constructor CarManualBuilder() is
+        this.reset()
+
+    method reset() is
+        this.manual = new Manual()
+
+    method setSeats(……) is
+        # 添加关于汽车座椅功能的文档。
+
+    method setEngine(……) is
+        # 添加关于引擎的介绍。
+
+    method setTripComputer(……) is
+        # 添加关于行车电脑的介绍。
+
+    method setGPS(……) is
+        # 添加关于 GPS 的介绍。
+
+    method getProduct():Manual is
+        # 返回使用手册并重置生成器。
+
+
+# 主管只负责按照特定顺序执行生成步骤。其在根据特定步骤或配置来生成产品时
+# 会很有帮助。由于客户端可以直接控制生成器，所以严格意义上来说，主管类并
+# 不是必需的。
+class Director is
+    # 主管可同由客户端代码传递给自身的任何生成器实例进行交互。客户端可通
+    # 过这种方式改变最新组装完毕的产品的最终类型。主管可使用同样的生成步
+    # 骤创建多个产品变体。
+    method constructSportsCar(builder: Builder) is
+        builder.reset()
+        builder.setSeats(2)
+        builder.setEngine(new SportEngine())
+        builder.setTripComputer(true)
+        builder.setGPS(true)
+
+    method constructSUV(builder: Builder) is
+        # ……
+
+
+# 客户端代码会创建生成器对象并将其传递给主管，然后执行构造过程。最终结果
+# 将需要从生成器对象中获取。
+class Application is
+
+    method makeCar() is
+        director = new Director()
+
+        CarBuilder builder = new CarBuilder()
+        director.constructSportsCar(builder)
+        Car car = builder.getProduct()
+
+        CarManualBuilder builder = new CarManualBuilder()
+        director.constructSportsCar(builder)
+
+        # 最终产品通常需要从生成器对象中获取，因为主管不知晓具体生成器和
+        # 产品的存在，也不会对其产生依赖。
+        Manual manual = builder.getProduct()
+```
 ## 生成器模式优缺点
 √ 你可以分步创建对象， 暂缓创建步骤或递归运行创建步骤。
 √ 生成不同形式的产品时， 你可以复用相同的制造代码。
@@ -79,163 +213,3 @@ category:
 - 你可以结合使用生成器和桥接模式： 主管类负责抽象工作， 各种不同的生成器负责实现工作。
 
 - 抽象工厂、 生成器和原型都可以用单例模式来实现。
-
-## 代码示例
-
-### index.ts: 概念示例
-
-```typescript
-/**
- * The Builder interface specifies methods for creating the different parts of
- * the Product objects.
- */
-interface Builder {
-    producePartA(): void;
-    producePartB(): void;
-    producePartC(): void;
-}
-
-/**
- * The Concrete Builder classes follow the Builder interface and provide
- * specific implementations of the building steps. Your program may have several
- * variations of Builders, implemented differently.
- */
-class ConcreteBuilder1 implements Builder {
-    private product: Product1;
-
-    /**
-     * A fresh builder instance should contain a blank product object, which is
-     * used in further assembly.
-     */
-    constructor() {
-        this.reset();
-    }
-
-    public reset(): void {
-        this.product = new Product1();
-    }
-
-    /**
-     * All production steps work with the same product instance.
-     */
-    public producePartA(): void {
-        this.product.parts.push('PartA1');
-    }
-
-    public producePartB(): void {
-        this.product.parts.push('PartB1');
-    }
-
-    public producePartC(): void {
-        this.product.parts.push('PartC1');
-    }
-
-    /**
-     * Concrete Builders are supposed to provide their own methods for
-     * retrieving results. That's because various types of builders may create
-     * entirely different products that don't follow the same interface.
-     * Therefore, such methods cannot be declared in the base Builder interface
-     * (at least in a statically typed programming language).
-     *
-     * Usually, after returning the end result to the client, a builder instance
-     * is expected to be ready to start producing another product. That's why
-     * it's a usual practice to call the reset method at the end of the
-     * `getProduct` method body. However, this behavior is not mandatory, and
-     * you can make your builders wait for an explicit reset call from the
-     * client code before disposing of the previous result.
-     */
-    public getProduct(): Product1 {
-        const result = this.product;
-        this.reset();
-        return result;
-    }
-}
-
-/**
- * It makes sense to use the Builder pattern only when your products are quite
- * complex and require extensive configuration.
- *
- * Unlike in other creational patterns, different concrete builders can produce
- * unrelated products. In other words, results of various builders may not
- * always follow the same interface.
- */
-class Product1 {
-    public parts: string[] = [];
-
-    public listParts(): void {
-        console.log(`Product parts: ${this.parts.join(', ')}\n`);
-    }
-}
-
-/**
- * The Director is only responsible for executing the building steps in a
- * particular sequence. It is helpful when producing products according to a
- * specific order or configuration. Strictly speaking, the Director class is
- * optional, since the client can control builders directly.
- */
-class Director {
-    private builder: Builder;
-
-    /**
-     * The Director works with any builder instance that the client code passes
-     * to it. This way, the client code may alter the final type of the newly
-     * assembled product.
-     */
-    public setBuilder(builder: Builder): void {
-        this.builder = builder;
-    }
-
-    /**
-     * The Director can construct several product variations using the same
-     * building steps.
-     */
-    public buildMinimalViableProduct(): void {
-        this.builder.producePartA();
-    }
-
-    public buildFullFeaturedProduct(): void {
-        this.builder.producePartA();
-        this.builder.producePartB();
-        this.builder.producePartC();
-    }
-}
-
-/**
- * The client code creates a builder object, passes it to the director and then
- * initiates the construction process. The end result is retrieved from the
- * builder object.
- */
-function clientCode(director: Director) {
-    const builder = new ConcreteBuilder1();
-    director.setBuilder(builder);
-
-    console.log('Standard basic product:');
-    director.buildMinimalViableProduct();
-    builder.getProduct().listParts();
-
-    console.log('Standard full featured product:');
-    director.buildFullFeaturedProduct();
-    builder.getProduct().listParts();
-
-    // Remember, the Builder pattern can be used without a Director class.
-    console.log('Custom product:');
-    builder.producePartA();
-    builder.producePartC();
-    builder.getProduct().listParts();
-}
-
-const director = new Director();
-clientCode(director);
-```
-### Output.txt: 执行结果
-
-```txt
-Standard basic product:
-Product parts: PartA1
-
-Standard full featured product:
-Product parts: PartA1, PartB1, PartC1
-
-Custom product:
-Product parts: PartA1, PartC1
-```

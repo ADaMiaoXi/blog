@@ -58,6 +58,102 @@ category:
 4. **具体工厂** （Concrete Factory） 实现抽象工厂的构建方法。 每个具体工厂都对应特定产品变体， 且仅创建此种产品变体。
 5. 尽管具体工厂会对具体产品进行初始化， 其构建方法签名必须返回相应的抽象产品。 这样， 使用工厂类的客户端代码就不会与工厂创建的特定产品变体耦合。 客户端 （Client） 只需通过抽象接口调用工厂和产品对象， 就能与任何具体工厂/产品变体交互。
 
+## 伪代码
+下面例子通过应用抽象工厂模式， 使得客户端代码无需与具体 UI 类耦合， 就能创建跨平台的 UI 元素， 同时确保所创建的元素与指定的操作系统匹配。
+
+![跨平台 UI 类示例。](../../../../.vuepress/public/assets/images/brainBoom/designPatterns/creational/factory/example.png)
+
+跨平台应用中的相同 UI 元素功能类似， 但是在不同操作系统下的外观有一定差异。 此外， 你需要确保 UI 元素与当前操作系统风格一致。 你一定不希望在 Windows 系统下运行的应用程序中显示 macOS 的控件。
+
+抽象工厂接口声明一系列构建方法， 客户端代码可调用它们生成不同风格的 UI 元素。 每个具体工厂对应特定操作系统， 并负责生成符合该操作系统风格的 UI 元素。
+
+其运作方式如下： 应用程序启动后检测当前操作系统。 根据该信息， 应用程序通过与该操作系统对应的类创建工厂对象。 其余代码使用该工厂对象创建 UI 元素。 这样可以避免生成错误类型的元素。
+
+使用这种方法， 客户端代码只需调用抽象接口， 而无需了解具体工厂类和 UI 元素。 此外， 客户端代码还支持未来添加新的工厂或 UI 元素。
+
+这样一来， 每次在应用程序中添加新的 UI 元素变体时， 你都无需修改客户端代码。 你只需创建一个能够生成这些 UI 元素的工厂类， 然后稍微修改应用程序的初始代码， 使其能够选择合适的工厂类即可。
+
+```py
+# 抽象工厂接口声明了一组能返回不同抽象产品的方法。这些产品属于同一个系列
+# 且在高层主题或概念上具有相关性。同系列的产品通常能相互搭配使用。系列产
+# 品可有多个变体，但不同变体的产品不能搭配使用。
+interface GUIFactory is
+    method createButton():Button
+    method createCheckbox():Checkbox
+
+
+# 具体工厂可生成属于同一变体的系列产品。工厂会确保其创建的产品能相互搭配
+# 使用。具体工厂方法签名会返回一个抽象产品，但在方法内部则会对具体产品进
+# 行实例化。
+class WinFactory implements GUIFactory is
+    method createButton():Button is
+        return new WinButton()
+    method createCheckbox():Checkbox is
+        return new WinCheckbox()
+
+# 每个具体工厂中都会包含一个相应的产品变体。
+class MacFactory implements GUIFactory is
+    method createButton():Button is
+        return new MacButton()
+    method createCheckbox():Checkbox is
+        return new MacCheckbox()
+
+
+# 系列产品中的特定产品必须有一个基础接口。所有产品变体都必须实现这个接口。
+interface Button is
+    method paint()
+
+# 具体产品由相应的具体工厂创建。
+class WinButton implements Button is
+    method paint() is
+        # 根据 Windows 样式渲染按钮。
+
+class MacButton implements Button is
+    method paint() is
+        # 根据 macOS 样式渲染按钮
+
+# 这是另一个产品的基础接口。所有产品都可以互动，但是只有相同具体变体的产
+# 品之间才能够正确地进行交互。
+interface Checkbox is
+    method paint()
+
+class WinCheckbox implements Checkbox is
+    method paint() is
+        # 根据 Windows 样式渲染复选框。
+
+class MacCheckbox implements Checkbox is
+    method paint() is
+        # 根据 macOS 样式渲染复选框。
+
+# 客户端代码仅通过抽象类型（GUIFactory、Button 和 Checkbox）使用工厂
+# 和产品。这让你无需修改任何工厂或产品子类就能将其传递给客户端代码。
+class Application is
+    private field factory: GUIFactory
+    private field button: Button
+    constructor Application(factory: GUIFactory) is
+        this.factory = factory
+    method createUI() is
+        this.button = factory.createButton()
+    method paint() is
+        button.paint()
+
+
+# 程序会根据当前配置或环境设定选择工厂类型，并在运行时创建工厂（通常在初
+# 始化阶段）。
+class ApplicationConfigurator is
+    method main() is
+        config = readApplicationConfigFile()
+
+        if (config.OS == "Windows") then
+            factory = new WinFactory()
+        else if (config.OS == "Mac") then
+            factory = new MacFactory()
+        else
+            throw new Exception("错误！未知的操作系统。")
+
+        Application app = new Application(factory)
+```
+
 ## 抽象工厂模式优缺点
 
 √ 你可以确保同一工厂生成的产品相互匹配。
@@ -79,166 +175,3 @@ category:
 -   你可以将抽象工厂和桥接模式搭配使用。 如果由桥接定义的抽象只能与特定实现合作， 这一模式搭配就非常有用。 在这种情况下， 抽象工厂可以对这些关系进行封装， 并且对客户端代码隐藏其复杂性。
 
 -   抽象工厂、 生成器和原型都可以用单例模式来实现。
-
-## 代码示例
-
-### index.ts: 概念示例
-
-```typescript
-/**
- * The Abstract Factory interface declares a set of methods that return
- * different abstract products. These products are called a family and are
- * related by a high-level theme or concept. Products of one family are usually
- * able to collaborate among themselves. A family of products may have several
- * variants, but the products of one variant are incompatible with products of
- * another.
- */
-interface AbstractFactory {
-    createProductA(): AbstractProductA
-
-    createProductB(): AbstractProductB
-}
-
-/**
- * Concrete Factories produce a family of products that belong to a single
- * variant. The factory guarantees that resulting products are compatible. Note
- * that signatures of the Concrete Factory's methods return an abstract product,
- * while inside the method a concrete product is instantiated.
- */
-class ConcreteFactory1 implements AbstractFactory {
-    public createProductA(): AbstractProductA {
-        return new ConcreteProductA1()
-    }
-
-    public createProductB(): AbstractProductB {
-        return new ConcreteProductB1()
-    }
-}
-
-/**
- * Each Concrete Factory has a corresponding product variant.
- */
-class ConcreteFactory2 implements AbstractFactory {
-    public createProductA(): AbstractProductA {
-        return new ConcreteProductA2()
-    }
-
-    public createProductB(): AbstractProductB {
-        return new ConcreteProductB2()
-    }
-}
-
-/**
- * Each distinct product of a product family should have a base interface. All
- * variants of the product must implement this interface.
- */
-interface AbstractProductA {
-    usefulFunctionA(): string
-}
-
-/**
- * These Concrete Products are created by corresponding Concrete Factories.
- */
-class ConcreteProductA1 implements AbstractProductA {
-    public usefulFunctionA(): string {
-        return 'The result of the product A1.'
-    }
-}
-
-class ConcreteProductA2 implements AbstractProductA {
-    public usefulFunctionA(): string {
-        return 'The result of the product A2.'
-    }
-}
-
-/**
- * Here's the the base interface of another product. All products can interact
- * with each other, but proper interaction is possible only between products of
- * the same concrete variant.
- */
-interface AbstractProductB {
-    /**
-     * Product B is able to do its own thing...
-     */
-    usefulFunctionB(): string
-
-    /**
-     * ...but it also can collaborate with the ProductA.
-     *
-     * The Abstract Factory makes sure that all products it creates are of the
-     * same variant and thus, compatible.
-     */
-    anotherUsefulFunctionB(collaborator: AbstractProductA): string
-}
-
-/**
- * These Concrete Products are created by corresponding Concrete Factories.
- */
-class ConcreteProductB1 implements AbstractProductB {
-    public usefulFunctionB(): string {
-        return 'The result of the product B1.'
-    }
-
-    /**
-     * The variant, Product B1, is only able to work correctly with the variant,
-     * Product A1. Nevertheless, it accepts any instance of AbstractProductA as
-     * an argument.
-     */
-    public anotherUsefulFunctionB(collaborator: AbstractProductA): string {
-        const result = collaborator.usefulFunctionA()
-        return `The result of the B1 collaborating with the (${result})`
-    }
-}
-
-class ConcreteProductB2 implements AbstractProductB {
-    public usefulFunctionB(): string {
-        return 'The result of the product B2.'
-    }
-
-    /**
-     * The variant, Product B2, is only able to work correctly with the variant,
-     * Product A2. Nevertheless, it accepts any instance of AbstractProductA as
-     * an argument.
-     */
-    public anotherUsefulFunctionB(collaborator: AbstractProductA): string {
-        const result = collaborator.usefulFunctionA()
-        return `The result of the B2 collaborating with the (${result})`
-    }
-}
-
-/**
- * The client code works with factories and products only through abstract
- * types: AbstractFactory and AbstractProduct. This lets you pass any factory or
- * product subclass to the client code without breaking it.
- */
-function clientCode(factory: AbstractFactory) {
-    const productA = factory.createProductA()
-    const productB = factory.createProductB()
-
-    console.log(productB.usefulFunctionB())
-    console.log(productB.anotherUsefulFunctionB(productA))
-}
-
-/**
- * The client code can work with any concrete factory class.
- */
-console.log('Client: Testing client code with the first factory type...')
-clientCode(new ConcreteFactory1())
-
-console.log('')
-
-console.log('Client: Testing the same client code with the second factory type...')
-clientCode(new ConcreteFactory2())
-```
-
-### Output.txt: 执行结果
-
-```txt
-Client: Testing client code with the first factory type...
-The result of the product B1.
-The result of the B1 collaborating with the (The result of the product A1.)
-
-Client: Testing the same client code with the second factory type...
-The result of the product B2.
-The result of the B2 collaborating with the (The result of the product A2.)
-```

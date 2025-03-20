@@ -54,6 +54,89 @@ category:
 4. **具体创建者** （Concrete Creators） 将会重写基础工厂方法， 使其返回不同类型的产品。
    注意， 并不一定每次调用工厂方法都会创建新的实例。 工厂方法也可以返回缓存、 对象池或其他来源的已有对象。
 
+## 伪代码
+
+以下示例演示了如何使用工厂方法开发跨平台 UI （用户界面） 组件， 并同时避免客户代码与具体 UI 类之间的耦合。
+
+![跨平台对话框示例](../../../../.vuepress/public/assets/images/brainBoom/designPatterns/creational/factory/example.png)
+
+基础对话框类使用不同的 UI 组件渲染窗口。 在不同的操作系统下， 这些组件外观或许略有不同， 但其功能保持一致。 Windows 系统中的按钮在 Linux 系统中仍然是按钮。
+
+如果使用工厂方法， 就不需要为每种操作系统重写对话框逻辑。 如果我们声明了一个在基本对话框类中生成按钮的工厂方法， 那么我们就可以创建一个对话框子类， 并使其通过工厂方法返回 Windows 样式按钮。 子类将继承对话框基础类的大部分代码， 同时在屏幕上根据 Windows 样式渲染按钮。
+
+如需该模式正常工作， 基础对话框类必须使用抽象按钮 （例如基类或接口）， 以便将其扩展为具体按钮。 这样一来， 无论对话框中使用何种类型的按钮， 其代码都可以正常工作。
+
+你可以使用此方法开发其他 UI 组件。 不过， 每向对话框中添加一个新的工厂方法， 你就离抽象工厂模式更近一步。 我们将在稍后谈到这个模式。
+
+```py
+# 创建者类声明的工厂方法必须返回一个产品类的对象。创建者的子类通常会提供
+# 该方法的实现。
+class Dialog is
+    # 创建者还可提供一些工厂方法的默认实现。
+    abstract method createButton():Button
+
+    # 请注意，创建者的主要职责并非是创建产品。其中通常会包含一些核心业务
+    # 逻辑，这些逻辑依赖于由工厂方法返回的产品对象。子类可通过重写工厂方
+    # 法并使其返回不同类型的产品来间接修改业务逻辑。
+    method render() is
+        # 调用工厂方法创建一个产品对象。
+        Button okButton = createButton()
+        # 现在使用产品。
+        okButton.onClick(closeDialog)
+        okButton.render()
+
+
+# 具体创建者将重写工厂方法以改变其所返回的产品类型。
+class WindowsDialog extends Dialog is
+    method createButton():Button is
+        return new WindowsButton()
+
+class WebDialog extends Dialog is
+    method createButton():Button is
+        return new HTMLButton()
+
+
+# 产品接口中将声明所有具体产品都必须实现的操作。
+interface Button is
+    method render()
+    method onClick(f)
+
+# 具体产品需提供产品接口的各种实现。
+class WindowsButton implements Button is
+    method render(a, b) is
+        # 根据 Windows 样式渲染按钮。
+    method onClick(f) is
+        # 绑定本地操作系统点击事件。
+
+class HTMLButton implements Button is
+    method render(a, b) is
+        # 返回一个按钮的 HTML 表述。
+    method onClick(f) is
+        # 绑定网络浏览器的点击事件。
+
+
+class Application is
+    field dialog: Dialog
+
+    # 程序根据当前配置或环境设定选择创建者的类型。
+    method initialize() is
+        config = readApplicationConfigFile()
+
+        if (config.OS == "Windows") then
+            dialog = new WindowsDialog()
+        else if (config.OS == "Web") then
+            dialog = new WebDialog()
+        else
+            throw new Exception("错误！未知的操作系统。")
+
+    # 当前客户端代码会与具体创建者的实例进行交互，但是必须通过其基本接口
+    # 进行。只要客户端通过基本接口与创建者进行交互，你就可将任何创建者子
+    # 类传递给客户端。
+    method main() is
+        this.initialize()
+        dialog.render()
+```
+
 ## 工厂方法模式优缺点
 
 √ 你可以避免创建者和具体产品之间的紧密耦合。
@@ -66,125 +149,12 @@ category:
 
 ## 与其他模式的关系
 
-- 在许多设计工作的初期都会使用工厂方法模式 （较为简单， 而且可以更方便地通过子类进行定制）， 随后演化为使用抽象工厂模式、 原型模式或生成器模式 （更灵活但更加复杂）。
+-   在许多设计工作的初期都会使用工厂方法模式 （较为简单， 而且可以更方便地通过子类进行定制）， 随后演化为使用抽象工厂模式、 原型模式或生成器模式 （更灵活但更加复杂）。
 
-- 抽象工厂模式通常基于一组工厂方法， 但你也可以使用原型模式来生成这些类的方法。
+-   抽象工厂模式通常基于一组工厂方法， 但你也可以使用原型模式来生成这些类的方法。
 
-- 你可以同时使用工厂方法和迭代器模式来让子类集合返回不同类型的迭代器， 并使得迭代器与集合相匹配。
+-   你可以同时使用工厂方法和迭代器模式来让子类集合返回不同类型的迭代器， 并使得迭代器与集合相匹配。
 
-- 原型并不基于继承， 因此没有继承的缺点。 另一方面， 原型需要对被复制对象进行复杂的初始化。 工厂方法基于继承， 但是它不需要初始化步骤。
+-   原型并不基于继承， 因此没有继承的缺点。 另一方面， 原型需要对被复制对象进行复杂的初始化。 工厂方法基于继承， 但是它不需要初始化步骤。
 
-- 工厂方法是模板方法模式的一种特殊形式。 同时， 工厂方法可以作为一个大型模板方法中的一个步骤。
-
-## 代码示例
-
-### index.ts: 概念示例
-
-```typescript
-/**
- * The Creator class declares the factory method that is supposed to return an
- * object of a Product class. The Creator's subclasses usually provide the
- * implementation of this method.
- */
-abstract class Creator {
-    /**
-     * Note that the Creator may also provide some default implementation of the
-     * factory method.
-     */
-    public abstract factoryMethod(): Product
-
-    /**
-     * Also note that, despite its name, the Creator's primary responsibility is
-     * not creating products. Usually, it contains some core business logic that
-     * relies on Product objects, returned by the factory method. Subclasses can
-     * indirectly change that business logic by overriding the factory method
-     * and returning a different type of product from it.
-     */
-    public someOperation(): string {
-        // Call the factory method to create a Product object.
-        const product = this.factoryMethod()
-        // Now, use the product.
-        return `Creator: The same creator's code has just worked with ${product.operation()}`
-    }
-}
-
-/**
- * Concrete Creators override the factory method in order to change the
- * resulting product's type.
- */
-class ConcreteCreator1 extends Creator {
-    /**
-     * Note that the signature of the method still uses the abstract product
-     * type, even though the concrete product is actually returned from the
-     * method. This way the Creator can stay independent of concrete product
-     * classes.
-     */
-    public factoryMethod(): Product {
-        return new ConcreteProduct1()
-    }
-}
-
-class ConcreteCreator2 extends Creator {
-    public factoryMethod(): Product {
-        return new ConcreteProduct2()
-    }
-}
-
-/**
- * The Product interface declares the operations that all concrete products must
- * implement.
- */
-interface Product {
-    operation(): string
-}
-
-/**
- * Concrete Products provide various implementations of the Product interface.
- */
-class ConcreteProduct1 implements Product {
-    public operation(): string {
-        return '{Result of the ConcreteProduct1}'
-    }
-}
-
-class ConcreteProduct2 implements Product {
-    public operation(): string {
-        return '{Result of the ConcreteProduct2}'
-    }
-}
-
-/**
- * The client code works with an instance of a concrete creator, albeit through
- * its base interface. As long as the client keeps working with the creator via
- * the base interface, you can pass it any creator's subclass.
- */
-function clientCode(creator: Creator) {
-    // ...
-    console.log("Client: I'm not aware of the creator's class, but it still works.")
-    console.log(creator.someOperation())
-    // ...
-}
-
-/**
- * The Application picks a creator's type depending on the configuration or
- * environment.
- */
-console.log('App: Launched with the ConcreteCreator1.')
-clientCode(new ConcreteCreator1())
-console.log('')
-
-console.log('App: Launched with the ConcreteCreator2.')
-clientCode(new ConcreteCreator2())
-```
-
-### Output.txt: 执行结果
-
-```txt
-App: Launched with the ConcreteCreator1.
-Client: I'm not aware of the creator's class, but it still works.
-Creator: The same creator's code has just worked with {Result of the ConcreteProduct1}
-
-App: Launched with the ConcreteCreator2.
-Client: I'm not aware of the creator's class, but it still works.
-Creator: The same creator's code has just worked with {Result of the ConcreteProduct2}
-```
+-   工厂方法是模板方法模式的一种特殊形式。 同时， 工厂方法可以作为一个大型模板方法中的一个步骤。

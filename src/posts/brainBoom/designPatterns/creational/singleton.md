@@ -50,6 +50,46 @@ category:
 1. 单例 （Singleton） 类声明了一个名为 get­Instance 获取实例的静态方法来返回其所属类的一个相同实例。
    单例的构造函数必须对客户端 （Client） 代码隐藏。 调用 获取实例方法必须是获取单例对象的唯一方式。
 
+## 伪代码
+在本例中， 数据库连接类即是一个单例。 该类不提供公有构造函数， 因此获取该对象的唯一方式是调用 获取实例方法。 该方法将缓存首次生成的对象， 并为所有后续调用返回该对象。
+```py
+# 数据库类会对`getInstance（获取实例）`方法进行定义以让客户端在程序各处
+# 都能访问相同的数据库连接实例。
+class Database is
+    # 保存单例实例的成员变量必须被声明为静态类型。
+    private static field instance: Database
+
+    # 单例的构造函数必须永远是私有类型，以防止使用`new`运算符直接调用构
+    # 造方法。
+    private constructor Database() is
+        # 部分初始化代码（例如到数据库服务器的实际连接）。
+        # ……
+
+    # 用于控制对单例实例的访问权限的静态方法。
+    public static method getInstance() is
+        if (Database.instance == null) then
+            acquireThreadLock() and then
+                # 确保在该线程等待解锁时，其他线程没有初始化该实例。
+                if (Database.instance == null) then
+                    Database.instance = new Database()
+        return Database.instance
+
+    # 最后，任何单例都必须定义一些可在其实例上执行的业务逻辑。
+    public method query(sql) is
+        # 比如应用的所有数据库查询请求都需要通过该方法进行。因此，你可以
+        # 在这里添加限流或缓冲逻辑。
+        # ……
+
+class Application is
+    method main() is
+        Database foo = Database.getInstance()
+        foo.query("SELECT ……")
+        # ……
+        Database bar = Database.getInstance()
+        bar.query("SELECT ……")
+        # 变量 `bar` 和 `foo` 中将包含同一个对象。
+```
+
 ## 单例模式优缺点
 
 √ 你可以保证一个类只有一个实例。
@@ -68,67 +108,3 @@ category:
     1. 只会有一个单例实体， 但是享元类可以有多个实体， 各实体的内在状态也可以不同。
     2. 单例对象可以是可变的。 享元对象是不可变的。
 -   抽象工厂模式、 生成器模式和原型模式都可以用单例来实现。
-
-## 代码示例
-
-### index.ts: 概念示例
-```ts
-/**
- * The Singleton class defines an `instance` getter, that lets clients access
- * the unique singleton instance.
- */
-class Singleton {
-    static #instance: Singleton;
-
-    /**
-     * The Singleton's constructor should always be private to prevent direct
-     * construction calls with the `new` operator.
-     */
-    private constructor() { }
-
-    /**
-     * The static getter that controls access to the singleton instance.
-     *
-     * This implementation allows you to extend the Singleton class while
-     * keeping just one instance of each subclass around.
-     */
-    public static get instance(): Singleton {
-        if (!Singleton.#instance) {
-            Singleton.#instance = new Singleton();
-        }
-
-        return Singleton.#instance;
-    }
-
-    /**
-     * Finally, any singleton can define some business logic, which can be
-     * executed on its instance.
-     */
-    public someBusinessLogic() {
-        // ...
-    }
-}
-
-/**
- * The client code.
- */
-function clientCode() {
-    const s1 = Singleton.instance;
-    const s2 = Singleton.instance;
-
-    if (s1 === s2) {
-        console.log(
-            'Singleton works, both variables contain the same instance.'
-        );
-    } else {
-        console.log('Singleton failed, variables contain different instances.');
-    }
-}
-
-clientCode();
-```
-### Output.txt: 执行结果
-
-```txt
-Singleton works, both variables contain the same instance.
-```
