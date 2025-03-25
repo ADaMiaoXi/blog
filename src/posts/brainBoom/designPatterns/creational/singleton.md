@@ -1,6 +1,6 @@
 ---
 title: 单例模式
-icon: /assets/images/brainBoom/designPatterns/singleton-mini.png
+icon: /assets/images/brainBoom/designPatterns/creational/singleton/singleton-mini.png
 order: 5
 category:
     - 设计模式
