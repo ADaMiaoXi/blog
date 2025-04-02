@@ -66,3 +66,111 @@ category:
 在本例中， **观察者**模式允许文本编辑器对象将自身的状态改变通知给其他服务对象。
 
 ![将对象中发生的事件通知给其他对象。](../../../../.vuepress/public/assets/images/brainBoom/designPatterns/behavioral/observer/example.png)
+
+订阅者列表是动态生成的： 对象可在运行时根据程序需要开始或停止监听通知。
+
+在本实现中， 编辑器类自身并不维护订阅列表。 它将工作委派给专门从事此工作的一个特殊帮手对象。 你还可将该对象升级为中心化的事件分发器， 允许任何对象成为发布者。
+
+只要发布者通过同样的接口与所有订阅者进行交互， 那么在程序中新增订阅者时就无需修改已有发布者类的代码。
+
+```py
+# 发布者基类包含订阅管理代码和通知方法。
+class EventManager is
+    private field listeners: hash map of event types and listeners
+
+    method subscribe(eventType, listener) is
+        listeners.add(eventType, listener)
+
+    method unsubscribe(eventType, listener) is
+        listeners.remove(eventType, listener)
+
+    method notify(eventType, data) is
+        foreach (listener in listeners.of(eventType)) do
+            listener.update(data)
+
+# 具体发布者包含一些订阅者感兴趣的实际业务逻辑。我们可以从发布者基类中扩
+# 展出该类，但在实际情况下并不总能做到，因为具体发布者可能已经是子类了。
+# 在这种情况下，你可用组合来修补订阅逻辑，就像我们在这里做的一样。
+class Editor is
+    public field events: EventManager
+    private field file: File
+
+    constructor Editor() is
+        events = new EventManager()
+
+    # 业务逻辑的方法可将变化通知给订阅者。
+    method openFile(path) is
+        this.file = new File(path)
+        events.notify("open", file.name)
+
+    method saveFile() is
+        file.write()
+        events.notify("save", file.name)
+
+    # ……
+
+
+# 这里是订阅者接口。如果你的编程语言支持函数类型，则可用一组函数来代替整
+# 个订阅者的层次结构。
+interface EventListener is
+    method update(filename)
+
+# 具体订阅者会对其注册的发布者所发出的更新消息做出响应。
+class LoggingListener implements EventListener is
+    private field log: File
+    private field message: string
+
+    constructor LoggingListener(log_filename, message) is
+        this.log = new File(log_filename)
+        this.message = message
+
+    method update(filename) is
+        log.write(replace('%s',filename,message))
+
+class EmailAlertsListener implements EventListener is
+    private field email: string
+    private field message: string
+
+    constructor EmailAlertsListener(email, message) is
+        this.email = email
+        this.message = message
+
+    method update(filename) is
+        system.email(email, replace('%s',filename,message))
+
+
+# 应用程序可在运行时配置发布者和订阅者。
+class Application is
+    method config() is
+        editor = new Editor()
+
+        logger = new LoggingListener(
+            "/path/to/log.txt",
+            "有人打开了文件：%s");
+        editor.events.subscribe("open", logger)
+
+        emailAlerts = new EmailAlertsListener(
+            "admin@example.com",
+            "有人更改了文件：%s")
+        editor.events.subscribe("save", emailAlerts)
+```
+
+## 观察者模式优缺点
+
+√ 开闭原则。 你无需修改发布者代码就能引入新的订阅者类 （如果是发布者接口则可轻松引入发布者类）。
+√ 你可以在运行时建立对象之间的联系。
+× 订阅者的通知顺序是随机的。
+
+## 与其他模式的关系
+
+- [**责任链模式**](./chain-of-responsibility.md)、 [**命令模式**](./command.md) 、 [**中介者模式**](./mediator.md)和**观察者模式**用于处理请求发送者和接收者之间的不同连接方式：
+    - *责任链* 按照顺序将请求动态传递给一系列的潜在接收者， 直至其中一名接收者对请求进行处理。
+    - *命令* 在发送者和请求者之间建立单向连接。
+    - *中介者* 清除了发送者和请求者之间的直接连接， 强制它们通过一个中介对象进行间接沟通。
+    - *观察者* 允许接收者动态地订阅或取消接收请求。
+    
+- [**中介者**](./mediator.md)和**观察者**之间的区别往往很难记住。 在大部分情况下， 你可以使用其中一种模式， 而有时可以同时使用。 让我们来看看如何做到这一点。
+*中介者* 的主要目标是消除一系列系统组件之间的相互依赖。 这些组件将依赖于同一个中介者对象。 *观察者* 的目标是在对象之间建立动态的单向连接， 使得部分对象可作为其他对象的附属发挥作用。
+有一种流行的中介者模式实现方式依赖于 *观察者*。 中介者对象担当发布者的角色， 其他组件则作为订阅者， 可以订阅中介者的事件或取消订阅。 当 *中介者* 以这种方式实现时， 它可能看上去与 * 观察者* 非常相似。
+当你感到疑惑时， 记住可以采用其他方式来实现中介者。 例如， 你可永久性地将所有组件链接到同一个中介者对象。 这种实现方式和 *观察者* 并不相同， 但这仍是一种中介者模式。
+假设有一个程序， 其所有的组件都变成了发布者， 它们之间可以相互建立动态连接。 这样程序中就没有中心化的中介者对象， 而只有一些分布式的观察者。
