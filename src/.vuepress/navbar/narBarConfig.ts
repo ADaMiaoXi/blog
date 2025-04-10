@@ -4,7 +4,7 @@ export const zhNavbar = navbar([
     '/',
     {
         text: '代码不止',
-        prefix: '/posts/codingMore/',
+        prefix: '/posts/coding-more/',
         icon: 'proicons:code',
         children: [
             {
@@ -14,14 +14,14 @@ export const zhNavbar = navbar([
             },
             {
                 text: '前端工程化',
-                link: 'frontendEngineering/',
+                link: 'frontend-engineering/',
                 icon: 'eos-icons:organisms'
             }
         ]
     },
     {
         text: '不止代码',
-        prefix: '/posts/moreThanCode/',
+        prefix: '/posts/more-than-code/',
         icon: 'material-symbols:code-off-rounded',
         children: [
             {
@@ -38,17 +38,17 @@ export const zhNavbar = navbar([
     },
     {
         text: '脑力涌现',
-        prefix: 'posts/brainBoom/',
+        prefix: 'posts/brain-boom/',
         icon: 'eos-icons:neural-network',
         children: [
             {
                 text: '数据结构与算法',
                 icon: '/assets/icon/data-structure.png',
-                link: 'dataStructure/'
+                link: 'data-structure/'
             },
             {
                 text: '设计模式',
-                link: 'designPatterns/',
+                link: 'design-patterns/',
                 icon: 'mdi:lightbulb-on-10'
             }
         ]

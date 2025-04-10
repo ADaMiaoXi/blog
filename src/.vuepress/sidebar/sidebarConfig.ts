@@ -6,7 +6,7 @@ export const zhSidebar = sidebar({
         {
             text: '代码不止',
             icon: 'proicons:code',
-            prefix: 'posts/codingMore/',
+            prefix: 'posts/coding-more/',
             collapsible: true,
             children: [
                 {
@@ -18,7 +18,7 @@ export const zhSidebar = sidebar({
                 },
                 {
                     text: '前端工程化',
-                    prefix: 'frontendEngineering',
+                    prefix: 'frontend-engineering',
                     icon: 'eos-icons:organisms',
                     collapsible: true,
                     children: 'structure'
@@ -27,7 +27,7 @@ export const zhSidebar = sidebar({
         },
         {
             text: '不止代码',
-            prefix: 'posts/moreThanCode/',
+            prefix: 'posts/more-than-code/',
             icon: 'material-symbols:code-off-rounded',
             collapsible: true,
             children: [
@@ -50,19 +50,19 @@ export const zhSidebar = sidebar({
         {
             text: '脑力涌现',
             icon: 'eos-icons:neural-network',
-            prefix: 'posts/brainBoom/',
+            prefix: 'posts/brain-boom/',
             collapsible: true,
             children: [
                 {
                     text: '数据结构与算法',
-                    prefix: 'dataStructure',
+                    prefix: 'data-structure',
                     icon: '/assets/icon/data-structure.png',
                     collapsible: true,
                     children: 'structure'
                 },
                 {
                     text: '设计模式',
-                    prefix: 'designPatterns/',
+                    prefix: 'design-patterns/',
                     icon: 'mdi:lightbulb-on-10',
                     collapsible: true,
                     children: [
