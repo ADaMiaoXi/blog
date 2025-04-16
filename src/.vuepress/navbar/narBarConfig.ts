@@ -14,7 +14,7 @@ export const zhNavbar = navbar([
             },
             {
                 text: 'React',
-                icon: 'https://legacy.reactjs.org/favicon-32x32.png?v=f4d46f030265b4c48a05c999b8d93791',
+                icon: 'skill-icons:react-dark',
                 link: 'react/'
             },
             {
