@@ -17,6 +17,28 @@ export const zhSidebar = sidebar({
                     children: 'structure'
                 },
                 {
+                    text: 'React',
+                    prefix: 'react/',
+                    icon: 'https://legacy.reactjs.org/favicon-32x32.png?v=f4d46f030265b4c48a05c999b8d93791',
+                    collapsible: true,
+                    children: [
+                        {
+                            text: '基础',
+                            prefix: 'base',
+                            icon:'material-symbols-light:menu-book-outline',
+                            collapsible: true,
+                            children: 'structure'
+                        },
+                        {
+                            text: '进阶',
+                            prefix: 'advance',
+                            icon: 'game-icons:spell-book',
+                            collapsible: true,
+                            children: 'structure'
+                        }
+                    ]
+                },
+                {
                     text: '前端工程化',
                     prefix: 'frontend-engineering',
                     icon: 'eos-icons:organisms',

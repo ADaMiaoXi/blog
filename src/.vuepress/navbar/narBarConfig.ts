@@ -13,6 +13,11 @@ export const zhNavbar = navbar([
                 link: 'JavaScript/'
             },
             {
+                text: 'React',
+                icon: 'https://legacy.reactjs.org/favicon-32x32.png?v=f4d46f030265b4c48a05c999b8d93791',
+                link: 'react/'
+            },
+            {
                 text: '前端工程化',
                 link: 'frontend-engineering/',
                 icon: 'eos-icons:organisms'
