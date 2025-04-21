@@ -25,7 +25,7 @@ export const zhSidebar = sidebar({
                         {
                             text: '基础',
                             prefix: 'base',
-                            icon:'material-symbols-light:menu-book-outline',
+                            icon: 'material-symbols-light:menu-book-outline',
                             collapsible: true,
                             children: 'structure'
                         },
@@ -37,6 +37,18 @@ export const zhSidebar = sidebar({
                             children: 'structure'
                         }
                     ]
+                },
+                {
+                    text: 'Vue3',
+                    icon: 'logos:vue',
+                    prefix: 'vue3',
+                    collapsible: true,
+                    children: 'structure'
+                },
+                {
+                    text: 'Mobx',
+                    icon: 'devicon-plain:mobx',
+                    link: 'mobx/'
                 },
                 {
                     text: '前端工程化',

@@ -18,6 +18,16 @@ export const zhNavbar = navbar([
                 link: 'react/'
             },
             {
+                text: 'Vue3',
+                icon: 'logos:vue',
+                link: 'vue3/',
+            },
+            {
+                text: 'Mobx',
+                icon: 'devicon-plain:mobx',
+                link: 'mobx/'
+            },
+            {
                 text: '前端工程化',
                 link: 'frontend-engineering/',
                 icon: 'eos-icons:organisms'
