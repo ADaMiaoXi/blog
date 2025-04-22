@@ -52,10 +52,40 @@ export const zhSidebar = sidebar({
                 },
                 {
                     text: '前端工程化',
-                    prefix: 'frontend-engineering',
+                    prefix: 'frontend-engineering/',
                     icon: 'eos-icons:organisms',
                     collapsible: true,
-                    children: 'structure'
+                    children: [
+                        {
+                            text: 'Webpack',
+                            prefix: 'webpack/',
+                            icon: 'material-icon-theme:webpack',
+                            collapsible: true,
+                            children: [
+                                {
+                                    text: '基础',
+                                    prefix: 'base',
+                                    icon: 'material-symbols-light:menu-book-outline',
+                                    collapsible: true,
+                                    children: 'structure'
+                                },
+                                {
+                                    text: '进阶',
+                                    prefix: 'advance',
+                                    icon: 'game-icons:spell-book',
+                                    collapsible: true,
+                                    children: 'structure'
+                                }
+                            ]
+                        },
+                        {
+                            text: 'Babel',
+                            prefix: 'babel/',
+                            icon: 'material-icon-theme:babel',
+                            collapsible: true,
+                            children: 'structure'
+                        }
+                    ]
                 }
             ]
         },
