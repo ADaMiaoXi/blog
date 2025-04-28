@@ -1,6 +1,6 @@
 ---
 title: 处理 Html 资源
-icon: arcticons:my-base
+icon: ph:file-html-thin
 order: 8
 category:
   - Webpack

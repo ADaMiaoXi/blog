@@ -31,7 +31,12 @@ export const zhNavbar = navbar([
                 text: '前端工程化',
                 link: 'frontend-engineering/',
                 icon: 'eos-icons:organisms'
-            }
+            },
+            {
+                text: 'Electron',
+                icon: 'skill-icons:electron',
+                link: 'electron/'
+            },
         ]
     },
     {

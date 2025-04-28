@@ -1,6 +1,6 @@
 ---
 title: 处理 js 资源
-icon: arcticons:my-base
+icon: ph:file-js
 order: 7
 category:
   - Webpack

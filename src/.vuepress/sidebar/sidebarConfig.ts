@@ -57,6 +57,13 @@ export const zhSidebar = sidebar({
                     collapsible: true,
                     children: [
                         {
+                            text: 'Babel',
+                            prefix: 'babel/',
+                            icon: 'material-icon-theme:babel',
+                            collapsible: true,
+                            children: 'structure'
+                        },
+                        {
                             text: 'Webpack',
                             prefix: 'webpack/',
                             icon: 'material-icon-theme:webpack',
@@ -75,18 +82,30 @@ export const zhSidebar = sidebar({
                                     icon: 'game-icons:spell-book',
                                     collapsible: true,
                                     children: 'structure'
+                                },
+                                {
+                                    text: '原理',
+                                    prefix: 'principle',
+                                    icon: 'hugeicons:ai-idea',
+                                    collapsible: true,
+                                    children: 'structure'
+                                },
+                                {
+                                    text: 'webpack 项目',
+                                    prefix: 'project',
+                                    icon: 'ix:project',
+                                    collapsible: true,
+                                    children: 'structure'
                                 }
                             ]
-                        },
-                        {
-                            text: 'Babel',
-                            prefix: 'babel/',
-                            icon: 'material-icon-theme:babel',
-                            collapsible: true,
-                            children: 'structure'
                         }
                     ]
-                }
+                },
+                {
+                    text: 'Electron',
+                    icon: 'skill-icons:electron',
+                    link: 'electron/'
+                },
             ]
         },
         {

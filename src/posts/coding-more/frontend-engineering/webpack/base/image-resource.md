@@ -1,6 +1,6 @@
 ---
 title: 处理图片资源
-icon: arcticons:my-base
+icon: mdi:file-image-outline
 order: 4
 category:
   - Webpack

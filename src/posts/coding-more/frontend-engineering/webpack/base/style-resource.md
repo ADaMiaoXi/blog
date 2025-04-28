@@ -1,6 +1,6 @@
 ---
 title: 处理样式资源
-icon: arcticons:my-base
+icon: bi:filetype-scss
 order: 3
 category:
   - Webpack

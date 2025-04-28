@@ -1,6 +1,6 @@
 ---
 title: 开发模式 & 生产模式
-icon: arcticons:my-base
+icon: material-symbols:modeling-outline
 order: 12
 category:
   - Webpack

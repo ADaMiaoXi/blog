@@ -1,6 +1,6 @@
 ---
 title: 修改输出资源的名称和路径
-icon: arcticons:my-base
+icon: material-symbols:output-rounded
 order: 5
 category:
   - Webpack

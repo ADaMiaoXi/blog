@@ -1,6 +1,6 @@
 ---
 title: 处理其他资源
-icon: arcticons:my-base
+icon: icomoon-free:file-video
 order: 9
 category:
   - Webpack

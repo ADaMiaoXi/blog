@@ -1,6 +1,6 @@
 ---
 title: 基本配置
-icon: arcticons:my-base
+icon: mynaui:config
 order: 2
 category:
   - Webpack

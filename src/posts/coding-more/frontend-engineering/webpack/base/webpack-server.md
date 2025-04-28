@@ -1,6 +1,6 @@
 ---
 title: 开发服务器&自动化
-icon: arcticons:my-base
+icon: devicon-plain:webpack-wordmark
 order: 11
 category:
   - Webpack

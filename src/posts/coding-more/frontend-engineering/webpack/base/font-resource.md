@@ -1,6 +1,6 @@
 ---
 title: 处理字体图标资源
-icon: arcticons:my-base
+icon: vaadin:file-font
 order: 6
 category:
   - Webpack
