@@ -3,7 +3,7 @@ import {navbar} from 'vuepress-theme-hope'
 export const zhNavbar = navbar([
     '/',
     {
-        text: 'Web 前端',
+        text: 'web 客户端',
         prefix: '/posts/web/',
         icon: 'fluent:card-ui-24-regular',
         children: [
@@ -55,14 +55,7 @@ export const zhNavbar = navbar([
                 text: '网络',
                 link: 'network/',
                 icon: 'line-md:spotify'
-            }
-        ]
-    },
-    {
-        text: '脑力涌现',
-        prefix: 'posts/brain-boom/',
-        icon: 'eos-icons:neural-network',
-        children: [
+            },
             {
                 text: '数据结构与算法',
                 icon: '/assets/icon/data-structure.png',

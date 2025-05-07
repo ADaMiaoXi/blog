@@ -4,7 +4,7 @@ export const zhSidebar = sidebar({
     '/': [
         '',
         {
-            text: 'Web 前端',
+            text: 'web 客户端',
             icon: 'fluent:card-ui-24-regular',
             prefix: 'posts/web/',
             collapsible: true,
@@ -71,15 +71,7 @@ export const zhSidebar = sidebar({
                     icon: 'line-md:spotify',
                     collapsible: true,
                     children: 'structure'
-                }
-            ]
-        },
-        {
-            text: '脑力涌现',
-            icon: 'eos-icons:neural-network',
-            prefix: 'posts/brain-boom/',
-            collapsible: true,
-            children: [
+                },
                 {
                     text: '数据结构与算法',
                     prefix: 'data-structure',

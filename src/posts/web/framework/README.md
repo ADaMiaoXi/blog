@@ -1,5 +1,5 @@
 ---
-title: Web 前端开发框架
+title: web 客户端开发框架
 index: false
 icon: skill-icons:react-dark
 ---
