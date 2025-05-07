@@ -3,40 +3,42 @@ import {navbar} from 'vuepress-theme-hope'
 export const zhNavbar = navbar([
     '/',
     {
-        text: '代码不止',
-        prefix: '/posts/coding-more/',
-        icon: 'proicons:code',
+        text: 'Web 前端',
+        prefix: '/posts/web/',
+        icon: 'fluent:card-ui-24-regular',
         children: [
             {
-                text: 'JavaScript',
-                icon: 'https://www.runoob.com/wp-content/uploads/2013/07/js-logo.png',
-                link: 'JavaScript/'
+                text: '开发语言',
+                icon: '/assets/icon/js-ts.ico',
+                link: 'language/'
             },
             {
-                text: 'React',
-                icon: 'skill-icons:react-dark',
-                link: 'react/'
+                text: '工程化',
+                icon: 'material-icon-theme:folder-webpack-open',
+                link: 'frontend-engineering/'
             },
             {
-                text: 'Vue3',
-                icon: 'logos:vue',
-                link: 'vue3/',
+                text: '开发框架',
+                icon: 'mdi:electron-framework',
+                link: 'framework/'
             },
             {
-                text: 'Mobx',
-                icon: 'devicon-plain:mobx',
-                link: 'mobx/'
-            },
-            {
-                text: '前端工程化',
-                link: 'frontend-engineering/',
-                icon: 'eos-icons:organisms'
-            },
+                text: '状态管理工具',
+                icon: 'eos-icons:cluster-management-outlined',
+                link: 'state-management/'
+            }
+        ]
+    },
+    {
+        text: '跨平台',
+        prefix: '/posts/cross-platform/',
+        icon: 'fluent:box-multiple-24-regular',
+        children: [
             {
                 text: 'Electron',
                 icon: 'skill-icons:electron',
                 link: 'electron/'
-            },
+            }
         ]
     },
     {

@@ -4,108 +4,52 @@ export const zhSidebar = sidebar({
     '/': [
         '',
         {
-            text: '代码不止',
-            icon: 'proicons:code',
-            prefix: 'posts/coding-more/',
+            text: 'Web 前端',
+            icon: 'fluent:card-ui-24-regular',
+            prefix: 'posts/web/',
             collapsible: true,
             children: [
                 {
-                    text: 'JavaScript',
-                    prefix: 'JavaScript',
-                    icon: 'https://www.runoob.com/wp-content/uploads/2013/07/js-logo.png',
+                    text: '开发语言',
+                    icon: '/assets/icon/js-ts.ico',
+                    prefix: 'language/',
                     collapsible: true,
                     children: 'structure'
                 },
                 {
-                    text: 'React',
-                    prefix: 'react/',
-                    icon: 'skill-icons:react-dark',
-                    collapsible: true,
-                    children: [
-                        {
-                            text: '基础',
-                            prefix: 'base',
-                            icon: 'material-symbols-light:menu-book-outline',
-                            collapsible: true,
-                            children: 'structure'
-                        },
-                        {
-                            text: '进阶',
-                            prefix: 'advance',
-                            icon: 'game-icons:spell-book',
-                            collapsible: true,
-                            children: 'structure'
-                        }
-                    ]
-                },
-                {
-                    text: 'Vue3',
-                    icon: 'logos:vue',
-                    prefix: 'vue3',
-                    collapsible: true,
-                    children: 'structure'
-                },
-                {
-                    text: 'Mobx',
-                    icon: 'devicon-plain:mobx',
-                    link: 'mobx/'
-                },
-                {
-                    text: '前端工程化',
+                    text: '工程化',
+                    icon: 'material-icon-theme:folder-webpack-open',
                     prefix: 'frontend-engineering/',
-                    icon: 'eos-icons:organisms',
                     collapsible: true,
-                    children: [
-                        {
-                            text: 'Babel',
-                            prefix: 'babel/',
-                            icon: 'material-icon-theme:babel',
-                            collapsible: true,
-                            children: 'structure'
-                        },
-                        {
-                            text: 'Webpack',
-                            prefix: 'webpack/',
-                            icon: 'material-icon-theme:webpack',
-                            collapsible: true,
-                            children: [
-                                {
-                                    text: '基础',
-                                    prefix: 'base',
-                                    icon: 'material-symbols-light:menu-book-outline',
-                                    collapsible: true,
-                                    children: 'structure'
-                                },
-                                {
-                                    text: '进阶',
-                                    prefix: 'advance',
-                                    icon: 'game-icons:spell-book',
-                                    collapsible: true,
-                                    children: 'structure'
-                                },
-                                {
-                                    text: '原理',
-                                    prefix: 'principle',
-                                    icon: 'hugeicons:ai-idea',
-                                    collapsible: true,
-                                    children: 'structure'
-                                },
-                                {
-                                    text: 'webpack 项目',
-                                    prefix: 'project',
-                                    icon: 'ix:project',
-                                    collapsible: true,
-                                    children: 'structure'
-                                }
-                            ]
-                        }
-                    ]
+                    children: 'structure'
                 },
+                {
+                    text: '开发框架',
+                    icon: 'mdi:electron-framework',
+                    prefix: 'framework/',
+                    collapsible: true,
+                    children: 'structure'
+                },
+                {
+                    text: '状态管理工具',
+                    icon: 'eos-icons:cluster-management-outlined',
+                    prefix: 'state-management/',
+                    collapsible: true,
+                    children: 'structure'
+                }
+            ]
+        },
+        {
+            text: '跨平台',
+            prefix: '/posts/cross-platform/',
+            icon: 'fluent:box-multiple-24-regular',
+            collapsible: true,
+            children: [
                 {
                     text: 'Electron',
                     icon: 'skill-icons:electron',
                     link: 'electron/'
-                },
+                }
             ]
         },
         {
