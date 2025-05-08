@@ -3,7 +3,7 @@ title: 关于 setup
 icon: hugeicons:setup-01
 order: 5
 category:
-    - Vue3
+    - Vue
 ---
 
 ## Vue2.\* 中的几个特性
@@ -35,7 +35,7 @@ category:
 
     组件对象上会直接挂载 props （`propA`、`propB`）,且 $attr 为空:
 
-    ![](../../../../.vuepress/public/assets/images/web/framework/vue3/image-20230405203955996.png)
+    ![](../../../../.vuepress/public/assets/images/web/framework/vue/image-20230405203955996.png)
 
 -   当组件没有声明接收 props 的类型：
 
@@ -62,7 +62,7 @@ category:
 
     传递过来的 props 会存进 ￥ attrs 属性中。
 
-    ![](../../../../.vuepress/public/assets/images/web/framework/vue3/image-20230405204258256.png)
+    ![](../../../../.vuepress/public/assets/images/web/framework/vue/image-20230405204258256.png)
 
 ### 关于 **slots**
 
@@ -83,7 +83,7 @@ category:
 
     可以在该组件对象上找到这些插槽被保存在了 $slots 属性上：
 
-    ![](../../../../.vuepress/public/assets/images/web/framework/vue3/image-20230405213353997.png)
+    ![](../../../../.vuepress/public/assets/images/web/framework/vue/image-20230405213353997.png)
 
 ## Vue3.0 中的几个特性
 
@@ -102,7 +102,7 @@ beforeCreate hook 调用前调用 setup() { console.log('--- setup 函数被调�
 '张三', age: 45 }) return { username: person.username, age: person.age } }, };
 ```
 
-![](../../../../.vuepress/public/assets/images/web/framework/vue3/image-20230405215426203.png)
+![](../../../../.vuepress/public/assets/images/web/framework/vue/image-20230405215426203.png)
 
 ### 关于 **props**
 
@@ -130,7 +130,7 @@ beforeCreate hook 调用前调用 setup() { console.log('--- setup 函数被调�
 
     `setup` 函数的第一个参数 `props` 不会接收到任何属性，但是未接收到的属性都会存在 `context` 对象中的 `attrs` 属性中：
 
-    ![](../../../../.vuepress/public/assets/images/web/framework/vue3/image-20230405220936225.png)
+    ![](../../../../.vuepress/public/assets/images/web/framework/vue/image-20230405220936225.png)
 
 -   当组建中声明了传进来 props 的类型
 
@@ -147,7 +147,7 @@ beforeCreate hook 调用前调用 setup() { console.log('--- setup 函数被调�
 
     `setup` 函数的第一个参数 `props` 则会接收到传入的属性，`context` 对象中的 `attrs` 属性中不会被存入已被存入到 `props` 对象中的属性：
 
-    ![](../../../../.vuepress/public/assets/images/web/framework/vue3/image-20230405221611480.png)
+    ![](../../../../.vuepress/public/assets/images/web/framework/vue/image-20230405221611480.png)
 
 ### 关于 **slots**
 
@@ -165,7 +165,7 @@ App.vue
 </template>
 ```
 
-![](../../../../.vuepress/public/assets/images/web/framework/vue3/image-20230405222935090.png)
+![](../../../../.vuepress/public/assets/images/web/framework/vue/image-20230405222935090.png)
 
 -   关于自定义事件事件
 

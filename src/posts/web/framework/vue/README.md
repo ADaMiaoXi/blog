@@ -1,5 +1,5 @@
 ---
-title: Vue 3
+title: Vue
 index: false
 icon: "logos:vue"
 ---

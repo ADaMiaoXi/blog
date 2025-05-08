@@ -3,7 +3,7 @@ title: computed 和 watch
 icon: oui:integration-observability
 order: 6
 category:
-    - Vue3
+    - Vue
 ---
 
 ## computed函数

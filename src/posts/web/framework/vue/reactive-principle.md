@@ -3,7 +3,7 @@ title: 响应式原理
 icon: ph:file-vue
 order: 3
 category:
-  - Vue3
+  - Vue
 ---
 
 ## Vue2.*的响应式

@@ -3,7 +3,7 @@ title: Composition API
 icon: icon-park-outline:composition
 order: 2
 category:
-  - Vue3
+  - Vue
 ---
 
 ## setup
@@ -106,7 +106,7 @@ export default {
   - 对于基本类型的数据：响应式依靠的是 `getter` 和 `setter`
   - 对象类型的数据：内部使用了 Vue3.0 中的一个新的函数 --- `reactive` 函数
 
-![](../../../../.vuepress/public/assets/images/web/framework/vue3/image-20230331200525404.png)
+![](../../../../.vuepress/public/assets/images/web/framework/vue/image-20230331200525404.png)
 
 ````vue
 <template>

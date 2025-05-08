@@ -3,7 +3,7 @@ title: 新的组件
 icon: mingcute:vue-line
 order: 10
 category:
-    - Vue3
+    - Vue
 ---
 
 ## Fragment

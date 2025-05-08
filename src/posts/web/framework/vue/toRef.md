@@ -3,7 +3,7 @@ title: toRef
 icon: radix-icons:update
 order: 9
 category:
-    - Vue3
+    - Vue
 ---
 
 - 作用：创建一个 ref 对象，其 value 值只响应另一个对象中的某个属性

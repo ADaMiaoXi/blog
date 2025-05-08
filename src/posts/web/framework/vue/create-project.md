@@ -3,7 +3,7 @@ title: 创建 Vue3.0 工程
 icon: material-icon-theme:folder-vuepress-open
 order: 1
 category:
-  - Vue3
+  - Vue
 ---
 
 ## 使用 vue-cli 创建

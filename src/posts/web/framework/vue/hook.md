@@ -3,7 +3,7 @@ title: 自定义 hook 函数
 icon: mdi:hook
 order: 8
 category:
-    - Vue3
+    - Vue
 ---
 
 - 什么是 hook? --- 本质是一个函数，把 setup 函数中使用的 Composition API 进行了封装。

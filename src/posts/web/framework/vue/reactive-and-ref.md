@@ -3,7 +3,7 @@ title: reactive 对比 ref
 icon: file-icons:closuretemplate
 order: 4
 category:
-  - Vue3
+  - Vue
 ---
 
 - 从定义数据角度分析
