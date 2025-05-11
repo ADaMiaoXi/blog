@@ -40,9 +40,24 @@ export const zhSidebar = sidebar({
             ]
         },
         {
+            text: '服务端',
+            prefix: 'posts/server/',
+            icon: 'circum:server',
+            collapsible: true,
+            children: [
+                {
+                    text: 'Linux',
+                    icon: 'devicon:linux',
+                    prefix: 'linux/',
+                    collapsible: true,
+                    children: 'structure'
+                }
+            ]
+        },
+        {
             text: '跨平台',
             prefix: '/posts/cross-platform/',
-            icon: 'fluent:box-multiple-24-regular',
+            icon: 'carbon:mobile-view-orientation',
             collapsible: true,
             children: [
                 {
