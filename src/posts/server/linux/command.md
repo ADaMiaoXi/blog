@@ -1,20 +1,20 @@
 ---
-title: Linux 基本命令
+title: 基本命令
 icon: clarity:command-line
-order: 1
+order: 2
 category:
   - Linux
 ---
 
-## Linux 的目录结构
-
-![](../../../.vuepress/public/assets/images/server/linux/20221027214128.png)
-
-- `/`，根目录是最顶级的目录了
-- Linux只有一个顶级目录：`/`
-- 路径描述的层次关系同样适用`/`来表示
-- /home/itheima/a.txt，表示根目录下的home文件夹内有itheima文件夹，内有a.txt
-
+## Linux 命令基础格式
+无论是什么命令，用于什么用途，在Linux中，命令有其通用的格式：
+```bash
+command [-options] [parameter]
+```
+- `command`： 命令本身。
+- `options`：[可选，非必填] 命令的一些选项，可以通过选项控制命令的行为细节。
+- `parameter`：[可选，非必填] 命令的参数，多数用于命令的指向目标等。
+- `[]`: 表示可选
 
 
 ## `ls` 命令
@@ -37,22 +37,26 @@ category:
 默认不显示出来，需要`-a`选项才可查看到。
 
 
+## `cd` 命令
+
+`cd` 命令，来自：<font color=red>C</font>hange <font color=red>D</font>irectory
+
+`cd` 命令可以切换当前工作目录，语法：
+```bash
+cd [目标目录]
+```
+- 没有选项，只有参数，表示目标路径
+- 使用参数，切换到指定路径
+- 不使用参数，切换工作目录到当前用户的HOME
 
 ## `pwd` 命令
+
+`pwd` 命令来自：<font color=red>P</font>rint <font color=red>W</font>ork <font color=red>D</font>irectory
 
 功能：展示当前工作目录
 
 语法：`pwd`
 
-
-
-## `cd` 命令
-
-功能：切换工作目录
-
-语法：`cd [目标目录]`
-
-参数：目标目录，要切换去的地方，不提供默认切换到`当前登录用户HOME目录`
 
 
 
@@ -66,7 +70,7 @@ category:
 
 
 
-FinalShell登陆终端后，默认的工作目录就是用户的HOME目录
+FinalShell 登陆终端后，默认的工作目录就是用户的HOME目录
 
 
 
@@ -242,13 +246,13 @@ FinalShell登陆终端后，默认的工作目录就是用户的HOME目录
 
 示例：
 
-`cat a.txt | grep itheima`，将cat a.txt的结果，作为grep命令的输入，用来过滤`itheima`关键字
+`cat a.txt | grep babala`，将cat a.txt的结果，作为grep命令的输入，用来过滤`babala`关键字
 
 
 
 可以支持嵌套：
 
-`cat a.txt | grep itheima | grep itcast`
+`cat a.txt | grep babala | grep hahala`
 
 
 
@@ -304,6 +308,43 @@ FinalShell登陆终端后，默认的工作目录就是用户的HOME目录
 
 
 ## `vi` 编辑器
+
+vi 是 visual interface 的简称, 是 Linux 中最经典的文本编辑器
+
+同图形化界面中的 文本编辑器一样，vi 是命令行下对文本文件进行编辑的绝佳选择。
+
+vim 是 vi 的加强版本，兼容 vi 的所有指令，不仅能编辑文本，而且还具有 shell 程序编辑的功能，可以不同颜色的字体来辨别语法的正确性，极大方便了程序的设计和编辑性。
+
+![](../../../.vuepress/public/assets/images/server/linux/vim.png)
+
+### vi\vim 编辑器的三种工作模式
+
+#### **命令**模式（Command mode）
+命令模式下，所敲的按键编辑器都理解为命令，以命令驱动执行不同的功能。
+此模式下，不能自由进行文本编辑。
+
+#### **输入**模式（Insert mode）
+也就是所谓的编辑模式、插入模式。
+此模式下，可以对文件内容进行自由编辑。
+
+#### **底线命令**模式（Last line mode）
+以 `:` 开始，通常用于文件的保存、退出。
+
+### 实操
+通过 vi/vim 命令编辑文件，会打开一个新的窗口，此时这个窗口就是：命令模式窗口
+命令模式是 vi 编辑器的入口和出口，如下图
+- 进入 vi 编辑器会进入命令模式
+- 通过命令模式输入键盘指令，可以进入输入模式
+- 输入模式需要退回到命令模式，然后通过命令可以进入底线命令模式
+
+快速体验
+1. 使用：`vim hello.txt`，编辑一个新文件，执行后进入的是命令模式
+2. 在命令模式内，按键盘 i ，进入输入模式
+3. 在输入模式内输入：`babala and lalaba`.
+4. 输入完成后，按 esc 回退会命令模式
+5. 在命令模式内，按键盘 `:` ，进入底线命令模式
+6. 在底线命令内输入：`wq`，保存文件并退出 vi 编辑器
+![](../../../.vuepress/public/assets/images/server/linux/vim-work-mode.png)
 
 ### 命令模式快捷键
 |模式|命令|描述|
@@ -368,10 +409,11 @@ Linux命令，可以拥有的选项很多。
 
 可以通过：`命令 --help`查看命令的帮助手册
 
-![image-20221027220005610](../../../.vuepress/public/assets/images/server/linux/20221027220005.png)
+![](../../../.vuepress/public/assets/images/server/linux/20221027220005.png)
 
 ### 查看命令的详细手册
 
 可以通过：`man 命令`查看某命令的详细手册
-
-![image-20221027220009949](../../../.vuepress/public/assets/images/server/linux/20221027220010.png)
+`man ls`，就是查看 `ls` 命令的详细手册
+`man cd`，就是查看 `cd` 命令的详细手册
+![](../../../.vuepress/public/assets/images/server/linux/20221027220010.png)

@@ -1,10 +1,50 @@
 ---
-title: Linux 常用操作
-icon: clarity:command-line
-order: 2
+title: 常用操作
+icon: lsicon:operation-outline
+order: 3
 category:
     - Linux
 ---
+
+## 常用操作
+### 强制停止
+`Ctrl + C` 强制停止
+- Linux 某些程序的运行，如果想强制停止，可使用快捷键 `Ctrl + C`。
+- 命令输入错误，也可以通过快捷键 `Ctrl + C`，退出当前输入。
+
+### 退出或登出
+- 可以通过快捷键  `Ctrl + D`，退出当前登录用户。
+- 也可以使用 `Ctrl + D` 退出某些程序专属界面，如 `python`
+
+### 历史命令搜索
+- 可以使用 `history` 命令，产看历史输入过的命令。
+- 可以通过：`!` 命令前缀，自动执行上一次匹配前缀的命令
+```bash
+$ history
+1  ls -l
+2  ifconfig
+3  ls
+4  python
+5  history
+
+$ !py
+python
+```
+
+- 可以通过快捷键：`ctrl + r`，输入内容去匹配历史命令
+如果搜索到的内容是你需要的，那么：
+    - 回车键可以直接执行
+    - 键盘左右键，可以得到此命令（不执行）
+
+### 光标移动快捷键
+- `ctrl + a`，跳到命令开头
+- `ctrl + e`，跳到命令结尾
+- `ctrl + ←`，向左跳一个单词
+- `ctrl + →`，向右跳一个单词
+
+### 清屏
+- 通过快捷键 `ctrl + l`，可以清空终端内容
+- 通过命令 `clear` 得到同样效果
 
 ## 软件安装
 
