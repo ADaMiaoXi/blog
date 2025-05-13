@@ -69,7 +69,7 @@ python
 
 > `yum` 和 `apt` 均需要 root 权限
 
-## `systemctl`
+## 控制系统服务
 
 功能：控制系统服务的启动关闭等
 
@@ -91,7 +91,9 @@ python
 -   参数 1：被链接的
 -   参数 2：要链接去的地方（快捷方式的名称和存放位置）
 
-## 日期
+## 时间
+
+### 日期
 
 语法：`date [-d] [+格式化字符串]`
 
@@ -143,7 +145,7 @@ python
 
 `-d` 选项可以和格式化字符串配合一起使用
 
-## 时区
+### 时区
 
 修改时区为中国时区
 
@@ -152,7 +154,7 @@ rf -f /etc/localtime
 sudo ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ```
 
-## `ntp`
+### 同步时间
 
 功能：同步时间
 
@@ -422,14 +424,13 @@ kill [-9] 进程ID
 
 ## 查看主机运行状态
 
-### top 命令
+### 查看系统资源占用
 
 功能：命令查看 CPU、内存使用情况，类似 Windows 的任务管理器，默认<font color=red>每 5 秒</font>刷新一次
 
 语法：`top`，按 q 或 ctrl + c 退出
 
-### top命令内容详解
-
+#### top 命令内容详解
 
 ![](../../../.vuepress/public/assets/images/server/linux/top-1.png)
 
@@ -451,61 +452,138 @@ Kib Mem：物理内存，total：总量，free：空闲，used：使用，buff/c
 KibSwap：虚拟内存（交换空间），total：总量，free：空闲，used：使用，buff/cache：buff 和 cache 占用
 
 ![](../../../.vuepress/public/assets/images/server/linux/top-6.png)
-- PID：进程id
-- USER：进程所属用户
-- PR：进程优先级，越小越高
-- NI：负值表示高优先级，正表示低优先级
-- VIRT：进程使用虚拟内存，单位KB
-- RES：进程使用物理内存，单位KB
-- SHR：进程使用共享内存，单位KB
-- S：进程状态（S休眠，R运行，Z僵死状态，N负数优先级，I空闲状态）
-- %CPU：进程占用CPU率
-- %MEM：进程占用内存率
-- TIME+：进程使用CPU时间总计，单位10毫秒
-- COMMAND：进程的命令或名称或程序文件路径
+
+-   PID：进程 id
+-   USER：进程所属用户
+-   PR：进程优先级，越小越高
+-   NI：负值表示高优先级，正表示低优先级
+-   VIRT：进程使用虚拟内存，单位 KB
+-   RES：进程使用物理内存，单位 KB
+-   SHR：进程使用共享内存，单位 KB
+-   S：进程状态（S 休眠，R 运行，Z 僵死状态，N 负数优先级，I 空闲状态）
+-   %CPU：进程占用 CPU 率
+-   %MEM：进程占用内存率
+-   TIME+：进程使用 CPU 时间总计，单位 10 毫秒
+-   COMMAND：进程的命令或名称或程序文件路径
 
 可用选项：
 
-![image-20221027221340729](../../../.vuepress/public/assets/images/server/linux/20221027221340.png)
+| 支持选项 | 功能                                                                                                                                    |
+| -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `-p`     | 只显示某个进程的信息                                                                                                                    |
+| `-d`     | 设置刷新时间,默认是 5s                                                                                                                  |
+| `-c`     | 显示产生进程的完整命令，默认是进程名                                                                                                    |
+| `-n`     | 指定刷新次数,比如 `top -n 3`，刷新输出 3 次后退出                                                                                       |
+| `-b`     | 以非交互非全屏模式运行,以批次的方式执行 top，一般配合-n 指定输出几次统计信息，将输出重定向到指定文件，比如 `top -b -n 3 > /tmp/top.tmp` |
+| `-i`     | 不显示任何闲置 (idle) 或无用 (zombie) 的进程                                                                                            |
+| `-u`     | 查找特定用户启动的进程                                                                                                                  |
 
 交互式模式中，可用快捷键：
 
-![image-20221027221354137](../../../.vuepress/public/assets/images/server/linux/20221027221354.png)
+| 按键 | 功能                                                                  |
+| ---- | --------------------------------------------------------------------- |
+| h 键 | 显示帮助画面                                                          |
+| c 键 | 显示产生进程的完整命令，等同于 `-c` 参数，再次按下 c 键，变为默认显示 |
+| f 键 | 选择需要展示的项目                                                    |
+| M 键 | 根据驻留内存大小(RES)排序                                             |
+| P 键 | 根据 CPU 使用百分比大小进行排序                                       |
+| T 键 | 根据时间/累计时间进行排序                                             |
+| E 键 | 切换顶部内存显示单位                                                  |
+| e 键 | 切换进程内存显示单位                                                  |
+| l 键 | 切换显示平均负载和启动时间信息                                        |
+| i 键 | 不显示闲置或无用的进程，等同于-1 参数，再次按下，变为默认显示         |
+| t 键 | 切换显示 CPU 状态信息                                                 |
+| m 键 | 切换显示内存信息                                                      |
 
-## df 命令
+### 磁盘信息监控
 
-查看磁盘占用
+#### `df` 命令
 
-![image-20221027221413787](../../../.vuepress/public/assets/images/server/linux/20221027221413.png)
+使用 `df` 命令，可以查看硬盘的使用情况
+语法：
 
-## iostat 命令
+```bash
+df [-h]
+```
+
+![](../../../.vuepress/public/assets/images/server/linux/df.png)
+
+#### `iostat` 命令
 
 查看 CPU、磁盘的相关信息
+语法：
 
-![image-20221027221439990](../../../.vuepress/public/assets/images/server/linux/20221027221440.png)
+```bash
+iostat [-x] [num1] [num2]
+```
 
-![image-20221027221514237](../../../.vuepress/public/assets/images/server/linux/20221027221514.png)
+-   选项：`-x`，显示更多信息
+-   `num1`：数字，刷新间隔，`num2`：数字，刷新几次
 
-## sar 命令
+![](../../../.vuepress/public/assets/images/server/linux/iostat1.png)
 
-查看网络统计
+> tps：该设备每秒的传输次数（Indicate the number of transfers per second that were issued to the device.）。"一次传输"意思是"一次 I/O 请求"。多个逻辑请求可能会被合并为"一次 I/O 请求"。"一次传输"请求的大小是未知的。
 
-![image-20221027221545822](../../../.vuepress/public/assets/images/server/linux/20221027221545.png)
+使用 `iostat` 的 `-x` 选项，可以显示更多信息
+
+![](../../../.vuepress/public/assets/images/server/linux/iostat2.png)
+
+> `rrqm/s`： 每秒这个设备相关的读取请求有多少被 Merge 了（当系统调用需要读取数据的时候，VFS 将请求发到各个 FS，如果 FS 发现不同的读取请求读取的是相同 Block 的数据，FS 会将这个请求合并 Merge, 提高 IO 利用率, 避免重复调用）；
+> `wrqm/s`： 每秒这个设备相关的写入请求有多少被 Merge 了。
+> `rsec/s`： 每秒读取的扇区数；sectors
+> `wsec/`： 每秒写入的扇区数。
+> `rKB/s`： 每秒发送到设备的读取请求数
+> `wKB/s`： 每秒发送到设备的写入请求数
+> `avgrq-sz`: 平均请求扇区的大小
+> `avgqu-sz`: 平均请求队列的长度。毫无疑问，队列长度越短越好  
+> `await`： 每一个 IO 请求的处理的平均时间（单位是微秒毫秒）
+> `svctm`: 表示平均每次设备 I/O 操作的服务时间（以毫秒为单位）
+> `%util`： 磁盘利用率
+
+### 网络状态监控
+
+可以使用 `sar` 命令查看网络的相关统计（sar 命令非常复杂，这里仅简单用于统计网络）
+
+语法：
+
+```bash
+sar -n DEV num1 num2
+```
+
+选项：
+
+-   `-n`: 查看网络
+-   `DEV`: 表示查看网络接口
+-   `num1`：刷新间隔（不填就查看一次结束）
+-   `num2`：查看次数（不填无限次数）
+
+![image-20221027221545822](../../../.vuepress/public/assets/images/server/linux/sar.png)
+
+> 信息解读：
+>
+> -   `IFACE` 本地网卡接口的名称
+> -   `rxpck/s` 每秒钟接受的数据包
+> -   `txpck/s` 每秒钟发送的数据包
+> -   `rxKB/S` 每秒钟接受的数据包大小，单位为 KB
+> -   `txKB/S` 每秒钟发送的数据包大小，单位为 KB
+> -   `rxcmp/s` 每秒钟接受的压缩数据包
+> -   `txcmp/s` 每秒钟发送的压缩包
+> -   `rxmcst/s` 每秒钟接收的多播数据包
 
 ## 环境变量
 
 -   临时设置：export 变量名=变量值
 -   永久设置：
-    -   针对用户，设置用户 HOME 目录内：`.bashrc`文件
-    -   针对全局，设置`/etc/profile`
+    -   针对用户，设置用户 HOME 目录内：`~/.bashrc`文件
+    -   针对全局，设置 `/etc/profile`
 
-### PATH 变量
+### `PATH` 变量
 
 记录了执行程序的搜索路径
 
 可以将自定义路径加入 PATH 内，实现自定义命令在任意地方均可执行的效果
 
-## $符号
+### `$` 符号
 
 可以取出指定的环境变量的值
 
@@ -519,91 +597,97 @@ KibSwap：虚拟内存（交换空间），total：总量，free：空闲，used
 
 如果变量名和其它内容混淆在一起，可以使用${}
 
-## 压缩解压
+## 压缩/解压
 
-### 压缩
+### `tar` 命令
+Linux 和 Mac 系统常用有 2 种压缩格式，后缀名分别是：
+- `.tar`，称之为 tarball，归档文件，即简单的将文件组装到一个 `.tar` 的文件内，并没有太多文件体积的减少，仅仅是简单的封装
+- `.gz`，也常见为 `.tar.gz`，gzip 格式压缩文件，即使用 gzip 压缩算法将文件压缩到一个文件内，可以极大的减少压缩后的体积
+针对这两种格式，使用 tar 命令均可以进行压缩和解压缩的操作
 
-`tar -zcvf 压缩包 被压缩1...被压缩2...被压缩N`
-
--   -z 表示使用 gzip，可以不写
-
-`zip [-r] 参数1 参数2 参数N`
-
-![image-20221027221906247](../../../.vuepress/public/assets/images/server/linux/20221027221906.png)
-
-### 解压
-
-`tar -zxvf 被解压的文件 -C 要解压去的地方`
-
--   -z 表示使用 gzip，可以省略
--   -C，可以省略，指定要解压去的地方，不写解压到当前目录
-
-`unzip [-d] 参数`
-
-![image-20221027221939899](../../../.vuepress/public/assets/images/server/linux/20221027221939.png)
-
-## su 命令
-
-切换用户
-
-语法：`su [-] [用户]`
-
-![image-20221027222021619](../../../.vuepress/public/assets/images/server/linux/20221027222021.png)
-
-## sudo 命令
-
-![image-20221027222035337](../../../.vuepress/public/assets/images/server/linux/20221027222035.png)
-
-比如：
-
-```shell
-itheima ALL=(ALL)       NOPASSWD: ALL
+语法：
+```bash
+tar [-c -v -x -f -z -C] 压缩包 被压缩1...被压缩2...被压缩N
 ```
 
-在 visudo 内配置如上内容，可以让 itheima 用户，无需密码直接使用`sudo`
+`-c`：创建压缩文件，用于压缩模式
+`-v`：显示压缩、解压过程，用于查看进度
+`-x`：解压模式
+`-f`：要创建的文件，或要解压的文件，-f 选项必须在所有选项中位置处于最后一个
+`-z`：gzip 模式，不使用-z 就是普通的 tarball 格式
+`-C`：选择解压的目的地，用于解压模式
 
-## chmod 命令
+#### **压缩**
+`tar` 的常用组合为：
+```bash
+tar -cvf test.tar 1.txt 2.txt 3.txt
+```
+将 1.txt 2.txt 3.txt 压缩到 test.tar 文件内
+```bash
+tar -zcvf test.tar.gz 1.txt 2.txt 3.txt
+```
+将 1.txt 2.txt 3.txt 压缩到 test.tar.gz 文件内，使用 gzip 模式
 
-修改文件、文件夹权限
+> 注意：
+> `-z` 选项如果使用的话，一般处于选项位第一个
+> `-f` 选项，必须在选项位最后一个
 
-语法：`chmod [-R] 权限 参数`
 
--   权限，要设置的权限，比如 755，表示：`rwxr-xr-x`
 
-    ![image-20221027222157276](../../../.vuepress/public/assets/images/server/linux/20221027222157.png)
+#### **解压**
 
--   参数，被修改的文件、文件夹
+常用的 `tar` 解压组合有
+```bash
+tar -xvf test.tar
+```
+解压 test.tar，将文件解压至当前目录
+```bash
+tar -xvf test.tar -C /home/itheima
+```
+解压 test.tar，将文件解压至指定目录（/home/itheima）
+```bash
+tar -zxvf test.tar.gz -C /home/itheima
+```
+以 Gzip 模式解压 test.tar.gz，将文件解压至指定目录（/home/itheima）
 
--   选项-R，设置文件夹和其内部全部内容一样生效
+> 注意：
+> `-f` 选项，必须在选项组合体的最后一位
+> `-z` 选项，建议在开头位置
+> `-C` 选项单独使用，和解压所需的其它参数分开
 
-## chown 命令
+### zip 命令
+#### **`zip` 压缩**
+语法：
+```bash
+zip [-r] [压缩包] [被压缩1]...[被压缩N]
+```
+- `-r`，被压缩的包含文件夹的时候，需要使用 `-r` 选项，和 `rm`、`cp` 等命令的 `-r` 效果一致
 
-修改文件、文件夹所属用户、组
+示例：
+```bash
+zip test.zip a.txt b.txt c.txt
+```
+将 a.txt b.txt c.txt 压缩到 test.zip 文件内
+```bash
+zip -r test.zip test babala a.txt
+```
+将 test、babala 两个文件夹和 a.txt 文件，压缩到 test.zip 文件内
 
-语法：`chown [-R] [用户][:][用户组] 文件或文件夹`
+#### **`unzip` 解压**
+使用 `unzip` 命令，可以方便的解压 zip 压缩包
+语法：
+```bash
+unzip [-d] 参数
+```
+- `-d`，指定要解压去的位置，同tar的-C选项
+` 参数，被解压的zip压缩包文件
 
-![image-20221027222326192](../../../.vuepress/public/assets/images/server/linux/20221027222326.png)
-
-## 用户组管理
-
-![image-20221027222354498](../../../.vuepress/public/assets/images/server/linux/20221027222354.png)
-
-## 用户管理
-
-![image-20221027222407618](../../../.vuepress/public/assets/images/server/linux/20221027222407.png)
-
-## genenv 命令
-
--   `getenv group`，查看系统全部的用户组
-
-    ![image-20221027222446514](../../../.vuepress/public/assets/images/server/linux/20221027222446.png)
-
--   `getenv passwd`，查看系统全部的用户
-
-    ![image-20221027222512274](../../../.vuepress/public/assets/images/server/linux/20221027222512.png)
-
-## env 命令
-
-查看系统全部的环境变量
-
-语法：`env`
+示例：
+```bash
+unzip test.zip
+```
+将 test.zip 解压到当前目录
+```bash
+unzip test.zip -d /home/babala
+```
+将 test.zip 解压到指定文件夹内（/home/babala）
