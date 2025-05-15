@@ -1,7 +1,7 @@
 ---
 title: 系统目录
 icon: mingcute:directory-line
-order: 1
+order: 2
 category:
   - Linux
 ---

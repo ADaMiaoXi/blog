@@ -1,7 +1,7 @@
 ---
 title: 基本命令
 icon: clarity:command-line
-order: 2
+order: 3
 category:
   - Linux
 ---

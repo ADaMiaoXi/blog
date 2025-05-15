@@ -1,7 +1,7 @@
 ---
 title: 常用操作
 icon: lsicon:operation-outline
-order: 3
+order: 4
 category:
     - Linux
 ---
