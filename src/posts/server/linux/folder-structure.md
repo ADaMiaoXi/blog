@@ -1,6 +1,6 @@
 ---
 title: 系统目录
-icon: mingcute:directory-line
+icon: vscode-icons:folder-type-linux
 order: 2
 category:
   - Linux

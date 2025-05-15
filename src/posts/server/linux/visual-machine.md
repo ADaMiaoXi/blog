@@ -19,7 +19,7 @@ category:
 下载地址: https://www.centos.org/download/
 
 ### 在 VMware 中安装 CentOS 操作系统
-1. 打开VMware软件
+1. 打开 VMware 软件
 ![](../../../.vuepress/public/assets/images/server/linux/open-VMware.png)
 2. 创建虚拟机
 ![](../../../.vuepress/public/assets/images/server/linux/create-vm1.png)

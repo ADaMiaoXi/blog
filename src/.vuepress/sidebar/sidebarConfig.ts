@@ -51,6 +51,13 @@ export const zhSidebar = sidebar({
                     prefix: 'linux/',
                     collapsible: true,
                     children: 'structure'
+                },
+                {
+                    text: 'Maven',
+                    icon: 'devicon:maven',
+                    prefix: 'maven/',
+                    collapsible: true,
+                    children: 'structure'
                 }
             ]
         },

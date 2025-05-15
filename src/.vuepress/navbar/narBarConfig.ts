@@ -38,6 +38,11 @@ export const zhNavbar = navbar([
                 text: 'Linux',
                 icon: 'devicon:linux',
                 link: 'linux/'
+            },
+            {
+                text: 'Maven',
+                icon: 'devicon:maven',
+                link: 'maven/'
             }
         ]
     },
