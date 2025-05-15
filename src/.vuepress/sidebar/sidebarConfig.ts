@@ -58,6 +58,13 @@ export const zhSidebar = sidebar({
                     prefix: 'maven/',
                     collapsible: true,
                     children: 'structure'
+                },
+                {
+                    text: 'Docker',
+                    icon: 'devicon:docker-wordmark',
+                    prefix: 'docker/',
+                    collapsible: true,
+                    children: 'structure'
                 }
             ]
         },

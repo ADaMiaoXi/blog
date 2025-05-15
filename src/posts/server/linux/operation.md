@@ -557,7 +557,7 @@ sar -n DEV num1 num2
 -   `num1`：刷新间隔（不填就查看一次结束）
 -   `num2`：查看次数（不填无限次数）
 
-![image-20221027221545822](../../../.vuepress/public/assets/images/server/linux/sar.png)
+![](../../../.vuepress/public/assets/images/server/linux/sar.png)
 
 > 信息解读：
 >

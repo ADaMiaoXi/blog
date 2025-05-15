@@ -43,6 +43,11 @@ export const zhNavbar = navbar([
                 text: 'Maven',
                 icon: 'devicon:maven',
                 link: 'maven/'
+            },
+            {
+                text: 'Docker',
+                icon: 'devicon:docker-wordmark',
+                link: 'docker/'
             }
         ]
     },
