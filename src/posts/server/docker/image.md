@@ -1,6 +1,6 @@
 ---
 title: Docker 镜像
-icon: clarity:command-line
+icon: pixelarticons:image-new
 order: 6
 category:
     - Docker

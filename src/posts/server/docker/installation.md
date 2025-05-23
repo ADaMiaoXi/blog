@@ -1,6 +1,6 @@
 ---
 title: 安装 Docker
-icon: clarity:command-line
+icon: ri:install-line
 order: 4
 category:
     - Docker

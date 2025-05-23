@@ -1,6 +1,6 @@
 ---
 title: 架构模式
-icon: clarity:command-line
+icon: token:infra
 order: 3
 category:
     - Docker

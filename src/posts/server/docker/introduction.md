@@ -1,6 +1,6 @@
 ---
 title: 关于 Docker
-icon: clarity:command-line
+icon: la:docker
 order: 1
 category:
     - Docker
