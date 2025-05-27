@@ -1,5 +1,5 @@
 ---
-title: cookie和storage
+title: cookie
 icon: majesticons:browser-cookie
 order: 4
 category:
@@ -16,10 +16,9 @@ category:
 
 可问题是，客户端和服务器的传输使用的是 http 协议， http 协议是无状态的，什么是无状态，就是**服务器不知道这一次请求的人，跟之前登陆请求成功的人是不是同一个人**
 
-<img src="../../../../src/.vuepress/public/assets/images/more-than-code/network/cookieAndStorage/image-20240220175318476.png" alt="image-20240220175318476"  />
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookie/image-20240220175318476.png)
 
-![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookieAndStorage/image-20240220175349560.png)
-
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookie/image-20240220175349560.png)
 
 
 由于 http 协议的无状态，服务器忘记了之前的所有请求，它无法确定这一次请求的客户端，就是之前登陆成功的那个客户端。
@@ -31,9 +30,7 @@ category:
 1. 客户端登陆成功后，服务器会给客户端一个出入证
 2. 后续客户端的每次请求，都必须要附带这个出入证
 
-![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookieAndStorage/image-20240220175016861.png)
-
-![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookieAndStorage/image-20240220175107524.png)
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookie/image-20240220175016861.png)
 
 服务器发扬了认证不认人的优良传统，就可以很轻松的识别身份了。
 
@@ -56,14 +53,14 @@ cookie 是浏览器中特有的一个概念，它就像浏览器的专属卡包�
 
 - key：键，比如 <身份证号>
 - value：值，比如 <身份证号> 的具体数值 <188954566513>，可以是任何信息
-- domain：域，表达这个 cookie 是属于哪个网站的，`yuanjin.teach`，表示这个 cookie 是属于 `yuanjin.teach` 这个网站的
+- domain：域，表达这个 cookie 是属于哪个网站的，`baidu.com`，表示这个 cookie 是属于 `baidu.com` 这个网站的
 - path: 路径，表达这个 cookie 是属于该网站哪个路径的，就好比是同一家公司不同部门会颁发不同的出入证。比如 `/news`，表示这个 cookie 属于 `/news` 这个路径的。
 - secure：是否使用安全传输
 - expire：过期事件，表示该 cookie 在什么时候过期
 
 下图是百度首页所用到的 cookies
 
-![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookieAndStorage/image-20240220211742241.png)
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookie/image-20240220211742241.png)
 
 当浏览器向服务器发送一个请求的时候，它会瞄一眼自己的卡包，看看哪些卡包适合附带捎给服务器
 
@@ -88,7 +85,7 @@ cookie 是浏览器中特有的一个概念，它就像浏览器的专属卡包�
 
 具体的加入方式是：**浏览器会将符合条件的 cookie，自动放置到请求头中**，例如，当我们访问百度的时候，它在请求头中附带了下面的 cookie：
 
-![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookieAndStorage/image-20240220221525105.png)
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookie/image-20240220221525105.png)
 
 这部分就是通过请求头 `cookie` 发送到服务器的，发送的格式为 `key=value; key=value; key=value; ...`，每一个键值对就是一个符合条件的 cookie。
 
@@ -121,7 +118,7 @@ Set-Cookie: cookie3
 
 
 
-![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookieAndStorage/image-20240221101532935.png)
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/cookie/image-20240221101532935.png)
 
 下面，依次说明每个属性值：
 
