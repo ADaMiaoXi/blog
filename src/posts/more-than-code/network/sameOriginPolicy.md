@@ -22,11 +22,11 @@ category:
 
 **同源策略是指，若页面的源和页面运行过程中加载的源不一致时，出于安全考虑，浏览器会对跨域的资源访问进行一些限制**
 
-![image-20240225211457276]( ../../../../src/.vuepress/public/assets/images/more-than-code/network/sameOriginPolicy/image-20240225211457276.png)
+![]( ../../../../src/.vuepress/public/assets/images/more-than-code/network/sameOriginPolicy/image-20240225211457276.png)
 
 同源策略对 ajax 的跨域限制的最为凶狠，默认情况下，它不允许 ajax 访问跨域资源。
 
-![image-20240225211538760]( ../../../../src/.vuepress/public/assets/images/more-than-code/network/sameOriginPolicy/image-20240225211538760.png)
+![]( ../../../../src/.vuepress/public/assets/images/more-than-code/network/sameOriginPolicy/image-20240225211538760.png)
 
 所以，我们通常所说的跨域问题,就是同源策略对 ajax 产生的影响。
 

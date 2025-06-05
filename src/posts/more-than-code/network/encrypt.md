@@ -10,7 +10,7 @@ category:
 
 ### 对称加密
 
-<img src=" ../../../../src/.vuepress/public/assets/images/more-than-code/network/encrypt/image-20240223103147452.png" alt="image-20240223103147452" style="zoom:80%;" />
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/encrypt/image-20240223103147452.png)
 
 常见算法: DES、 3DES、 TDEA、 Blowfish、 RC5、 IDEA
 

@@ -30,11 +30,11 @@ category:
 
 所以，必须有一个东西，能够将域名转换成 IP 地址，这个东西就是 DNS 服务器，翻译 IP 地址的过程称之为 **域名解析**。
 
-![image-20240228181430515]( ../../../../src/.vuepress/public/assets/images/more-than-code/network/DNS/image-20240228181430515.png)
+![]( ../../../../src/.vuepress/public/assets/images/more-than-code/network/DNS/image-20240228181430515.png)
 
 全世界认可的 DNS 服务器一共有三种，外加一种局部使用的本地 DNS 服务器，一共四种。
 
-![image-20240228181540239]( ../../../../src/.vuepress/public/assets/images/more-than-code/network/DNS/image-20240228181540239.png)
+![]( ../../../../src/.vuepress/public/assets/images/more-than-code/network/DNS/image-20240228181540239.png)
 
 为了使得解析速度更快，查询的节点更少，上述每个节点都可能设置告诉缓存来加速解析。
 

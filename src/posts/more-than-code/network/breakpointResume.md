@@ -26,7 +26,7 @@ range: bytes=0-5000
 
 完整流程如下：
 
-<img src="../../../../src/.vuepress/public/assets/images/more-than-code/network/breakpointResume/image-20240228171020926.png" alt="image-20240228171020926" style="zoom:80%;" />
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/breakpointResume/image-20240228171020926.png)
 
 在请求下载资源之前，下载器先给服务器发一个 head 类型的请求，用于得到资源信息 head 请求的响应没有响应体，所有数据在响应头中。
 

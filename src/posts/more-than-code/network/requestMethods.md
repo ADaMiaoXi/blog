@@ -8,11 +8,13 @@ category:
 
 ## 请求方法的本质
 
+![]( ../../../../src/.vuepress/public/assets/images/more-than-code/network/requestMethods/image.png)
+
 请求方法是请求行中的第一个单词，它向服务器描述了客户发出请求的动作类型。在 HTTP 协议中，不同的请求方法只是包含了不同的语义，但服务器和浏览器的一些约定俗成的行为造成了它们具体的区别。
 
 ```js
 fetch('https://www.baidu.com',{
-      method: 'getPic' // 告诉百度，这次请求是来嘿嘿嘿的
+      method: 'getPic' // 告诉百度，这次请求是来获取图片的
 })
 ```
 上面的请求中，我们使用了自定义方法 `getPic`。虽然百度服务器无法理解这是什么，但这样的请求也是可以正常发送到百度服务器的。

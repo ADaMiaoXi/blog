@@ -23,7 +23,7 @@ category:
 
 比如下面的聊天场景
 
-<img src="../../../../src/.vuepress/public/assets/images/more-than-code/network/webSocket/image-20240229211708084.png" alt="image-20240229211708084" style="zoom:80%;" />
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/webSocket/image-20240229211708084.png)
 
 由于HTTP协议是请求-响应模式，请求必须在前，响应必须在后，这就导致了服务器无法「主动」的把消息告诉客户端。
 
@@ -37,7 +37,7 @@ category:
 
 客户端每隔一小段时间就向服务器请求一次，询问有没有新消息
 
-<img src="../../../../src/.vuepress/public/assets/images/more-than-code/network/webSocket/image-20240229211924044.png" alt="image-20240229211924044" style="zoom:80%;" />
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/webSocket/image-20240229211924044.png)
 
 实现短轮询是非常简单的，客户端只需要设置一个计时器不断发送请求即可
 

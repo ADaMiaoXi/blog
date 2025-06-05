@@ -1,5 +1,5 @@
 ---
-title: Maven 简介
+title: 关于 Maven
 icon: catppuccin:maven
 order: 1
 category:
