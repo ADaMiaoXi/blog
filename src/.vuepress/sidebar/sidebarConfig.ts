@@ -10,7 +10,7 @@ export const zhSidebar = sidebar({
             collapsible: true,
             children: [
                 {
-                    text: '开发语言',
+                    text: '语言',
                     icon: '/assets/icon/js-ts.ico',
                     prefix: 'language/',
                     collapsible: true,
@@ -24,7 +24,7 @@ export const zhSidebar = sidebar({
                     children: 'structure'
                 },
                 {
-                    text: '开发框架',
+                    text: '框架',
                     icon: 'mdi:electron-framework',
                     prefix: 'framework/',
                     collapsible: true,

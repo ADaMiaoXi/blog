@@ -8,7 +8,7 @@ export const zhNavbar = navbar([
         icon: 'fluent:card-ui-24-regular',
         children: [
             {
-                text: '开发语言',
+                text: '语言',
                 icon: '/assets/icon/js-ts.ico',
                 link: 'language/'
             },
@@ -18,7 +18,7 @@ export const zhNavbar = navbar([
                 link: 'frontend-engineering/'
             },
             {
-                text: '开发框架',
+                text: '框架',
                 icon: 'mdi:electron-framework',
                 link: 'framework/'
             },
