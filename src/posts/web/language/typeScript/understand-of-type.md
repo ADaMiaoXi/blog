@@ -1162,3 +1162,1379 @@ const person: User = {
     }
 }
 ```
+
+## `instanceof` 和 `in`
+
+### `instanceof` 实例判断
+
+`typeof`类型检查只能判断`"string"`/`"number"`/`"boolean"`/`"function"`/`"object"`等值。如果遇到了具体的对象类型判断就无能为力了，因此，可以使用`instanceof`关键字
+
+```typescript
+class Animal {
+    eat() {
+        console.log('animal eat')
+    }
+}
+
+class Dog extends Animal {
+    eat() {
+        console.log('dog eat')
+    }
+    bark() {
+        console.log('dog bark')
+    }
+}
+
+class Cat extends Animal {
+    eat() {
+        console.log('cat eat')
+    }
+    meow() {
+        console.log('cat meow')
+    }
+}
+
+function feedAnimal(animal: Animal) {
+    if (animal instanceof Dog) {
+        animal.bark() // Dog
+    } else if (animal instanceof Cat) {
+        animal.meow() // Cat
+    } else {
+        animal.eat() // Animal
+    }
+}
+
+feedAnimal(new Dog())
+```
+
+### `in` 属性检查
+
+JavaScript 语言中，`in`运算符用来确定对象是否包含某个属性名
+
+```typescript
+const obj = {a: 123}
+
+if ('a' in obj) {
+    console.log('有a属性')
+}
+```
+
+在 Typescript 中，`in`**检查对象是否具有特定的属性，并使用该属性区分不同的类型**。**它通常返回一个布尔值，表示该属性是否存在于该对象中**。
+
+```typescript
+type Circle = {
+    kind: 'circle'
+    radius: number
+}
+
+type Rectangle = {
+    kind: 'rectangle'
+    width: number
+    height: number
+}
+
+type Triangle = {
+    kind: 'triangle'
+    base: number
+    height: number
+}
+
+type Shape = Circle | Rectangle | Triangle
+
+function printArea(shape: Shape) {
+    if ('radius' in shape) {
+        console.log(Math.PI * shape.radius ** 2)
+    } else if ('width' in shape) {
+        console.log(shape.width * shape.height)
+    } else {
+        console.log((shape.base * shape.height) / 2)
+    }
+}
+```
+
+## 字面量类型检查(可辨识联合类型)
+
+再结合着对象的联合类型来看一下问题：
+
+```typescript
+type UserTextEvent = {value: string; target: HTMLInputElement}
+type UserMouseEvent = {value: number; target: HTMLButtonElement}
+type UserEvent = UserTextEvent | UserMouseEvent
+
+function handle(event: UserEvent) {
+    if (typeof event.value === 'string') {
+        console.log(event.value) // event.value类型为string
+        console.log(event.target) // event.target类型为 HTMLInputElement | HTMLButtonElement
+    } else {
+        console.log(event.value) // event.value类型为number
+        console.log(event.target) // event.target类型为 HTMLInputElement | HTMLButtonElement
+    }
+}
+```
+
+`event.value`的类型可以顺利的细化，但是`event.target`却不可以，因为 handle 函数的参数是`UserEvent`。联合之后的`UserEvent`，其实类似于：
+
+```typescript
+type UserEvent = {
+    value: string | number
+    target: HTMLInputElement | HTMLButtonElement
+}
+```
+
+也就是当`value:string`的时候，`target`可以选择`HTMLInputElement | HTMLButtonElement`
+
+也就是当`value:number`的时候，`target`也可以选择`HTMLInputElement | HTMLButtonElement`
+
+因此，Typescript 需要一种更可靠的方式，明确对象的并集类型的具体情况。
+
+最常见的方式是，使用**字面量类型进行标记**，这样具体有值的情况下，就相当于在进行值的判断，这样 Typescript 就能很精确的推导出，具体的对象并集类型到底是哪个类型了
+
+```typescript
+type UserTextEvent = {type: 'TextEvent'; value: string; target: HTMLInputElement}
+type UserMouseEvent = {type: 'MouseEvent'; value: number; target: HTMLButtonElement}
+type UserEvent = UserTextEvent | UserMouseEvent
+
+function handle(event: UserEvent) {
+    if (event.type === 'TextEvent') {
+        console.log(event.value) // event.value类型为string
+        console.log(event.target) // event.target类型为 HTMLInputElement
+    } else {
+        console.log(event.value) // event.value类型为number
+        console.log(event.target) // event.target类型为 HTMLButtonElement
+    }
+}
+handle({type: 'TextEvent', value: 'hello', target: document.getElementsByTagName('input')[0]})
+```
+
+> 一般像这种多个类型的联合类型，并且多个类型含有一个公共可辨识的公共属性的联合类型，还有一个专门的称呼**"可辨识联合类型"**
+
+**可辨识联合类型**对初学者有实际的指导作用，我们在创建类型的时候，就需要想着**最好创建带有可辨识的联合类型，而不是可选字段**
+
+比如，有这样的情况，如果是`circle`的时候，有`radius`属性，如果是`rect`情况，有`width`和`height`属性。对于初学者，很有可能创建成下面的类型：
+
+```typescript
+type Shape = {
+    kind: 'circle' | 'rect'
+    radius?: number
+    width?: number
+    height?: number
+}
+
+function area(shape: Shape) {
+    switch (shape.kind) {
+        case 'circle':
+            return Math.PI * shape.radius ** 2 // error shape.radius可能未定义
+        case 'rect':
+            return shape.width * shape.height // error shape.width，shape.height可能未定义
+    }
+}
+```
+
+上面这种方式 kind 字段没有与其他字段建立关系，因此，不能保证可选属性是否有值。所以报出了未定义的错误(当然在后面的学习中我们可以使用非空断言`!`处理)。
+
+可辨识的联合类型是一种更好的处理方式：
+
+```typescript
+type Circle = {kind: 'circle'; radius: number}
+type Rect = {kind: 'rect'; width: number; height: number}
+type Shape = Circle | Rect
+
+function area(shape: Shape) {
+    switch (shape.kind) {
+        case 'circle':
+            return Math.PI * shape.radius ** 2
+        case 'rect':
+            return shape.width * shape.height
+    }
+}
+```
+
+## 自定义守卫（谓语动词 is）
+
+自定义守卫是指通过 `{形参} is {类型}` 的语法结构，来给**返回布尔值的条件函数**赋予类型守卫的能力
+
+```typescript
+function isString(input: any) {
+    return typeof input === 'string'
+}
+function isNumber(input: any) {
+    return typeof input === 'number'
+}
+
+function foo(input: string | number) {
+    if (isString(input)) {
+        console.log(input) // 依然是 string | number
+    } else if (isNumber(input)) {
+        console.log(input) // 依然是 string | number
+    }
+}
+```
+
+**类型收窄只能在同一的函数中**，如果在不同的函数中就不起作用。
+
+只要我们加上谓语动词：
+
+```typescript
+function isString(input: any): input is string {
+    return typeof input === 'string'
+}
+function isNumber(input: any): input is number {
+    return typeof input === 'number'
+}
+
+function foo(input: string | number) {
+    if (isString(input)) {
+        console.log(input) // string
+    } else if (isNumber(input)) {
+        console.log(input) // number
+    }
+}
+```
+
+自定义类型守卫在我做一些比较复杂类型判断的时候比较有用
+
+```typescript
+type Box = {
+    _v_isBox: boolean
+    value: any
+}
+
+function isBox(box: any): box is Box {
+    return box && box._v_isBox === true
+}
+
+function unWrapBox(box: Box) {
+    return isBox(box) ? box.value : box
+}
+```
+
+上面的这个代码，其实就是简单模拟了一下 Vue3 中[isRef](https://github.com/vuejs/core/blob/main/packages/reactivity/src/ref.ts#L97)和[unRef](https://github.com/vuejs/core/blob/main/packages/reactivity/src/ref.ts#L234)的 ts 代码
+
+```typescript
+export function isRef(r: any): r is Ref {
+    return !!(r && r.__v_isRef === true)
+}
+
+export function unref<T>(ref: MaybeRef<T> | ComputedRef<T>): T {
+    return isRef(ref) ? ref.value : ref
+}
+```
+
+其实前面讲的`字面量的类型检查`，`typeof`，`instanceof`，`in`以及`自定义守卫`在 Typescript 中有统一的称呼，都叫做**类型守卫**，其目的其实都是在控制流分析的时候，帮助 typescript 收紧类型，便于推断
+
+## `never`
+
+`never` 类型根据其英文翻译，就表示`从来没有`，`绝不`。其实之前已经见到过这个类型
+
+```typescript
+type A = string & number // never
+```
+
+我们之前不是讲过有`null`，`undefined`和`void`类型吗？这三个都是有具体意义的，也表示具体的类型，`undefined`表示尚未定义，`null`表示缺少值，甚至是`void`就表示一个空类型，就像没有返回值的函数使用 void 来作为返回值类型标注一样。
+
+而 never 才是一个“什么都没有”的类型，它甚至不包括空的类型，严格来说，**never 类型不携带任何的类型信息**。
+
+比如下面的联合声明：
+
+```javascript
+type Foo = string | number | boolean | undefined | null | void | never
+```
+
+我们把常见的基础类型都放入到了联合声明中，但是将鼠标悬浮在类型别名之上，你会发现这里显示的类型是：`string | number | boolean | void | null | undefined`，`never`直接被无视掉了。
+
+> 注意：这个特性在以后的类型编程条件判断中经常会被用到，使用 never 来填充数据
+
+在 typescript 的类型系统中，`never` 类型被称为 **Bottom Type**，是**整个类型系统层级中最底层的类型**
+
+如果说`any`，`unknown`是其他每个类型的父类型，那么`never`就是其他每个类型的子类型。
+
+这意味着，**never 类型可以赋值给其他任何类型，但是反过来，却行不通**
+
+通常我们不会显式地声明一个 `never` 类型，这是没有任何意义的，它主要被类型检查所使用。
+
+不过在实际工作中，特别是在团队开发中，我们可以利用 never 的特性与类型的控制流分析，让 typescript 做出更合理的处理
+
+```typescript
+type Method = 'GET' | 'POST'
+
+function request(url: string, method: Method) {
+    if (method === 'GET') {
+        console.log(method) // GET
+        // todos...
+    } else if (method === 'POST') {
+        console.log(method) // POST
+        // todos...
+    } else {
+        console.log(method) // never
+    }
+}
+```
+
+上面的代码没有什么问题，但是如果某一天，`Method`类型加入了新的联合类型，比如`type Method = "GET" | "POST" | "PUT" | "DELETE";`，特别是在团队开发中，这个时候，request 函数是没有任何感知的。
+
+```typescript
+type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
+
+function request(url: string, method: Method) {
+    if (method === 'GET') {
+        console.log(method) // GET
+        // todos...
+    } else if (method === 'POST') {
+        console.log(method) // POST
+        // todos...
+    } else {
+        const _neverCheck: never = method
+        throw new Error(`不知道的类型: ${_neverCheck}`)
+    }
+}
+```
+
+将代码修改为现在的这个样子，虽然现在有报错了，**`method`根据类型流分析，还剩下`"PUT" | "DELETE"`类型，所以不能赋值给`never`类型**。但是将错误扼杀在摇篮中，才是在团队项目中想要的结果，而不是等运行了，才去一个个排查，特别是这种隐藏的 bug，在团队的成千上万行代码与模块中，去找到这个问题，是非常痛苦的问题。
+
+> 这种方式也叫做**穷举式检查**，积极的对不期望的情况进行错误处理，在编译时就捕获未处理的情况。而不是默默地忽略它们
+
+比如，前面的代码，我们也可以进行修改：
+
+```typescript
+type Circle = {kind: 'circle'; radius: number}
+type Rect = {kind: 'rect'; width: number; height: number}
+type Shape = Circle | Rect
+
+function area(shape: Shape) {
+    switch (shape.kind) {
+        case 'circle':
+            return Math.PI * shape.radius ** 2
+        case 'rect':
+            return shape.width * shape.height
+        default:
+            const _neverCheck: never = shape
+            throw new Error('Invalid shape type')
+    }
+}
+```
+
+如果新加一个类型`const _neverCheck: never = shape;` 这行代码就会报错，因为控制流分析并没有完全结束
+
+```diff
+type Circle = { kind: "circle", radius: number }
+type Rect = { kind: "rect", width: number, height: number }
++type Triangle = { kind: "triangle", base: number, height: number }
+type Shape = Circle | Rect | Triangle;
+
+function area(shape: Shape) {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+    case "rect":
+      return shape.width * shape.height;
++    case "triangle":
++      return shape.base * shape.height / 2;
+    default:
+      const _neverCheck: never = shape;
+      throw new Error("Invalid shape type");
+  }
+}
+```
+
+还有在某些情况下使用 never 确实是符合逻辑的，比如一个只负责抛出错误的函数：
+
+```typescript
+function fn(): never {
+    throw new Error('error')
+}
+```
+
+在类型流的分析中，一旦一个返回值类型为 `never` 的函数被调用，那么下方的代码都会被视为无效的代码：
+
+```typescript
+function fn(): never {
+    throw new Error('error')
+}
+
+function foo(n: number) {
+    if (n > 10) {
+        fn()
+        let name = 'jack' // 检测到无法访问的代码。ts(7027)
+        console.log('hello')
+    }
+}
+```
+
+`never`类型在我们后面讲解的条件类型中也可以做出很有意思的处理
+
+## 数组
+
+数组类型有两种声明方式：
+
+```typescript
+类型[]
+或者
+Array<类型>
+```
+
+```typescript
+let a = [1, 2, 3]
+var b = ['a', 'b']
+const c: boolean[] = [true, false]
+const d: string[] = ['a', 'b']
+
+let e = [1, 'a']
+const f: (number | string)[] = [2, 'b']
+
+a.push(4)
+// a.push("a"); //error
+d.unshift('c')
+
+f.push(3)
+// f.push(true); //error
+```
+
+**一般情况下，数组应该保持同质。**
+
+也就是说，不要在同一个数组中存储不同类型的值，存数值的，就是存数值的数组，存字符串的，就是存字符串的数组。设计程序时要规划好，保持数组中的每个元素都具有相同的类型。
+
+虽然这样让数组变得不灵活了，不过这就是类型语言和 javascript 这种灵活语言的区别。如果不这么做，我们需要做一些额外的工作，让 typescript 相信我们执行的操作是安全的。
+
+比如上面的`e`或者`f`，如果我们想映射这个数组，把字母变成大写，把数字变成乘以 2：
+
+```javascript
+let g = [1, 'a']
+g.map(item => {
+    if (typeof item === 'number') {
+        return item * 2
+    }
+    return item.toUpperCase()
+})
+```
+
+为此，必须使用 typeof 检查每个元素的类型，判断元素是数字还是字符串，然后再做相应的操作
+
+**对象字面量当然也能和数组一起使用**
+
+```typescript
+const users: {
+    name: string
+    age: number
+}[] = [
+    {
+        name: 'John',
+        age: 30
+    },
+    {
+        name: 'Jane',
+        age: 25
+    }
+]
+```
+
+当然写成类型别名或者接口肯定可读性更高一些
+
+```typescript
+type User = {
+    name: string
+    age: number
+}
+
+const users: Array<User> = [
+    {
+        name: 'John',
+        age: 30
+    },
+    {
+        name: 'Jane',
+        age: 25
+    }
+]
+```
+
+**一般情况下，初始化一个空数组，数组的类型为`any`**
+
+> **注意：**如果**启用**了 `strictNullChecks` 配置，同时**禁用**了 `noImplicitAny`，声明一个空数组，那么这个未标明类型的数组会被推导为 `never[]` 类型
+
+```javascript
+const arr = [] // any[]
+arr.push(1)
+arr.push('a')
+```
+
+**注意：**当这样的数组离开定义时所在的作用域后，TypeScript 将最终确定一个类型，不再扩展。
+
+在实际工作中，可以很好的利用这一特性
+
+```javascript
+function fn() {
+    const arr = [] // any[]
+    arr.push(1)
+    arr.push('a')
+    return arr // (string | number)[]
+}
+
+const myArr = fn()
+// myArr.push(true); // error
+```
+
+`readonly`修饰符也可以用来修饰数组，用于创建不可变的数组，只读数组和常规数组没有多大差别，只是不能就地更改。如果想创建只读数组，需要显示的注解类型。
+
+```javascript
+const arr: readonly number[] = [1, 2, 3];
+const myArr1 = arr.concat(4);
+console.log(myArr1);
+
+const myArr2 = arr.filter(item => item % 2 === 0);
+console.log(myArr2)
+
+const myArr3 = arr.slice(0, 2);
+console.log(myArr3);
+
+// arr[3] = 4;  // error 类型“readonly number[]”中的索引签名仅允许读取。
+// arr.push(4); // error 类型“readonly number[]”上不存在属性“push”
+// arr.splice(0,2) // error 属性splice在类型readonly number[]上不存在，你是否指的是slice
+```
+
+在只读数组中，只能使用非变型方法，例如`concat`和`slice`，不能使用可变形方法，比如`push`和`splice`
+
+> **注意：**只读数组不可变的特性能让代码更易于理解，不过其背后提供支持的任然是常规的 Javascript 数组。这就意味着，即便只是对数组做很小的改动，也要复制整个原数组。
+>
+> 对于小型数组来说，没什么影响，但是对于大型数组，可能会造成极大的影响。
+>
+> 如果打算大量使用不可变的数组，建议使用[immutable](https://www.npmjs.com/package/immutable)包
+
+**使用并集数组的细节**
+
+使用并集数组类型，我们一般有两种的声明方式，两种方式大体上一样，但是有一些细节上的区别
+
+```typescript
+// 可以是number数组，可以是string，也可以是number和string类型混合的数组
+type ArrType1 = (number | string)[]
+// 要么是number类型，要么是string类型
+type ArrType2 = number[] | string[]
+
+const arr1: ArrType1 = ['a', 'b', 'c']
+const arr2: ArrType2 = [1, 2, 3]
+// const arr3: ArrType2 = [1, "a", 3]; // error
+const arr4: ArrType1 = [1, 'a', 3]
+```
+
+## 元组
+
+**元祖类型是数组的子类型**，是定义数组的一种特殊方式。
+
+长度固定，各索引位置上的值具有固定的已知类型。在某些固定的场合，使用元祖类型更加方便，严谨性也更好
+
+**声明元组必须显式注解类型**，因为声明元组与数组的声明相同，都是使用方括号`[]`，因此默认推导出来的都是数组类型
+
+比如，在 Javascript 中，我们经常使用数组来表示一个坐标点。这种做法在 TS 中也没有任何问题，但是如果我们使用元祖类型，那么无论是提示还是代码严谨性，就更加的好
+
+```typescript
+const pointer1: number[] = [10, 20]
+const pointer2: [number, number] = [20, 30]
+```
+
+在 typescript4.0 中，甚至加入了`具名元祖`，让元祖类型的可读性更高
+
+```typescript
+const pointer3: [x: number, y: number] = [20, 30]
+const user: [name: string, age: number, gender: '男' | '女'] = ['jack', 20, '男']
+```
+
+很明显，元祖结构进一步提升了**数组结构的严谨性**
+
+不过元祖类型还是有一个问题，虽然名义上限定了有几个值，并且如果像下面这样写，会报错
+
+```typescript
+pointer3[2] = 40 // error 不能将类型40分配给类型undefined
+```
+
+但是却可以使用`push`方法往里面加入新的值
+
+```typescript
+pointer3.push(40)
+console.log(pointer3)
+```
+
+因此，我们可以将元祖类型限制为可读`readonly`元祖
+
+```typescript
+const pointer3: readonly [x: number, y: number] = [20, 30]
+```
+
+## 方括号运算符 `[]`
+
+数组当然需要使用 `[]`，在 Javascript 中我们经常使用 `[]` 来获取数组的值，或者动态引用获取对象属性的值
+
+```typescript
+const arr = ['a', 'b', 'c', 'd', 'e']
+console.log(arr[1]) // b
+
+const a = 'name'
+const obj = {
+    id: 1,
+    name: 'jack'
+}
+console.log(obj[a]) // jack
+```
+
+在 Typescript 中，方括号运算符 `[]` 用于类型计算，取出对象类型的键对应的值的类型，比如 `类型[键名]`，简写为 `T[K]` 会返回 `T` 类型的属性 `K` 的类型。
+
+```typescript
+type Person = {
+    age: number
+    name: string
+    sex: boolean
+}
+
+type Age = Person['age'] // number类型
+```
+
+方括号的参数如果是联合类型，那么返回的也是联合类型。
+
+```typescript
+type AgeOrName = Person['age' | 'name'] // string | number
+```
+
+甚至可以获取数组的具体类型，注意下面的写法：
+
+```typescript
+const arr = ['a', 'b', 'c', 'd', 'e']
+type ArrType = (typeof arr)[number] // string
+```
+
+因为在 Javascript 中，数组其实就是 `key:value` 的键值对，而数组的键也就是下标都是 number 类型
+
+同样，如果是一个对象字面量类型的数组，一样会得到数组中对象字面量类型：
+
+```typescript
+type User = {
+    name: string
+    age: number
+}
+
+const users: User[] = [
+    {name: 'John', age: 25},
+    {name: 'Steve', age: 30},
+    {name: 'Mike', age: 35}
+]
+
+type ArrType2 = (typeof users)[number] // { name: string; age: number;}
+```
+
+如果是一个元组，就可以得到元组类型中所有位置上类型的联合类型：
+
+```typescript
+const roles: ['Admin', 'User', 'Guest'] = ['Admin', 'User', 'Guest']
+type ArrType3 = (typeof roles)[number] // "Admin" | "User" | "Guest"
+```
+
+## 类型断言
+
+类型断言（Type Assertion）可以用来手动指定一个值的类型。
+
+在使用 `TypeScript` 的过程中，你可能会遇到这种情况：你比 `TypeScript` 更加清楚某个值的类型。 比如你从异步请求中拿到一个类型为`any`的值，但你清楚的知道这个值就是`string`类型，这个时候你可以通过**类型断言**方式告诉编译器：这就是一个 string 类型。类型断言有点类似于其他语言的类型转换，注意只是类似，它没有运行时的影响，**类型断言只是在编译阶段起作用**。
+
+### 语法
+
+```typescript
+值 as 类型
+或者 < 类型 > 值
+```
+
+```typescript
+let someValue: any = 'this is a string'
+let strLength1: number = (<string>someValue).length
+// 如果要写断言，建议用as，因为上面的形式在react中会有歧义。尖括号语法与JSX的标签语法相冲突
+let strLength2: number = (someValue as string).length
+```
+
+注意在 `tsx` 语法中使用 `值 as 类型`。
+
+### 用途
+
+#### **联合类型断言：**
+
+```typescript
+type MyType = string | number | boolean
+
+function getLength(type: MyType) {
+    console.log((type as string).length)
+}
+
+getLength('Hello World')
+
+type Student = {name: string; score: number}
+type Teacher = {name: string; age: number; subject: string}
+type Person = Student | Teacher
+
+function print(person: Person) {
+    console.log(person.name)
+    console.log((person as Student).score)
+}
+
+print({name: 'John', score: 100})
+```
+
+其实从上面的代码中可以很明显的看出来，类型断言是有很明显的类型安全隐患的。所以我们一般在使用的时候，需要自己明确的知道确实可以进行断言，再进行操作。
+
+#### 父类型断言为子类型
+
+```typescript
+class Animal {
+    eat() {
+        console.log('animal eat')
+    }
+}
+
+class Dog extends Animal {
+    eat() {
+        console.log('dog eat')
+    }
+    bark() {
+        console.log('dog bark')
+    }
+}
+
+class Cat extends Animal {
+    eat() {
+        console.log('cat eat')
+    }
+    meow() {
+        console.log('cat meow')
+    }
+}
+
+function feed(animal: Animal) {
+    ;(animal as Cat).meow()
+}
+```
+
+还记得我们之前的`instanceof`吗？
+
+```typescript
+class Animal {
+    eat() {
+        console.log('animal eat')
+    }
+}
+
+class Dog extends Animal {
+    eat() {
+        console.log('dog eat')
+    }
+    bark() {
+        console.log('dog bark')
+    }
+}
+
+class Cat extends Animal {
+    eat() {
+        console.log('cat eat')
+    }
+    meow() {
+        console.log('cat meow')
+    }
+}
+
+function feedAnimal(animal: Animal) {
+    if (animal instanceof Dog) {
+        animal.bark() // Dog
+    } else if (animal instanceof Cat) {
+        animal.meow() // Cat
+    } else {
+        animal.eat() // Animal
+    }
+}
+```
+
+其实类型安全的做法就是应该使用类型守卫，但是有时候可能使用起来不那么方便，或者说其实类型我们很确定，那就可以直接使用类型推断，比如常见的 DOM 事件操作
+
+```typescript
+const inputDom = document.querySelector('input')
+inputDom!.addEventListener('change', e => {
+    console.log((e.target as HTMLInputElement).value)
+})
+```
+
+#### 将任何一个类型断言为 `any`
+
+(某些情况下可以被断言为`unknown`)
+
+有时候，当我们引用一个在此类型上不存在的属性或方法时，就会报错：
+
+```ts
+const obj = {
+    name: 'jack',
+    age: 18
+}
+console.log(obj.sex) // 类型“{ name: string; age: number; }”上不存在属性“sex”
+```
+
+对象`obj`上没有`sex`这样的一个属性，当然 TS 就会提示错误。
+
+但有的时候，我们非常确定这段代码不会出错，比如：
+
+```ts
+window.foo = 1 // 类型“Window & typeof globalThis”上不存在属性“foo”
+```
+
+往全局对象`window`上添加新的属性，这可能是我们经常会做的操作，但是`window`对象类型上没有我们`foo`这个属性，当然同样也会报错。
+
+此时我们可以使用 `as any` 临时将 `window` 断言为 `any` 类型：
+
+```typescript
+;(window as any).foo = 1
+```
+
+> 当然，上面的这个例子我们也可以通过扩展 `Window` 的类型来解决这个问题:
+>
+> ```typescript
+> export {}
+> declare global {
+>     interface Window {
+>         foo: number
+>     }
+> }
+>
+> window.foo = 1
+> ```
+>
+> 不过如果只是临时的增加 `foo` 属性，`as any` 会更加方便。
+>
+> 我的意思是，我们不能滥用 `as any`，但是也不要完全否定它的作用，我们需要在**类型的严格性和开发的便利性之间掌握平衡**。才能发挥出 TypeScript 最大的价值。
+
+#### 将 `any/unknown` 断言为一个具体的类型
+
+在日常的开发中，我们不可避免的需要处理 `any` 或者`unknown`类型的变量，它们可能是由于第三方库未能定义好自己的类型，也有可能是历史遗留问题，还可能是受到 TypeScript 类型系统的限制而无法精确定义类型的场景。
+
+遇到 `any` 或者`unknown`类型的变量时，我们可以通过类型断言把 `any` 或者`unknown`断言为精确的类型。
+
+```typescript
+// 第三方API或者历史遗留函数
+function getData(id: number): any {
+    // 模拟：根据id获取的对象数据
+    // ......
+    return {id: 1, name: 'jack', age: 18}
+}
+
+interface User {
+    id: number
+    name: string
+    age: number
+}
+
+const user = getData(1) as User
+console.log(user.name)
+```
+
+### 限制
+
+并不是任何一个类型都可以被断言为任何另一个类型。
+
+```typescript
+let str = '123'
+let n = str as number // error
+```
+
+两个完全没有关联的类型进行断言，这当然会报错，相信大家也能想的通，因此，什么情况下能断言，就很好理解了。
+
+具体来说，若 `A` 兼容 `B`，那么 `A` 能够被断言为 `B`，`B` 也能被断言为 `A`。
+
+```typescript
+let str1: 'hello' = 'hello'
+let str2 = 'hello'
+str2 = str1 // 可以直接赋值
+// str2 = str1 as string;
+str1 = str2 as 'hello' // 可以使用类型断言
+```
+
+对象类型也一样
+
+```typescript
+let a: Animal = new Animal()
+let b: Dog = new Dog()
+
+// a = b; // 可以直接赋值
+b = a as Dog // 可以使用类型断言, 但是不安全Animal没有bark方法
+b.eat()
+// b.bark(); // error
+```
+
+### 非空断言
+
+当你确信某个值不是`null`或`undefined`时，可以使用非空断言
+
+**语法:** `值!`，比如`someValue!`
+
+```typescript
+let maybeString: string | null = 'hello'
+let definitelyString = maybeString!
+```
+
+```typescript
+function getRandom(length?: number) {
+    if (!length) {
+        return undefined
+    }
+
+    return Math.random().toString(36).slice(-length)
+}
+let s = getRandom(6)
+// 可以使用类型断言
+;(s as string).charAt(0)
+// 由于就是字符串和非空的处理，可以使用非空断言
+s!.charAt(0)
+```
+
+```typescript
+type Box = {
+    id: number
+    name: string
+}
+
+function getBox(): Box | undefined {
+    if (Math.random() > 0.5) {
+        return {
+            id: 1,
+            name: 'box1'
+        }
+    }
+    return undefined
+}
+
+function createProduction(box: Box) {
+    // todos...
+}
+
+createProduction(getBox() as Box)
+// 非空断言
+createProduction(getBox()!)
+```
+
+### 双重断言
+
+既然：
+
+-   任何类型都可以被断言为 `any`(某些情况下可以被断言为`unknown`)
+-   `any`或`unknown`可以被断言为任何类型
+
+那么就可以使用双重断言 `as any as 类型` 来将任何一个类型断言为任何另一个类型
+
+```typescript
+let str = '123Hello'
+let n = str as unknown as number
+console.log(typeof n)
+```
+
+这样写很明显有类型安全的问题，类型断言并不等于类型转换，编译之后是没有类型的，所以通过 tsc 编译之后你会发现，其实就是把变量`str`赋值给了变量`n`
+
+```typescript
+let str = '123Hello'
+let n = str
+console.log(typeof n) // string
+```
+
+### as const 断言
+
+**`as const`断言** 用于指示 TypeScript 将一个变量视为常量，并据此推断出最具体的类型。并且，使用 `as const` 时，TypeScript 会将**数组视为只读元组**，**对象的属性也会被视为只读属性**，且对象或数组中的值会被推断为字面量类型，而不是更一般的类型（如 `string`、`number` 等）
+
+```typescript
+// a 的类型是 'Hello'
+let a = 'Hello' as const
+
+// arr 的类型是 readonly [1, 2, 3]
+let arr = [1, 2, 3] as const
+
+// obj 的类型是 { readonly x: 10; readonly y: 20; }
+let obj = {x: 10, y: 20} as const
+
+// 对于更复杂的嵌套一样起作用
+const user = {
+    id: 1,
+    name: 'jack',
+    address: {
+        city: '成都',
+        province: '四川'
+    }
+} as const
+
+/*
+user的类型是: {
+    readonly id: 1;
+    readonly name: "jack";
+    readonly address: {
+        readonly city: "成都";
+        readonly province: "四川";
+    };
+}
+*/
+```
+
+as const 结合着方括号运算符，有时候可以非常方便的处理一些看起来比较复杂的问题。
+
+比如，需要将数组中的内容转换为联合类型
+
+```typescript
+const roles = ['角色列表', '用户删除', '用户查询', '权限详情'] as const
+type Role = (typeof roles)[number] //"角色列表" | "用户删除" | "用户查询" | "权限详情"
+```
+
+## satisfies
+
+`satisfies` 是一个类型操作符，它是 `TS4.9` 的新功能。和类型断言 `as` 功能比较类似，但是比类型断言更加安全也更加智能，因为他能在满足类型安全的前提下，自动帮我们做类型收窄和类型提示。
+
+```typescript
+interface IConfig {
+    a: string | number
+}
+
+// Error   类型 "{}" 中缺少属性 "a"，但类型 "IConfig" 中需要该属性。
+const legacy: IConfig = {}
+// 但是使用legacy.a竟然不会报错
+console.log(legacy.a)
+
+// 这样做并不安全，因为{}中并没有属性a
+const legacyAs = {} as IConfig
+// 直接调用竟然也不会报错
+console.log(legacyAs.a)
+
+// Error 类型 "{}" 中缺少属性 "a"，但类型 "IConfig" 中需要该属性。
+const current = {} satisfies IConfig
+// 调用也会报错
+console.log(current.a)
+
+//const currentWithValue:IConfig = { a: 2 }
+//currentWithValue.a.toFixed() //error 类型string|number上不存在属性toFixed
+
+//const currentWithValue = { a: 2 } as IConfig
+//currentWithValue.a.toFixed() //error 类型string|number上不存在属性toFixed
+
+const currentWithValue = {a: 2} satisfies IConfig
+// 此时使用 a 的时候会自动推断我们声明的类型,不再是联合类型
+// satisfies关键字可以帮助我们反向推导
+currentWithValue.a.toFixed()
+```
+
+再比如在某些映射类型中：
+
+```typescript
+type MyElement = {
+    tagName: string
+    src: string
+    [key: string]: any
+}
+
+const element: MyElement = {
+    tagName: 'img',
+    src: 'https://example.com/image.png',
+    alt: 'Example Image'
+}
+
+console.log(element.alt) // 没有类型提示
+```
+
+可以使用 `satisfies`
+
+```typescript
+const element = {
+    tagName: 'img',
+    src: 'https://example.com/image.png',
+    alt: 'Example Image'
+} satisfies MyElement
+
+console.log(element.alt)
+```
+
+## 枚举
+
+### 为什么使用枚举？
+
+在讲解具体使用枚举之前，首先要理解为什么要使用枚举
+
+其实枚举在其他语言中它都是老朋友了，比如`java`，`c#`。
+
+比如我们现在要定义春夏秋冬，颜色，月份，星期，方向等等有序列或者比较固定离散值（可以被清晰区分并计数的值）的情况，在 javascript 中，我们会想到用 const 定义一系列常量，在 Typescript 我们会想到用字面量的联合类型来处理
+
+```typescript
+type Gender = '男' | '女'
+type Color = 'red' | 'blue' | 'green'
+type Direction = 'up' | 'down' | 'left' | 'right'
+type Status = 'success' | 'error' | 'warning'
+type Weekday = 'Sun' | 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat'
+
+function fn1(color: Color) {
+    switch (color) {
+        case 'red':
+            console.log(color)
+            // todo...
+            break
+        case 'blue':
+            console.log(color)
+            // todo...
+            break
+        case 'green':
+            console.log(color)
+            // todo...
+            break
+    }
+}
+```
+
+但是这么写，其实也会遇到`java`，`c#`语言在处理上的一些问题，也就是**逻辑含义和真实的值产生了混淆，会导致当修改真实值的时候，产生大量的修改**
+
+简单来说，就是上面的`"red" | "blue" | "green"`颜色如果想要修改为其他的颜色，比如中文的`"红"|"蓝"|"绿"`，不单单声明要改，整个判断也需要修改。所以无论是像`java`，`c#`这样的类型语言，或者是像 Typescript 才有了枚举这样的类型。
+
+Typescript 声明枚举非常简单
+
+```typescript
+enum Color {
+    Red,
+    Blue,
+    Green
+}
+
+function fn2(color: Color) {
+    switch (color) {
+        case Color.Red:
+            console.log(color)
+            break
+        case Color.Blue:
+            console.log(color)
+            break
+        case Color.Green:
+            console.log(color)
+            break
+    }
+}
+fn2(Color.Red)
+```
+
+> 按约定，枚举名称最好为首字母大写的单数形式。枚举中的键也为首字母大写
+
+Typescript 枚举大体分为两种：字符串到字符串之间的映射，字符串到数字之间的映射。
+
+Typescript 可以自动为枚举中的各个成员推导对应的数字。默认从 0 开始，依次往下，你也可以自己手动设置
+
+```typescript
+enum Color {
+    Red = 0,
+    Blue = 1,
+    Green = 2
+}
+```
+
+甚至如果手动设置一个开头，Typescript 会自动的往下为你推导下一个枚举对应的数值
+
+```typescript
+enum Color {
+    Red = 100,
+    Blue, //101
+    Green = 100 + 200, //甚至可以得到计算之后的值
+    Yellow //301
+}
+```
+
+当然也可以定义字符串到字符串的映射
+
+```typescript
+enum Color {
+    Red = 'red',
+    Blue = 'blue',
+    Green = '#008000',
+    Yellow = '#FFFF00'
+}
+```
+
+当然，前面为什么说大体分为两种，因为其实还可以数值和字符串混合，这种一般称为**异构枚举**，不过这种就不推荐了
+
+```typescript
+enum Color {
+    Red = 100,
+    Blue = 'blue',
+    Green = 100 + 200,
+    Yellow = 'yellow'
+}
+```
+
+再来一个例子，大家理解一下上面这句话的意思
+
+写一个函数处理参数传递的各种不同的状态，比如`"success","notfound","error"`
+
+```typescript
+type StatusType = 'success' | 'notfound' | 'error'
+
+function checkStatus(status: StatusType) {
+    if (status === 'success') {
+        console.log(status)
+        // todo...
+    } else if (status === 'notfound') {
+        console.log(status)
+        // todo...
+    } else if (status === 'error') {
+        console.log(status)
+        // todo...
+    }
+}
+```
+
+上面的代码虽然通过类型字面量的联合类型进行了判断，但是某一天要修改类型了，改成中文 `"成功"|"未找到"|"失败"`，或者直接改成数字，`200 | 404 | 500`，那么下面所有的判断都需要改。但是如果一开始就使用的是枚举，事情就简单了。就算要修改，把枚举对应的值，修改了就行了。
+
+```typescript
+enum Status {
+    Success = 200,
+    NotFound = 404,
+    Error = 500
+}
+
+function checkStatus(status: Status) {
+    if (status === Status.Success) {
+        console.log(status)
+        // todo...
+    } else if (status === Status.NotFound) {
+        console.log(status)
+        // todo...
+    } else if (status === Status.Error) {
+        console.log(status)
+        // todo...
+    }
+}
+```
+
+### 双向映射
+
+枚举和对象的差异还在于，**对象是单向映射的**，我们只能从键映射到键值。而**枚举是双向映射的**，即你可以从枚举成员映射到枚举值，也可以从枚举值映射到枚举成员：
+
+```typescript
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right
+}
+const upValue = Direction.Up
+console.log(upValue) // 0
+const upKey = Direction[0]
+console.log(upKey) // Up
+```
+
+为什么可以这样，我们看一下编译后的产物就知道了
+
+```javascript
+var Direction
+;(function (Direction) {
+    Direction[(Direction['Up'] = 0)] = 'Up'
+    Direction[(Direction['Down'] = 1)] = 'Down'
+    Direction[(Direction['Left'] = 2)] = 'Left'
+    Direction[(Direction['Right'] = 3)] = 'Right'
+})(Direction || (Direction = {}))
+const upValue = Direction.Up
+console.log(upValue) // 0
+const upKey = Direction[0]
+console.log(upKey) // Up
+```
+
+`obj[k] = v` 的返回值即是 v，因此这里的 `obj[obj[k] = v] = k` 本质上就是进行了 `obj[k] = v` 与 `obj[v] = k` 这样两次赋值。
+
+但需要注意的是，仅有值为数字的枚举成员才能够进行这样的双向枚举，**字符串枚举成员仍然只会进行单次映射**：
+
+```typescript
+enum Direction {
+    Up = 0,
+    Down = 1,
+    Left = 'left',
+    Right = 'right'
+}
+```
+
+**编译之后**
+
+```javascript
+var Direction
+;(function (Direction) {
+    Direction[(Direction['Up'] = 0)] = 'Up'
+    Direction[(Direction['Down'] = 1)] = 'Down'
+    Direction['Left'] = 'left'
+    Direction['Right'] = 'right'
+})(Direction || (Direction = {}))
+```
+
+> 通过上面的代码，大家有没有发现，**枚举类型相当的特殊，既作为类型，也可以是值**。
+
+### 枚举的一些问题
+
+> 在 Javascript 中，是没有 enum 枚举类型的，虽然有相关的[enum 提案](https://github.com/rbuckton/proposal-enum)，不过一直没有进展。所以对于枚举来说，实际上是有一些小坑在里面的。
+
+比如，从上面的编译结果可以看出，枚举类型在实际运行环境中编译成了一个**立即执行函数（IIFE）**。如果是普通业务，这不是什么问题。但如果这是一个 ts 写 npm 第三方库，需要提供给别人调用，就会发现因为枚举类型变成了立即执行函数（`IIFE`），无法被 `tree shaking` 优化掉，因为这个 `IIFE` 有副作用。
+
+当然了，一般枚举的内容也不会太多，其实影响有限，但是这确确实实是枚举存在的一个问题，特别是现在特别鼓吹 ESM 浏览器模块化的今天，这个问题可能会被放大。
+
+还有一个问题是，由于**枚举是双向映射的**，那么，下面的代码注意观察
+
+```typescript
+enum Direction {
+    Up = 0,
+    Down = 1,
+    Left = 2,
+    Right = 3
+}
+console.log(Direction[0]) // Up
+console.log(Direction[99]) // 不报错，undefined
+```
+
+`Direction[99]` 这样的写法，在 Typescript 中竟然没有报错...或者这样写
+
+```typescript
+const n: number = 11
+const dir: Direction = n
+```
+
+这样写，竟然也不会报错，当然这样写是能够理解的，因为我们有时候会使用枚举实现一些更加灵活的场景处理，比如下面的代码
+
+```typescript
+enum AttackType {
+    // Decimal    // Binary
+    None = 0, // 0000
+    Melee = 1, // 0001
+    Fire = 2, // 0010
+    Ice = 4, // 0100
+    Poison = 8 // 1000
+}
+
+// 一个攻击，位运算：属性 近战 | 火 | 毒
+const MeleeAndFireAndPoison = AttackType.Melee | AttackType.Fire | AttackType.Poison
+
+const attack = (attack: AttackType) => {
+    console.log(attack)
+}
+// 这里 `MeleeAndFireAndPoison` 可以分配给类型`AttackType`
+// 但是不能直接传入字面量类型的数值11
+attack(MeleeAndFireAndPoison)
+// 直接传入AttackType.Melee，也可以传入枚举对应的0,1,2,4,8
+attack(AttackType.Melee)
+```
+
+### 常量枚举
+
+如果希望屏蔽不安全的访问操作，可以使用**常量枚举**
+
+```typescript
+const enum Direction {
+    Up = 0,
+    Down = 1,
+    Left = 2,
+    Right = 3
+}
+
+// console.log(Direction[0]) // error 不能反向查找
+console.log(Direction.Up) // 0
+```
+
+1. 常量枚举不允许反向查找
+2. 常量枚举默认并不会生产任何 Javascript 代码，而是在用到枚举成员的时候直接插入对应的值
+
+```typescript
+console.log(0 /* Direction.Up */) // 0
+```
+
+上面的常量枚举代码，编译之后就只有这么一句
+
+### `isolatedModules`
+
+如果在工程中使用枚举类型，务必要设置 tsconfig 的属性`isolatedModules:true`，因为有些打包工具并没有依赖 Typescript 的`tsc`进行类型检查和类型转译，像 `esbuild` 和 `Babel`这样的工具会单独编译每个文件，因此它们无法判断导入的名称是类型还是值。所以有一些 Typescript 的特性是容易产生错误的，比如`const enum`。这个内容在[vite](https://cn.vitejs.dev/guide/features.html#isolatedmodules)和[esbuild](https://esbuild.github.io/content-types/#isolated-modules)中都有相关的说明
