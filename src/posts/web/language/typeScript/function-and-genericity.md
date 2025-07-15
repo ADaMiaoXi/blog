@@ -8,7 +8,7 @@ category:
 
 ## 函数声明与调用
 
-函数在前面章节已经广泛使用，其声明方式与 Javascript 基本一致，区别在于 Typescript 中需要显式地注解函数的参数
+函数在前面章节已经广泛使用，其声明方式与 JavaScript 基本一致，区别在于 TypeScript 中需要显式地注解函数的参数
 
 ```typescript
 function add(a: number, b: number): number {
@@ -16,9 +16,9 @@ function add(a: number, b: number): number {
 }
 ```
 
-函数的返回类型 Typescript 可以自动推导，也可以显式地注解。
+函数的返回类型 TypeScript 可以自动推导，也可以显式地注解。
 
-函数的声明方式与 Javascript 一致，支持具名函数、函数表达式和箭头函数等多种形式
+函数的声明方式与 JavaScript 一致，支持具名函数、函数表达式和箭头函数等多种形式
 
 ```typescript
 function sayHello1(name: string) {
@@ -43,7 +43,7 @@ const sayHello5 = (name: string) => {
 }
 ```
 
-在函数调用时，无需提供任何额外的类型信息，直接传入实参即可，Typescript 将检查实参是否与函数的形参类型兼容
+在函数调用时，无需提供任何额外的类型信息，直接传入实参即可，TypeScript 将检查实参是否与函数的形参类型兼容
 
 ```typescript
 const sum = add(1, 2)
@@ -51,11 +51,11 @@ const sum = add(1, 2)
 
 返回结果的类型是确定的。
 
-当缺少必要参数或参数类型不匹配时，Typescript 将提示相应的错误
+当缺少必要参数或参数类型不匹配时，TypeScript 将提示相应的错误
 
 ```typescript
 const sum = add(1) //error 应有2个参数，但获得1个
-const str = sayHello1(123) // error 类型“123”的参数不能赋给类型“string”的参数
+const str = sayHello1(123) // error 类型"123"的参数不能赋给类型"string"的参数
 ```
 
 ### 可选参数与默认参数
@@ -71,7 +71,7 @@ function sendMessage(userId: number, message?: string) {
 sendMessage(1)
 ```
 
-与在 Javascript 中一样，可以为可选参数提供默认值，这样做在语义上与把参数标记为可选是一样的。
+与在 JavaScript 中一样，可以为可选参数提供默认值，这样做在语义上与把参数标记为可选是一样的。
 
 > 带默认值的参数调用时可以不用传入参数的值，并且带默认值的参数不要求一定要放在参数列表的末尾，可选参数是必须放在末尾。不过默认参数放在前面也没有任何意义，约定俗成都还是放在末尾。
 
@@ -83,7 +83,7 @@ function sendMessage(userId: number, message = 'hello') {
 
 ### 剩余参数
 
-函数有时需要接受不定数量的参数，在传统的 Javascript 中，可以使用 arguments 对象来处理此类情况
+函数有时需要接受不定数量的参数，在传统的 JavaScript 中，可以使用 `arguments` 对象来处理此类情况
 
 ```typescript
 function sum() {
@@ -92,11 +92,11 @@ function sum() {
 sum(1, 2, 3, 4, 5) //error
 ```
 
-使用 arguments 存在诸多限制，在现代 Javascript 开发中已不被推荐，在 Typescript 中更是如此。
+使用 `arguments` 存在诸多限制，在现代 JavaScript 开发中已不被推荐，在 TypeScript 中更是如此。
 
-1. arguments 是一个类数组对象，使用时需要转换为真正的数组才能使用数组方法
+1. `arguments` 是一个类数组对象，使用时需要转换为真正的数组才能使用数组方法
 2. 调用时会提示函数不需要参数，但实际却传入了参数
-3. 在 reduce 等函数的回调中，所有参数类型都被推导为 any
+3. 在 `reduce` 等函数的回调中，所有参数类型都被推导为 `any`
 
 为确保类型安全，应当使用**剩余参数(rest parameter)**
 
@@ -109,9 +109,9 @@ sum(1, 2, 3, 4, 5)
 
 使用剩余参数可以解决上述所有问题：
 
-1. 剩余参数是一个真正的数组，可以使用 Typescript 定义具体的类型
+1. 剩余参数是一个真正的数组，可以使用 TypeScript 定义具体的类型
 2. 函数调用时会提供准确的类型提示
-3. reduce 等回调函数中的参数都具有明确的类型
+3. `reduce` 等回调函数中的参数都具有明确的类型
 
 需要注意的是：
 
@@ -119,7 +119,7 @@ sum(1, 2, 3, 4, 5)
 
 ### `this` 的类型注解
 
-在 Javascript 中，可能会写出下面的代码（可以在浏览器上测试）
+在 JavaScript 中，可能会写出下面的代码（可以在浏览器上测试）
 
 ```typescript
 function showDate() {
@@ -140,7 +140,7 @@ showDate.call(new Date())
 >
 > **注意**：`noImplicitThis` 不强制要求类和对象的函数必须要注解 `this`
 
-这种写法存在安全隐患，因为无法确定 `showDate` 方法的正确调用方式。在 `Typescript` 中，可以使用 `this` 的类型注解来确保传入正确的 `this` 对象
+这种写法存在安全隐患，因为无法确定 `showDate` 方法的正确调用方式。在 TypeScript 中，可以使用 `this` 的类型注解来确保传入正确的 `this` 对象
 
 ```typescript
 function showDate(this: Date) {
@@ -151,7 +151,7 @@ showDate.call(new Date())
 // showDate.call(null); // 如果"strictBindCallApply":false不会报错
 ```
 
-> 如果函数使用 `this`，可以在函数的第一个参数中声明 `this` 类型(放在其他参数之前)，这样在调用函数的时候，Typescript 将确保 `this` 是你预期的类型
+> 如果函数使用 `this`，可以在函数的第一个参数中声明 `this` 类型(放在其他参数之前)，这样在调用函数的时候，TypeScript 将确保 `this` 是预期的类型
 >
 > `this`不是常规的参数，而是保留字，是函数签名的一部分
 
@@ -161,7 +161,7 @@ showDate.call(new Date())
 
 在讨论函数时，需要明确声明的函数具体属于什么类型。虽然可以使用 `Function` 类型，但这并不精确。
 
-与对象类型类似，object 能描述所有对象，function 也可以描述所有函数，但都无法体现具体的类型信息
+与对象类型类似，`object` 能描述所有对象，`function` 也可以描述所有函数，但都无法体现具体的类型信息
 
 ```typescript
 function add(a: number, b: number) {
@@ -169,15 +169,15 @@ function add(a: number, b: number) {
 }
 ```
 
-像上面这样的函数，可以用 Typescript 进行描述
+像上面这样的函数，可以用 TypeScript 进行描述
 
 ```typescript
 ;(a: number, b: number) => number
 ```
 
-这是 Typescript 表示函数类型的句法，也称为**调用签名**。
+这是 TypeScript 表示函数类型的句法，也称为**调用签名**。
 
-> 函数的调用签名只包含类型层面的代码，即只有类型，没有值。因此，函数的调用签名可以表示参数的类型、`this` 的类型、返回值的类型。剩余参数的类型和可选参数的类型，但是无法表示默认值（因为默认值是值，不是类型）。调用签名没有函数体，无法推导出返回类型，所以必须显式的注解
+> 函数的调用签名只包含类型层面的代码，即只有类型，没有值。因此，函数的调用签名可以表示参数的类型、`this` 的类型、返回值的类型、剩余参数的类型和可选参数的类型，但是无法表示默认值（因为默认值是值，不是类型）。调用签名没有函数体，无法推导出返回类型，所以必须显式的注解
 >
 > 函数签名其实对写函数也有指导意义。
 
@@ -196,7 +196,7 @@ function sumFn(...numbers: number[]): number {
 }
 ```
 
-可以把调用签名和函数表达式结合起来
+可以将调用签名和函数表达式结合起来
 
 ```typescript
 type Log = (userId: number, message?: string) => void
@@ -205,7 +205,7 @@ const log: Log = (userId, message) => {
 }
 ```
 
-将函数表达式注解为 `Log` 类型后，会发现，不必再此注解参数的类型，因为在定义 `Log` 类型的时候已经注解了 `message` 和 `userId` 的类型。Typescript 能从 `Log` 中推导出来，同理，返回值类型其实也是一样（当然返回值类型本身就能帮助进行推导）
+将函数表达式注解为 `Log` 类型后，会发现，不必再此注解参数的类型，因为在定义 `Log` 类型的时候已经注解了 `message` 和 `userId` 的类型。TypeScript 能从 `Log` 中推导出来，同理，返回值类型其实也是一样（当然返回值类型本身就能帮助进行推导）
 
 上面使用的都是类型别名，当然也能使用`interface`
 
@@ -251,7 +251,7 @@ function handleData(data: string, callback: (err: Error | null, result: string) 
 }
 ```
 
-当然可以把 `callback` 的声明再提取成一个类型别名
+当然可以将 `callback` 的声明再提取成一个类型别名
 
 ```typescript
 // 注意：没有用模块化，类型别名的命名容易和全局变量冲突, 比如ErrorCallback
@@ -262,7 +262,7 @@ function handleData(data: string, callback:ErrorCB):void {
 }
 ```
 
-当然也能够整个函数提取为类型别名或者接口，交给函数表达式处理：
+当然也能够将整个函数提取为类型别名或者接口，交给函数表达式处理：
 
 ```typescript
 type ErrorCB = (err: Error | null, result: string) => void
@@ -298,7 +298,7 @@ type User = {
 
 ## 上下文类型推导
 
-直接把函数类型进行声明，Typescript 能从上下文中推导出参数的类型。这是 Typescript 类型推导的一个强大特性，一般称为**上下文类型推导**。
+直接将函数类型进行声明，TypeScript 能从上下文中推导出参数的类型。这是 TypeScript 类型推导的一个强大特性，一般称为**上下文类型推导**。
 
 **上下文类型推导，在某些时候非常的有用，比如回调函数中**
 
@@ -324,14 +324,14 @@ times((n: number) => console.log(n), 4)
 times(n => console.log(n), 4)
 ```
 
-因为 Typescript 能从上下文推导出 n 是一个数字，因为在 `times` 的签名中，我们声明回调函数 `f` 的参数 `index` 是一个数字。那么 Typescript 就能推导出，下面传入的回调函数中的参数 `n`，就是那个参数，该参数的类型必然应该是 `number` 类型
+因为 TypeScript 能从上下文推导出 `n` 是一个数字，因为在 `times` 的签名中，声明回调函数 `f` 的参数 `index` 是一个数字。那么 TypeScript 就能推导出，下面传入的回调函数中的参数 `n`，就是那个参数，该参数的类型必然应该是 `number` 类型
 
 但是，也有需要注意的地方：
 
-> 如果回调函数的声明不是在行内直接声明，那么 Typescript 无法推导出它的类型
+> 如果回调函数的声明不是在行内直接声明，那么 TypeScript 无法推导出它的类型
 
 ```typescript
-const fn = n => console.log(n) // error 参数n隐式具有“any”类型
+const fn = n => console.log(n) // error 参数n隐式具有"any"类型
 times(fn, 4)
 ```
 
@@ -341,7 +341,7 @@ times(fn, 4)
 
 在某些逻辑较复杂的情况下，函数可能有多组入参类型和返回值类型.
 
-比如有这样简单的需求：函数有两个参数，要求两个参数如果都是 number 类型，那么就做乘法操作，返回计算结果，如果两个参数都是字符串，就做字符串拼接，并返回字符串拼接结果。其他情况直接抛出异常：参数类型必须相同
+比如有这样简单的需求：函数有两个参数，要求两个参数如果都是 `number` 类型，那么就做乘法操作，返回计算结果，如果两个参数都是字符串，就做字符串拼接，并返回字符串拼接结果。其他情况直接抛出异常：参数类型必须相同
 
 > 首先，**很多初学者的直观想法是，直接声明两个不同的函数不就完了**。
 >
@@ -369,7 +369,7 @@ const result = combine(2, 3)
 1. 参数可以输 `number` 也可以输入 `string`，并没有在编译时就给出提示不能输入不同类型的参数
 2. 返回值类型并不固定，两个参数是 `number`，那么返回的类型，就应该一定是 `number`，但是现在返回的是 `string | number`
 
-**其次，这涉及到静态类型语言的基本原则**：在多数静态语言中，一旦指定了特定的参数和返回类型，就只能使用相应的参数调用函数，且返回值类型保持一致。习惯了 Javascript 的动态性，可能认为上述写法合理，毕竟有类型限定和函数推导。
+**其次，这涉及到静态类型语言的基本原则**：在多数静态语言中，一旦指定了特定的参数和返回类型，就只能使用相应的参数调用函数，且返回值类型保持一致。习惯了 JavaScript 的动态性，可能认为上述写法合理，毕竟有类型限定和函数推导。
 
 然而，在多数静态语言中，上述写法并不成立。参数类型必须明确（数值或字符串），不存在类型推导，函数返回值类型也必须明确指定，如**以下伪代码**所示：
 
@@ -384,7 +384,7 @@ function combine(a: string, b: string): string {
 
 在函数声明时确定类型，避免了运行时判断的复杂性。
 
-因此，Typescript 相比其他静态编程语言，保持了一定的动态性，函数的输出类型依赖于输入类型的推导。这既可以理解为 Typescript 的类型系统更为先进，也可以视为兼容 Javascript 动态特性的必要妥协。
+因此，TypeScript 相比其他静态编程语言，保持了一定的动态性，函数的输出类型依赖于输入类型的推导。这既可以理解为 TypeScript 的类型系统更为先进，也可以视为兼容 JavaScript 动态特性的必要妥协。
 
 针对上述问题，可以使用**函数重载签名（Overload Signature）**来解决
 
@@ -405,8 +405,8 @@ const result = combine(2, 3)
 
 这里的三个 `function combine` 其实具有不同的意义：
 
--   `function combine(a: number, b: number): number;`，**重载签名一**，传入 a 和 b 的值为 `number` 时，函数返回值类型为 `number` 。
--   `function combine(a: string, b: string): string;`，**重载签名二**，传入 a 和 b 的值为 `string` 时，函数返回值类型为 `string` 。
+-   `function combine(a: number, b: number): number;`，**重载签名一**，传入 `a` 和 `b` 的值为 `number` 时，函数返回值类型为 `number` 。
+-   `function combine(a: string, b: string): string;`，**重载签名二**，传入 `a` 和 `b` 的值为 `string` 时，函数返回值类型为 `string` 。
 -   `function combine(a: number | string, b: number | string)`，**函数的实现签名**，会包含重载签名的所有可能情况
 
 > 注意：重载签名和实现签名必须放在一起，中间不能插入其他的内容
@@ -431,7 +431,7 @@ function changeType(x: string | number): number | string {
 changeType('2')
 ```
 
-不过在声明重载的时候，还是有一些细节需要注意，比如，模拟 `DOM API` 中 `createElement` 函数的处理，这个函数大家都用过，参数传递具体的标签名字符串，就帮助创建对应的 HTML 元素
+不过在声明重载的时候，还是有一些细节需要注意，比如，模拟 DOM API 中 `createElement` 函数的处理，这个函数大家都用过，参数传递具体的标签名字符串，就帮助创建对应的 HTML 元素
 
 ```typescript
 function createElement(tag: 'a'): HTMLAnchorElement
@@ -461,13 +461,13 @@ const a = createElement("a");
 
 需要注意的是：**拥有多个重载声明的函数在被调用时，是按照重载的声明顺序往下查找的**，简单来说，特殊的子类型，比如类型字面量等应该放在上面，**兜底的类型，应该放在最后**，如果将兜底的类型放在最上面，无论如何，函数签名找到的都是第一个
 
-> 实际上，`TypeScript` 中的重载是**伪重载**，它只有**一个具体实现**，其**重载体现在方法调用的签名上而非具体实现上**。而在如 `Java` 等语言中，**重载体现在多个名称一致但入参不同的函数实现上**，这才是**更广义上的函数重载**。
+> 实际上，TypeScript 中的重载是**伪重载**，它只有**一个具体实现**，其**重载体现在方法调用的签名上而非具体实现上**。而在如 Java 等语言中，**重载体现在多个名称一致但入参不同的函数实现上**，这才是**更广义上的函数重载**。
 
 ## 理解泛型
 
-在掌握了前述内容后，现在面临一个看似简单的需求：用 Typescript 封装一个函数，传入任意类型的参数，并返回相同类型的值。
+在掌握了前述内容后，现在面临一个看似简单的需求：用 TypeScript 封装一个函数，传入任意类型的参数，并返回相同类型的值。
 
-对于 Javascript 而言，这个需求实现起来非常简单
+对于 JavaScript 而言，这个需求实现起来非常简单
 
 ```javascript
 function identity(value) {
@@ -476,7 +476,7 @@ function identity(value) {
 const identity = value => value
 ```
 
-但在 Typescript 中，这个需求变得复杂：参数需要类型约束，返回类型应与参数类型一致。
+但在 TypeScript 中，这个需求变得复杂：参数需要类型约束，返回类型应与参数类型一致。
 
 如果尝试指定具体类型，如`number`或`string`：
 
@@ -498,7 +498,7 @@ function identity(value: any) {
 const s = identity('hello')
 ```
 
-但使用`any`与直接编写 Javascript 代码无异，这完全丧失了类型检查的价值。即使代码不再报错，**最终得到的变量类型仍然是未知的**，无法享受到 IDE 的类型提示和类型安全保障。这违背了使用 Typescript 的初衷。
+但使用`any`与直接编写 JavaScript 代码无异，这完全丧失了类型检查的价值。即使代码不再报错，**最终得到的变量类型仍然是未知的**，无法享受到 IDE 的类型提示和类型安全保障。这违背了使用 TypeScript 的初衷。
 
 此时可能会想到前面介绍的**函数重载**：
 
@@ -547,14 +547,14 @@ function identity(value: string[]): string[];
 const s1 = identity([1,2,3,4]);
 const s2 = identity(["a","b","c","d"]);
 +const s3 = identity({ id: 1, name: "aaa" });
-+console.log(s3.name) // error 类型“object”上不存在属性“name”
++console.log(s3.name) // error 类型"object"上不存在属性"name"
 ```
 
-对象类型 object 会报错，为什么？这在之前就解释过，object 仅仅表示对象而已，并不知道对象里面具体有什么，那就只能使用对象字面量...那这就完全没戏了。谁知道对象字面量里面有多少的内容呢?
+对象类型 `object` 会报错，为什么？这在之前就解释过，`object` 仅仅表示对象而已，并不知道对象里面具体有什么，那就只能使用对象字面量...那这就完全没戏了。谁知道对象字面量里面有多少的内容呢?
 
 那么这里好像就没有更好的办法可以解决了？
 
-如果能利用 Typescript 的自动推导的功能，**不确定当前用什么类型，当用到什么类型的参数的时候，根据传给的类型进行推导，只要在代码用到了推导的类型，那么就都是这个类型**，这就是要讲的泛型
+如果能利用 TypeScript 的自动推导的功能，**不确定当前用什么类型，当用到什么类型的参数的时候，根据传给的类型进行推导，只要在代码用到了推导的类型，那么就都是这个类型**，这就是要讲的泛型
 
 ```typescript
 function identity<T>(value: T): T {
@@ -562,7 +562,7 @@ function identity<T>(value: T): T {
 }
 ```
 
-在函数名后，使用尖括号 `<>` 来声明泛型 `T` ，表示传递的泛型的类型，可以把他先理解为一种占位符号。后面凡是出现一样的这个符号 `T` ，那就表示是一样的类型。
+在函数名后，使用尖括号 `<>` 来声明泛型 `T` ，表示传递的泛型的类型，可以将其先理解为一种占位符号。后面凡是出现一样的这个符号 `T` ，那就表示是一样的类型。
 
 本质上 `T` 其实和写的 `number`，`string` 等等是一个意思。当调用时：
 
@@ -582,7 +582,7 @@ const s3 = identity<User>({id: 1, name: 'aaa'})
 console.log(s3.name) // ok
 ```
 
-当调用的时候，TS 其实可以根据传入的参数自动推导泛型的类型，所以，调用的时候，前面的 `<>` 是可以省略的。
+当调用的时候，TypeScript 其实可以根据传入的参数自动推导泛型的类型，所以，调用的时候，前面的 `<>` 是可以省略的。
 
 ```typescript
 const s1 = identity(1)
@@ -593,7 +593,7 @@ console.log(s3.name) // ok
 
 那为什么是`T`？
 
-> `T`就是一个类型名称，如果愿意，可以使用任意的其他字母名称，例如，A，B，C 等等。
+> `T`就是一个类型名称，如果愿意，可以使用任意的其他字母名称，例如，`A`，`B`，`C` 等等。
 >
 > 按照惯例，经常使用单个大写字母，从 `T` 开始，依次使用 `U`，`V`，`W` 等。
 >
@@ -760,7 +760,7 @@ interface TimedEvent<T> {
 }
 ```
 
-泛型别名还可以为 TypeScript 开发带来便利。例如，在 `strict` 模式下，不能将已固定类型的变量赋值为 `null`。如果习惯了在 Javascript 中将某些值初始化为 `null`，这种限制可能会带来不便
+泛型别名还可以为 TypeScript 开发带来便利。例如，在 `strict` 模式下，不能将已固定类型的变量赋值为 `null`。如果习惯了在 JavaScript 中将某些值初始化为 `null`，这种限制可能会带来不便
 
 ```typescript
 type Nullable<T> = T | null | undefined
@@ -848,7 +848,7 @@ const result2 = swap(['hello', {text: 'world'}])
 console.log(result1, result2)
 ```
 
-考虑另一个需求：封装一个类似于数组 map 方法的函数。该函数接受一个数组和一个回调函数，根据回调函数的处理逻辑生成一个新数组，新数组的类型可能与原数组相同，也可能不同
+考虑另一个需求：封装一个类似于数组 `map` 方法的函数。该函数接受一个数组和一个回调函数，根据回调函数的处理逻辑生成一个新数组，新数组的类型可能与原数组相同，也可能不同
 
 ```typescript
 // 原生map演示
@@ -859,7 +859,7 @@ const newArr2 = arr.map(e => `<div>index${e}</div>`)
 console.log(newArr2)
 ```
 
-首先实现一个基础的 map 函数：
+首先实现一个基础的 `map` 函数：
 
 ```typescript
 const arr = [1, 2, 3, 4, 5]
@@ -881,7 +881,7 @@ console.log(t2)
 
 **使用 `T` 表示输入数组中元素的类型，使用 `U` 表示输出数组中元素的类型。**
 
-**该 map 函数接受一个 `T` 类型的数组和一个将 `T` 映射为 `U` 的函数，最终返回一个 `U` 类型的数组**
+**该 `map` 函数接受一个 `T` 类型的数组和一个将 `T` 映射为 `U` 的函数，最终返回一个 `U` 类型的数组**
 
 ```typescript
 const arr = [1, 2, 3, 4, 5]
@@ -897,14 +897,14 @@ const t1 = map<number, number>(arr, e => e * 2)
 const t2 = map<number, string>(arr, e => `<div>index${e}</div>`)
 ```
 
-与单个泛型的情况相同，调用时可以让 Typescript 自动进行类型推导
+与单个泛型的情况相同，调用时可以让 TypeScript 自动进行类型推导
 
 ```typescript
 const t1 = map(arr, e => e * 2)
 const t2 = map(arr, e => `<div>index${e}</div>`)
 ```
 
-**需要注意**：要么让 Typescript 自动推导，要么显式指定所有泛型参数，不能只指定部分参数。即使两个泛型都是 number 类型，也不能认为只指定一个参数就足够了。以下写法是错误的：
+**需要注意**：要么让 TypeScript 自动推导，要么显式指定所有泛型参数，不能只指定部分参数。即使两个泛型都是 `number` 类型，也不能认为只指定一个参数就足够了。以下写法是错误的：
 
 ```typescript
 const t1 = map<number>(arr, e => e * 2) // error 应该有2个类型参数，但只获得了1个
@@ -950,7 +950,7 @@ const myEvent: MyEvent<HTMLButtonElement | null> = {
 }
 ```
 
-前面声明的泛型别名在使用时需要指定泛型的类型。如果大部分 target 都是同一类型，可以像函数的默认参数一样，为泛型设置默认类型
+前面声明的泛型别名在使用时需要指定泛型的类型。如果大部分 `target` 都是同一类型，可以像函数的默认参数一样，为泛型设置默认类型
 
 ```typescript
 type MyEvent<T = HTMLElement | null> = {
@@ -967,7 +967,7 @@ const myEvent: MyEvent = {
 
 泛型确实为类型定义带来了便利，但有时约束力不够，过于宽泛。例如，某些场景下需要一个泛型`T`，但该泛型只能是对象类型，不能是基本类型。甚至可能需要该泛型具备特定的属性，如`length`或`value`。因此，需要**为泛型设置上限约束**
 
-在 ES6 中，`extends` 关键字用于实现类的继承，表示某个类是另一个类的子类。**Typescript 借用了这一概念，使用 `extends` 表达类型之间的兼容性关系，从而实现对泛型范围的约束**
+在 ES6 中，`extends` 关键字用于实现类的继承，表示某个类是另一个类的子类。**TypeScript 借用了这一概念，使用 `extends` 表达类型之间的兼容性关系，从而实现对泛型范围的约束**
 
 ```typescript
 function getObj<T extends object>(obj: T) {
@@ -1008,7 +1008,7 @@ const result = compareLength([1, 2, 3, 4, 5], 'abc')
 console.log(result)
 ```
 
-同样，可以将 extends 应用于对象字面量类型，extends 本身就表示继承关系：
+同样，可以将 `extends` 应用于对象字面量类型，`extends` 本身就表示继承关系：
 
 ```typescript
 type TreeNode = {
@@ -1043,12 +1043,12 @@ console.log(c1)
 console.log(d1)
 ```
 
-如果上述`mapNode`函数不加以限制，T 的类型无法确定`node:T`中 node 是否具有 value 属性。加以限制后，就可以安全地在函数中使用对象 node 的 value 属性。**这实际上是对类型的细化，也可以称为类型守卫**
+如果上述`mapNode`函数不加以限制，`T` 的类型无法确定`node:T`中 `node` 是否具有 `value` 属性。加以限制后，就可以安全地在函数中使用对象 `node` 的 `value` 属性。**这实际上是对类型的细化，也可以称为类型守卫**
 
-有时候我们想写一个类型，比如`Message`，`Message` 可以接受一个泛型，其主要作用是从泛型上读取泛型的 “message” 属性的类型。你可能会这么写：
+有时候需要写一个类型，比如`Message`，`Message` 可以接受一个泛型，其主要作用是从泛型上读取泛型的 `message` 属性的类型。可能会这么写：
 
 ```typescript
-type Message<T> = T['message'] // error 类型“"message"”无法用于索引类型“T”
+type Message<T> = T['message'] // error 类型""message""无法用于索引类型"T"
 ```
 
 因为泛型`T`无法确定`message`属性的存在，**此时可以使用泛型约束**
@@ -1064,15 +1064,15 @@ const person = {
 type PersonMessage = Message<typeof person> // string
 ```
 
-## 元祖的类型推导
+## 元组的类型推导
 
-Typescript 在推导元组类型时会放宽要求，推导结果尽可能宽泛，不考虑元组的长度和各位置的具体类型，通常直接推导为数组类型
+TypeScript 在推导元组类型时会放宽要求，推导结果尽可能宽泛，不考虑元组的长度和各位置的具体类型，通常直接推导为数组类型
 
 ```typescript
 const a = [1, true] // (number | boolean)[]
 ```
 
-然而有时需要更严格的推导结果，将上述示例中的变量 a 视为固定长度的元组而非数组。
+然而有时需要更严格的推导结果，将上述示例中的变量 `a` 视为固定长度的元组而非数组。
 
 可以使用类型断言`as const`，将元组标记为只读元组类型
 
@@ -1080,7 +1080,7 @@ const a = [1, true] // (number | boolean)[]
 const a = [1, true] as const // readonly [1, true]
 ```
 
-除了使用`as const`断言外，还可以利用 Typescript 推导剩余参数类型的特性。
+除了使用`as const`断言外，还可以利用 TypeScript 推导剩余参数类型的特性。
 
 如果仅按以下方式编写：
 
@@ -1092,7 +1092,7 @@ function tuple<T>(...ts: T[]) {
 const t = tuple(1, 2, 3, 4) //number[]
 ```
 
-得到的仍然是 number 类型的数组，但如果按以下方式编写：
+得到的仍然是 `number` 类型的数组，但如果按以下方式编写：
 
 ```typescript
 function tuple<T extends unknown[]>(...ts: T) {
@@ -1159,15 +1159,15 @@ deleteUser(u1) // OK? Error?
 
 ### 结构化类型系统
 
-TypeScript 的类型系统特性：**结构化类型系统**。TypeScript 比较两个类型并非通过类型的名称，而是比较这两个类型上实际拥有的属性与方法。User 与 Animal 类型上是一致的，所以它们虽然是两个名字不同的类型，但仍然被视为结构一致，这就是结构化类型系统的特性。可能听过结构类型的别称**鸭子类型（\*Duck Typing\*）**，这个名字来源于**鸭子测试（\*Duck Test\*）**。其核心理念是，**如果看到一只鸟走起来像鸭子，游泳像鸭子，叫得也像鸭子，那么这只鸟就是鸭子**。
+TypeScript 的类型系统特性：**结构化类型系统**。TypeScript 比较两个类型并非通过类型的名称，而是比较这两个类型上实际拥有的属性与方法。`User` 与 `Animal` 类型上是一致的，所以它们虽然是两个名字不同的类型，但仍然被视为结构一致，这就是结构化类型系统的特性。可能听过结构类型的别称**鸭子类型（Duck Typing）**，这个名字来源于**鸭子测试（Duck Test）**。其核心理念是，**如果看到一只鸟走起来像鸭子，游泳像鸭子，叫得也像鸭子，那么这只鸟就是鸭子**。
 
 因此：`deleteUser(a1);`正确
 
 `deleteUser(u1);`为什么也是正确的？
 
-在很多类型系统中，都有子类型与超(父)类型的概念。当然了在 java，c#这种后端名义型类型系统中子类型和父类型很容易区分，他们必须要`extends`，`implements`关键字。
+在很多类型系统中，都有子类型与超(父)类型的概念。当然了在 Java，C# 这种后端名义型类型系统中子类型和父类型很容易区分，他们必须要`extends`，`implements`关键字。
 
-但是在 TS 中，是通过结构进行区分的，不一定强制需要`extends`，`implements`关键字标注父子关系。比如上面的`User`和`AdminUser`。
+但是在 TypeScript 中，是通过结构进行区分的，不一定强制需要`extends`，`implements`关键字标注父子关系。比如上面的`User`和`AdminUser`。
 
 明明`u1`多了一个属性`role`，这是因为，**结构化类型系统**认为 `AdminUser` 类型完全实现了 `User` 类型。至于额外的属性 `role`，可以认为是 `AdminUser` 类型继承 `User` 类型后添加的新属性，即此时 `AdminUser` 类型可以被认为是 `User` 类型的子类型。
 
@@ -1181,7 +1181,7 @@ TypeScript 的类型系统特性：**结构化类型系统**。TypeScript 比较
 
 之前的基础类型，一直在强调类型兼容性的问题，不同的类型当然没有兼容性可言，要谈兼容性，至少需要父子关系。至于所谓父子关系的兼容性，一般都具有下面的含义：
 
-> 给定两个类型 A 和 B，假设 B 是 A 的子类型，那么在需要 A 的地方都可以放心使用 B
+> 给定两个类型 `A` 和 `B`，假设 `B` 是 `A` 的子类型，那么在需要 `A` 的地方都可以放心使用 `B`
 
 ![](../../../../.vuepress/public/assets/images/web/language/typeScript/function-and-genericity/image-20240226103220252.png)
 
@@ -1235,11 +1235,11 @@ ExistUser  ---> id ---> number
 LegacyUser ---> id ---> number | string | undefined
 ```
 
-也就是说，每个类型的 id 属性的类型是不一样的，这里是联合类型，联合类型也有子类型和父类型的兼容关系。联合类型的父子关系的区分和基础类型是一样的。简单来说，**越具体的，越形象化的，就是子类型**
+也就是说，每个类型的 `id` 属性的类型是不一样的，这里是联合类型，联合类型也有子类型和父类型的兼容关系。联合类型的父子关系的区分和基础类型是一样的。简单来说，**越具体的，越形象化的，就是子类型**
 
-> "hello" 字面量类型 比 string 类型 更具体，那么"hello"字面量类型就是 string 类型的子类型
+> `hello` 字面量类型 比 `string` 类型 更具体，那么`hello`字面量类型就是 `string` 类型的子类型
 >
-> [number, number]元组类型比数组类型更具体，那么元组类型就是数组类型的子类型
+> `[number, number]`元组类型比数组类型更具体，那么元组类型就是数组类型的子类型
 >
 > `a | b` 联合类型 比 `a | b | c` 联合类型更具体，那么 `a | b` 就是 `a | b | c` 的子类型
 >
@@ -1268,7 +1268,7 @@ deleteUser(u3);
 不能把父类型赋值给子类型
 ```
 
-**typescript 对于结构（对象和类）的属性类型进行了协变**，也就是说，**如果想保证 `A` 对象可赋值给 `B` 对象，那么 `A` 对象的每个属性都必须是 `B` 对象对应属性的子类型**。
+**TypeScript 对于结构（对象和类）的属性类型进行了协变**，也就是说，**如果想保证 `A` 对象可赋值给 `B` 对象，那么 `A` 对象的每个属性都必须是 `B` 对象对应属性的子类型**。
 
 **如果 `A` 是 `B` 的子类型，那么可以说由 `A` 组成的复合类型（例如数组和泛型）也是 `B` 组成相应复合类型的子类型**
 
@@ -1325,7 +1325,7 @@ deleteUser(u1) // 正确
 deleteUser({id: 2, name: 'user2', role: 'admin'}) // 错误
 ```
 
-由于协变的存在，可以将`AdminUser`类型的 u1 对象视为`User`类型的子类型，因此可以进行赋值。
+由于协变的存在，可以将`AdminUser`类型的 `u1` 对象视为`User`类型的子类型，因此可以进行赋值。
 
 但在直接赋值时，如果包含多余属性会提示错误。这是合理的，因为已经标注为`User`类型，却包含其他属性，TypeScript 理应提示错误。这种与标注类型不匹配的检查称为**多余属性检查**。
 
@@ -1353,7 +1353,7 @@ type Dog = Pet & {
 }
 ```
 
-Animal、Pet 和 Dog 明显具有逐层的继承关系
+`Animal`、`Pet` 和 `Dog` 明显具有逐层的继承关系
 
 ```typescript
 let a: Animal = {
@@ -1393,7 +1393,7 @@ feed(p)
 feed(d)
 ```
 
-使用 class 类的情况也相同，类的基本使用与 Javascript 一致，父子层级关系也保持一致。关于类型的相关问题将在后续章节详细说明
+使用 `class` 类的情况也相同，类的基本使用与 JavaScript 一致，父子层级关系也保持一致。关于类型的相关问题将在后续章节详细说明
 
 ```typescript
 class Animal {
@@ -1428,7 +1428,7 @@ feed(p)
 feed(d)
 ```
 
-无论如何，协变的相关内容与前面保持一致，因为**class 类也是结构化类型**，子类型的值可以传递到需要父类型的地方。
+无论如何，协变的相关内容与前面保持一致，因为**`class` 类也是结构化类型**，子类型的值可以传递到需要父类型的地方。
 
 ## 逆变
 
@@ -1461,7 +1461,7 @@ function petToAnimal(p: Pet): Animal {
 ```typescript
 clone(petToPet)
 clone(petToDog)
-clone(petToAnimal) // error "类型“(p: Pet) => Animal”的参数不能赋给类型“(p: Pet) => Pet”的参数
+clone(petToAnimal) // error "类型"(p: Pet) => Animal"的参数不能赋给类型"(p: Pet) => Pet"的参数
 ```
 
 `petToDog`可以正常传递，但 `petToAnimal` 却报错了。原因可以通过伪代码来分析：
@@ -1475,7 +1475,7 @@ function clone(f: (p: Pet) => Pet): void {
 }
 ```
 
-如果传给`clone`函数的`f`返回的是`Animal`，就无法调用`.run`方法。因此在编译时，`Typescript`会确保传入的函数至少返回一个`Pet`。
+如果传给`clone`函数的`f`返回的是`Animal`，就无法调用`.run`方法。因此在编译时，TypeScript 会确保传入的函数至少返回一个`Pet`。
 
 由此可以得出：**当函数的其他特征保持一致时，如果一个函数的返回类型是另一个函数返回类型的子类型，那么函数的返回类型是协变的**
 
@@ -1498,7 +1498,7 @@ function dogToPet(d: Dog): Pet {
 ```typescript
 clone(petToPet)
 clone(animalToPet)
-clone(dogToPet) // Error "类型“(d: Dog) => Pet”的参数不能赋给类型“(p: Pet) => Pet”的参数
+clone(dogToPet) // Error "类型"(d: Dog) => Pet"的参数不能赋给类型"(p: Pet) => Pet"的参数
 ```
 
 `animalToPet` 可以正常传递，但 `dogToPet` 却报错了，同样可以通过伪代码分析：
@@ -1516,10 +1516,10 @@ function dogToPet(d: Dog): Pet {
 
 总结而言，**在不考虑 `this` 的情况下，满足以下条件时，可以认为函数 `A` 是函数 `B` 的子类型**
 
-1、函数 A 的参数数量小于或等于函数 B 的参数数量
+1、函数 `A` 的参数数量小于或等于函数 `B` 的参数数量
 
-2、函数 A 的返回类型是函数 B 返回类型的子类型（协变）
+2、函数 `A` 的返回类型是函数 `B` 返回类型的子类型（协变）
 
-3、函数 A 的各个参数的类型是函数 B 相应参数的父类型（逆变）
+3、函数 `A` 的各个参数的类型是函数 `B` 相应参数的父类型（逆变）
 
-> 由于历史遗留问题，Typescript 中的函数默认对参数和 this 类型采用协变处理，这并不安全。因此 `strict` 家族包含了 `strictFunctionTypes` 选项，当开启 `strict:true` 时，默认也会开启 `strictFunctionTypes:true`
+> 由于历史遗留问题，TypeScript 中的函数默认对参数和 `this` 类型采用协变处理，这并不安全。因此 `strict` 家族包含了 `strictFunctionTypes` 选项，当开启 `strict:true` 时，默认也会开启 `strictFunctionTypes:true`

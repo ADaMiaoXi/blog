@@ -16,9 +16,9 @@ type User = {
 }
 ```
 
-前面的代码中，我们可以通过修饰符 `?` 限定有哪些属性值，但是最多也就是 `name`，`age` 和 `sex` 这三个属性，无非也就是 `age` 和 `sex` 这两个属性写与不写的问题了。
+在前面的代码中，可以通过修饰符 `?` 限定属性值，但最多只能包含 `name`、`age` 和 `sex` 这三个属性，实际上只是 `age` 和 `sex` 这两个属性是否定义的问题。
 
-如果希望在 Typescript 中也能动态的添加属性，还是不行，这个时候我们可以借助**索引签名类型（Index Signatures）**
+如果希望在 TypeScript 中动态添加属性，仍然存在限制，此时可以借助**索引签名类型（Index Signatures）**
 
 ```typescript
 type User = {
@@ -34,7 +34,7 @@ const user: User = {
 
 在这个例子中我们声明的键的类型为 string（`[key: string]`），这也意味着在实现这个类型结构的变量中**只能声明字符串类型的键**
 
-但由于 JavaScript 中，对于 `user[prop]` 形式的访问会将**数字索引访问转换为字符串索引访问**，也就是说， `user[123]` 和 `user['123']` 的效果是一致的。因此，在字符串索引签名类型中我们仍然可以声明数字类型的键。类似的，`symbol` 类型也是如此：
+但由于 JavaScript 中，对于 `user[prop]` 形式的访问会将**数字索引访问转换为字符串索引访问**，也就是说，`user[123]` 和 `user['123']` 的效果是一致的。因此，在字符串索引签名类型中仍然可以声明数字类型的键。类似地，`symbol` 类型也是如此：
 
 ```javascript
 const user: User = {
@@ -73,7 +73,7 @@ type AnyTypeHere = {
 }
 ```
 
-而且，之前我们必须声明属性明确的对象字面量类型，这对于有些时候声明一个空的对象就不太友好，但是又不能直接声明对象为 obj，那么这里的索引签名类型就非常合适这个场景了。
+此外，之前必须声明属性明确的对象字面量类型，这对于某些时候声明一个空对象并不友好，但又不能直接声明对象为 obj，此时索引签名类型就非常适合这种场景。
 
 ```typescript
 type AnyTypeHere = {
@@ -86,7 +86,7 @@ let obj: AnyTypeHere = {
 }
 ```
 
-其实，Typescript 也专门提供了一个类似的工具类型[Record](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type)，方便这种情况我们的使用
+实际上，TypeScript 也专门提供了一个类似的工具类型[Record](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type)，方便这种情况的使用
 
 ## `keyof`
 
@@ -102,13 +102,13 @@ type User = {
 type UserKeys = keyof User // keyof User = 'id' | 'name' | 'age'
 ```
 
-在 VS Code 中悬浮鼠标只能看到 `keyof User`，看不到其中的实际值，你可以这么做
+在 VS Code 中悬浮鼠标只能看到 `keyof User`，看不到其中的实际值，可以这样处理
 
 ```typescript
 type UserKeys = keyof User & {} // "id" | "name" | "age"
 ```
 
-甚至我们可以结合这`typeof`，直接从一个对象上，获取这个对象键的所有联合类型
+甚至可以结合 `typeof`，直接从一个对象上获取该对象键的所有联合类型
 
 ```typescript
 const user = {
@@ -132,7 +132,7 @@ type Person = {
 type A = Person[keyof Person]
 ```
 
-结合着泛型，方括号运算符以及 extends 受限的泛型，可以直接重写之前我们在重载中写过的代码：
+结合泛型、方括号运算符以及 extends 受限的泛型，可以直接重写之前在重载中编写过的代码：
 
 ```typescript
 type TagName = keyof HTMLElementTagNameMap
@@ -146,7 +146,7 @@ const a = createElement('a') // ok
 
 ## `in` 运算符遍历
 
-前面讲了 in 运算符在 Typescript 可以用来检查属性，在控制流中实现对类型的守卫。
+前面讲了 in 运算符在 TypeScript 中可以用来检查属性，在控制流中实现对类型的守卫。
 
 除了类型守卫的作用，`in` 运算符还能遍历联合类型的每一个成员类型
 
@@ -164,13 +164,13 @@ type Foo = {
 // };
 ```
 
-上面的讲解`keyof`的时候，不是用到了这样的写法
+上面讲解 `keyof` 的时候，使用了这样的写法
 
 ```typescript
 type A = keyof Person
 ```
 
-那完全可以把`keyof`放入到索引中使用
+那么完全可以将 `keyof` 放入到索引中使用
 
 ```typescript
 type User = {
@@ -192,7 +192,7 @@ const u: CopyUser = {
 }
 ```
 
-现在固定了`keyof User`，那么我们可以使用泛型，增加一般性
+现在固定了 `keyof User`，那么可以使用泛型，增加通用性
 
 ```typescript
 type Copy<T> = {
@@ -221,9 +221,9 @@ const dog: Copy<Animal> = {
 }
 ```
 
-> **注意：** **`keyof T`** 这两个的结合得到的是一个联合类型`string | number | symbol`，因为`T`是泛型，并不知道`T`类型的每个键到底是什么类型，可以看一下`keyof any`的结果
+> **注意：** **`keyof T`** 的结合得到的是一个联合类型 `string | number | symbol`，因为 `T` 是泛型，无法确定 `T` 类型的每个键的具体类型，可以查看 `keyof any` 的结果
 >
-> 当然`[key in keyof T]`现在这样写没有什么问题，但是如果后面要和 as，和模板字符串类型连用的话，要注意类型的转换，最好直接让键就是`string`类型
+> `[key in keyof T]` 这样写没有问题，但是如果后面要和 as、模板字符串类型连用的话，需要注意类型的转换，最好直接让键为 `string` 类型
 >
 > `[key in keyof T & string]`
 
@@ -231,7 +231,7 @@ const dog: Copy<Animal> = {
 
 ### 属性修饰符
 
-我们类型编程的代码已经逐步过渡成对泛型的处理：
+类型编程的代码已经逐步过渡成对泛型的处理：
 
 ```typescript
 type User = {
@@ -250,7 +250,7 @@ type Copy<T extends object> = {
 }
 ```
 
-上面的`Copy<T>`类型只需要我们稍稍做修改，就能成为一个很有用的新的类型别名
+上面的 `Copy<T>` 类型只需要稍作修改，就能成为一个很有用的新的类型别名
 
 ```typescript
 type MyReadonly<T> = {
@@ -258,7 +258,7 @@ type MyReadonly<T> = {
 }
 ```
 
-就在之前的代码签名加了`readonly`，这个类型别名就能实现将你传递的类型 T 所有的属性变为`readonly`
+只是在之前的代码签名加了 `readonly`，这个类型别名就能实现将传递的类型 T 所有的属性变为 `readonly`
 
 ```typescript
 type User = {
@@ -285,7 +285,7 @@ u.id = 2 // error 无法分配到 "id" ，因为它是只读属性
 u.name = 'tom' // error 无法分配到 "name" ，因为它是只读属性
 ```
 
-又或者说，直接在后面加上`?`，就能将原来类型中所有的属性变为可选
+或者直接在后面加上 `?`，就能将原来类型中所有的属性变为可选
 
 ```typescript
 type MyPartial<T> = {
@@ -300,15 +300,15 @@ const u: OptionalUser = {
 }
 ```
 
-`MyReadonly`是[`Readonly<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype)的具体实现
+`MyReadonly` 是 [`Readonly<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#readonlytype) 的具体实现
 
-`MyPartial`是[`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype)的具体实现
+`MyPartial` 是 [`Partial<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype) 的具体实现
 
-其实，这种在现有类型的基础上创建新的类型的方式，在 TS 中也有专门的称呼：**映射类型（Mapped Types）**，其实和索引签名类型很类似，差别只是**索引签名**用于定义对象可以有哪些类型的键和值，适用于属性名未知或动态的情况。**映射类型**则允许你在现有类型的基础上创建新的类型，通过对原始类型的属性进行转换或应用修饰符，来满足更具体的类型设计需求
+实际上，这种在现有类型的基础上创建新类型的方式，在 TypeScript 中有专门的称呼：**映射类型（Mapped Types）**，与索引签名类型很类似，差别在于**索引签名**用于定义对象可以有哪些类型的键和值，适用于属性名未知或动态的情况。**映射类型**则允许在现有类型的基础上创建新的类型，通过对原始类型的属性进行转换或应用修饰符，来满足更具体的类型设计需求
 
 ### 修饰操作符 `+`，`-`
 
-其实上面的 `readonly` 与 `?` 的写法是简写，具体应该是给原来的类型**加上`readonly`**，给原来的类型**加上`?`**
+实际上，上面的 `readonly` 与 `?` 的写法是简写，具体应该是给原来的类型**加上 `readonly`**，给原来的类型**加上 `?`**
 
 -   `+`修饰符：写成 `+?` 或 `+readonly`，为映射属性添加 `?` 修饰符或 `readonly` 修饰符。
 
@@ -322,7 +322,7 @@ type MyPartial<T> = {
 }
 ```
 
-既然有`+`，那就有`-`
+既然有 `+`，那就有 `-`
 
 -   `–` 修饰符：写成 `-?` 或 `-readonly`，为映射属性移除 `?` 修饰符或 `readonly` 修饰符。
 
@@ -341,7 +341,7 @@ u.id = 2 // ok,因为已经移除了只读属性
 
 ### 泛型编程的理解
 
-Javascript 的编程大家很熟悉，如果我们想处理一个值，然后返回一个新的值，理所应当的想到的就是函数
+JavaScript 的编程大家都很熟悉，如果要处理一个值，然后返回一个新的值，理所当然想到的就是函数
 
 ```typescript
 function myPartial(type){
@@ -359,7 +359,7 @@ const newType = myPartial(type);
 
 2、调用函数，获取到新的返回值
 
-**如果我们操作类型，也能像 Javascript 的函数处理一样，操作旧类型，然后得到了新的类型**，那就很方便了。
+**如果操作类型，也能像 JavaScript 的函数处理一样，操作旧类型，然后得到新的类型**，那就很方便了。
 
 ```typescript
 // 可以当做是函数，可以接受任意类型。
@@ -380,7 +380,7 @@ type PartialedUser = MyPartial<User>
 
 ![](../../../../.vuepress/public/assets/images/web/language/typeScript/type-programing/image-20231228174036872.png)
 
-最后只需要将声明中 `{todos...}` 相关语法，换成 Typescript 的语法就行了
+最后只需要将声明中 `{todos...}` 相关语法，换成 TypeScript 的语法即可
 
 ```typescript
 type MyPartial<T> = {
@@ -388,7 +388,7 @@ type MyPartial<T> = {
 }
 ```
 
-有了这个理论，我们来看之前的映射类型，我们写了这样的代码：
+有了这个理论，来看之前的映射类型，编写了这样的代码：
 
 ```typescript
 type AnyTypeHere = {
@@ -396,10 +396,10 @@ type AnyTypeHere = {
 }
 ```
 
-这样写肯定是有一定缺陷的，固定了键的类型，而且值的类型是 any，当然我们介绍了 Record 工具的用法，可以通过 Record 工具，帮我们定义需要的泛型。这个简单工具，我们完全也可以自己实现。
+这样写肯定存在一定缺陷，固定了键的类型，而且值的类型是 any，当然介绍了 Record 工具的用法，可以通过 Record 工具，帮助定义需要的泛型。这个简单工具，完全也可以自己实现。
 
 ```typescript
-// 对于js来说，我们对值操作
+// 对于 JavaScript 来说，对值操作
 function MyRecord(key,value){
   // todos...
   return {....}
@@ -407,11 +407,11 @@ function MyRecord(key,value){
 ```
 
 ```typescript
-// 对于TS来说，我们对类型操作
+// 对于 TypeScript 来说，对类型操作
 type MyRecode<K,V> = {
   // todos......
 }
-K 我们需要限定一下类型，而V传入什么类型，就应该是什么类型。那这个不是就很简单吗？
+K 需要限定一下类型，而 V 传入什么类型，就应该是什么类型。那这个不是就很简单吗？
 type MyRecode<K extends string | number | symbol,V> = {
   [key in K]:V
 }
@@ -518,13 +518,13 @@ type B = ArrLen<[1, 2, 3, 4, 5, 6]> //6
 
 ### 结合泛型使用扩展运算符
 
-比如现在希望写一个泛型工具，实现两个元组类型的拼接
+比如现在希望编写一个泛型工具，实现两个元组类型的拼接
 
 ```typescript
 type Result = Concat<[1, 2], [3, 4]> //[1,2,3,4]
 ```
 
-咋一看没啥思路，但是其实 ts 和 js 一样，支持`... Spread扩展运算符`
+乍一看没有思路，但实际上 TypeScript 和 JavaScript 一样，支持 `... Spread扩展运算符`
 
 ```typescript
 type Concat<T extends any[], U extends any[]> = [...T, ...U]
@@ -533,13 +533,13 @@ type C = Concat<[1, 2, 3, 4], ['a', 'b', 'c']>
 
 ## 条件类型与类型兼容性
 
-条件类型是 ts 中非常强大的功能，看起来有点像 JavaScript 中的条件表达式（`条件 ? true 表达式 : false 表达式`）：
+条件类型是 TypeScript 中非常强大的功能，看起来有点像 JavaScript 中的条件表达式（`条件 ? true 表达式 : false 表达式`）：
 
 > SomeType extends OtherType ? TrueType : FalseType
 >
 > 当 `extends` 左边的类型可以赋值给右边的类型时（`extends`左边的类型与右边兼容时），你将获得第一个分支（“true” 分支）中的**类型**；否则你将获得后一个分支（“false” 分支）中的**类型**。
 
-不过首先要解惑的是，为什么使用`extends`?，而不是`===`或者其他运算符。
+不过首先要解惑的是，为什么使用 `extends`，而不是 `===` 或者其他运算符。
 
 > 这是因为在类型层面中，对于能够进行赋值操作的两个变量，我们**并不需要它们的类型完全相等，只需要具有兼容性**，而两个完全相同的类型，其 extends 自然也是成立的。
 
@@ -547,7 +547,7 @@ type C = Concat<[1, 2, 3, 4], ['a', 'b', 'c']>
 type T = 1 extends number ? true : false // true
 ```
 
-在实际操作中，我们经常会使用条件类型来判断一个类型和另一个类型是否兼容
+在实际操作中，经常会使用条件类型来判断一个类型和另一个类型是否兼容
 
 ```typescript
 type T1 = 1 extends number ? true : false // true
@@ -559,9 +559,9 @@ type T6 = {a: 1} extends {a: 1; b: 2} ? true : false // false
 type T8 = string extends {} ? true : false // true
 ```
 
-大家可以下去自己慢慢测试类型兼容性。
+可以自行测试类型兼容性。
 
-但是，下面的代码会让你产生困惑：
+但是，下面的代码会让人产生困惑：
 
 ```typescript
 type T9 = {} extends object ? true : false // true
@@ -572,13 +572,13 @@ type T13 = Object extends object ? true : false // true
 type T14 = object extends Object ? true : false // true
 ```
 
-这三个建议大家不需要细究，知道他们有这个问题：你中有我，我中有你。这是**TS“系统设定”**的问题。
+这三个建议不需要细究，知道它们有这个问题：你中有我，我中有你。这是**TS“系统设定”**的问题。
 
-记住给大家的这个图：
+记住这个图：
 
 > **原始类型 < 原始类型对应的装箱类型 < Object 类型**
 
-其实还有更神奇的：
+还有更神奇的：
 
 ```typescript
 type T15 = string extends any ? true : false // true
@@ -592,7 +592,7 @@ type T20 = unknown extends any ? 1 : 2 // 1
 type T21 = any extends unknown ? 1 : 2 // 1
 ```
 
-是不是很神奇？实际上，还是因为**TS“系统设定”**的原因，因为 any 其实从系统底层的意义来说，就是为了保证和 js 的兼容性存在的。大家不需要纠结。记住**any/unknown**是所有类型的顶层类型就行
+是不是很神奇？实际上，还是因为**TS“系统设定”**的原因，因为 any 从系统底层的意义来说，就是为了保证和 JavaScript 的兼容性存在的。不需要纠结。记住**any/unknown**是所有类型的顶层类型即可
 
 别忘记，`never`类型是所有类型的子类型
 
@@ -605,7 +605,7 @@ type T23 = 'Hello' extends never ? true : false // false
 
 条件类型当然可以和泛型结合，然后组合出很多类型编程相关的处理。
 
-我们可以定义一个泛型类型`IsString`，根据`T`的类型，判断返回的具体类型是`true`还是`false`:
+可以定义一个泛型类型 `IsString`，根据 `T` 的类型，判断返回的具体类型是 `true` 还是 `false`：
 
 ```typescript
 type IsString<T> = T extends string ? true : false
@@ -625,7 +625,7 @@ type A = If<true, 'a', 'b'> // 'a'
 type B = If<false, 'a', 'b'> // 'b'
 ```
 
-这就非常的简单了：
+这就非常简单了：
 
 ```typescript
 type If<C extends boolean, T, F> = C extends true ? T : F
@@ -633,11 +633,11 @@ type If<C extends boolean, T, F> = C extends true ? T : F
 
 > 若位于 `extends` **右侧的类型**包含位于 `extends` **左侧的类型**(即**狭窄类型 extends 宽泛类型**)时，结果为 true，反之为 false。
 >
-> 这对于基础类型和字面量类型来说大家很容易分辨。如果是对象呢？
+> 这对于基础类型和字面量类型来说很容易分辨。如果是对象呢？
 >
-> **当 `extends` 作用于对象时，若在对象中指定的 key 越多，则其类型定义的范围越狭窄**，对象字面量的兼容性问题是我们一直提及的，希望大家注意。
+> **当 `extends` 作用于对象时，若在对象中指定的 key 越多，则其类型定义的范围越狭窄**，对象字面量的兼容性问题是一直提及的，需要注意。
 
-上面这句话，其实我们之前在受限的泛型中已经感受过了
+上面这句话，实际上之前在受限的泛型中已经感受过了
 
 ```typescript
 type ObjLength = {
@@ -658,9 +658,9 @@ getObjLength({id: 1, length: 2})
 type Result = {a: string; b: boolean} extends {a: string} ? true : false // true
 ```
 
-`extends`左边的对象字面量类型`{ a: string, b: boolean }`拥有两个属性，右边的对象字面量类型`{ a: string }` 只有一个属性，左边有更多的属性，并且和右边有一样的属性`{ a: string }` 。那么我们就可以说对象字面量类型`{ a: string, b: boolean }`和`{ a: string }` 类型兼容，因此上面的`Result`的类型为`true`
+`extends` 左边的对象字面量类型 `{ a: string, b: boolean }` 拥有两个属性，右边的对象字面量类型 `{ a: string }` 只有一个属性，左边有更多的属性，并且和右边有一样的属性 `{ a: string }`。那么就可以说对象字面量类型 `{ a: string, b: boolean }` 和 `{ a: string }` 类型兼容，因此上面的 `Result` 的类型为 `true`
 
-上面的代码中不是写过这样的代码吗？
+上面的代码中编写过这样的代码：
 
 ```typescript
 type Message<T extends {message: unknown}> = T['message']
@@ -673,7 +673,7 @@ const person = {
 type PersonMessage = Message<typeof person>
 ```
 
-如果没有 message 类型现在这里的代码 typescript 会提示报错，我们也能通过判断让其获取其他类型
+如果没有 message 类型，现在这里的代码 TypeScript 会提示报错，也能通过判断让其获取其他类型
 
 ```typescript
 type Message<T> = T extends {message: unknown} ? T['message'] : never
@@ -686,7 +686,7 @@ const person = {
 type PersonMessage = Message<typeof person> // never
 ```
 
-比如还能根据方括号运算符的特点，直接提取数组的类型
+例如还能根据方括号运算符的特点，直接提取数组的类型
 
 ```typescript
 type Flatten<T> = T extends any[] ? T[number] : T
@@ -704,7 +704,7 @@ const arr = [
 type A = Flatten<typeof arr>
 ```
 
-来写一个现在看起来稍微离谱的写法：
+来编写一个看起来稍微复杂的写法：
 
 ```typescript
 type GetType<T> = T extends string
@@ -736,7 +736,7 @@ type T5 = GetType<{}> // "object"
 type T6 = GetType<null> // "null"
 ```
 
-再来上点难度：**实现泛型工具 Merge**
+再来增加一些难度：**实现泛型工具 Merge**
 
 将两个类型合并成一个类型，第二个类型的键会覆盖第一个类型的键。
 
@@ -795,20 +795,20 @@ type C = IsString<'abc'> // true
 type D = IsString<123> // false
 ```
 
-如果我们传入的`T`是一个联合类型，那么就会触发分布式特性
+如果传入的 `T` 是一个联合类型，那么就会触发分布式特性
 
 ```typescript
 type IsString<T> = T extends string ? 1 : 2
 type E = IsString<'a' | true | 1> // 1 | 2
 ```
 
-我们可以写的再灵活一些。比如我们定义下面的类型：
+可以写得更灵活一些。比如定义下面的类型：
 
 ```typescript
 type MyInclude<T, U> = T extends U ? T : never
 ```
 
-我们可以这样使用：
+可以这样使用：
 
 ```typescript
 type A = 'a' | 'b' | 'c'
@@ -816,13 +816,13 @@ type B = 'a' | 'b'
 type C = MyInclude<A, B> // a | b
 ```
 
-其实 `MyInclude` 干了类似于下面的事情：
+实际上 `MyInclude` 完成了类似于下面的操作：
 
 ```typescript
 type C = MyInclude<'a', 'a' | 'b'> | MyInclude<'b', 'a' | 'b'> | MyInclude<'c', 'a' | 'b'>
 ```
 
-我们可以替换为具体的定义来理解一下：
+可以替换为具体的定义来理解一下：
 
 ```typescript
 type C =
@@ -843,7 +843,7 @@ type C = 'a' | 'b' | never
 type C = 'a' | 'b'
 ```
 
-上面`MyInclude`这个代码例子其实完全可以反过来，又形成另外一个类型：
+上面 `MyInclude` 这个代码例子实际上完全可以反过来，又形成另外一个类型：
 
 ```typescript
 type MyExclude<T, U> = T extends U ? never : T
@@ -853,7 +853,7 @@ type B = 'a' | 'b'
 type C = MyExclude<A, B> // c
 ```
 
-大家可以按照上面的步骤，自行分析一下
+可以按照上面的步骤，自行分析一下
 
 `MyInclude` 实际上是[Extract<Type, Union>](https://www.typescriptlang.org/docs/handbook/utility-types.html#extracttype-union)工具类型的实现
 
@@ -876,7 +876,7 @@ type Bar = MyOmit<Foo, 'age'> //{ name: string }
 
 MyOmit 的实现，其实就是 [Omit<Type, Keys>](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys) 工具类型的实现
 
-这几个工具，我们可以做个案例来练习一下，比如有如下对象字面量类型：
+这几个工具，可以做个案例来练习一下，比如有如下对象字面量类型：
 
 ```typescript
 type User = {
@@ -888,7 +888,7 @@ type User = {
 }
 ```
 
-现在希望实现一个工具类型，将选择键名设置为可选，比如，如果设置 `age`，`tel` 和 `address`，那么经过工具类型转换之后，上面的类型别名就会变为：
+现在希望实现一个工具类型，将选择键名设置为可选，例如，如果设置 `age`、`tel` 和 `address`，那么经过工具类型转换之后，上面的类型别名就会变为：
 
 ```typescript
 type User = {
@@ -939,7 +939,7 @@ type E = C<string | number> // (string | number)[]Ò
 
 ## 映射类型的属性过滤
 
-上面我们通过`Pick` + `Exclude`实现了`Omit`类型工具，那我们能不能完全自己实现，不借助已有的类型工具呢？也可以，不过我们需要掌握一个技巧：通过`as + never`实现属性过滤的效果
+上面通过 `Pick` + `Exclude` 实现了 `Omit` 类型工具，那么能不能完全自己实现，不借助已有的类型工具呢？也可以，不过需要掌握一个技巧：通过 `as + never` 实现属性过滤的效果
 
 ```typescript
 type User = {
@@ -956,7 +956,7 @@ type MyOmit<T, K extends keyof T> = {
 type A = MyOmit<User, 'tel' | 'address'> //  {readonly id: number; name: string}
 ```
 
-在例子中，映射 `K in keyof T` 获取类型 T 的每一个属性以后，后面紧跟着`as`其实是可以为键重新映射命名的
+在例子中，映射 `K in keyof T` 获取类型 T 的每一个属性以后，后面紧跟着 `as` 实际上是可以为键重新映射命名的
 
 不过现在，它的键名重映射 `as P extends K ? never : P`，使用了条件运算符，又会触发分布式处理
 
@@ -970,7 +970,7 @@ type A = MyOmit<User, 'tel' | 'address'> //  {readonly id: number; name: string}
 >
 > "id" | "name" | never | never ---> "id" | "name"
 
-我们还能再升级一下，比如：只保留 User 值类型是 string 类型的，生成新的类型
+还能再升级一下，例如：只保留 User 值类型是 string 类型的，生成新的类型
 
 ```typescript
 type PickStringValueType<T> = {
@@ -979,9 +979,9 @@ type PickStringValueType<T> = {
 type FilteredUser = PickStringValueType<User> //{name:string, tel:string}
 ```
 
-当然，你想反过来，去掉值类型是 string 类型的，将`K`和`never`换个位置就行了
+当然，如果想反过来，去掉值类型是 string 类型的，将 `K` 和 `never` 换个位置即可
 
-其实上面做的更加普遍性一些，就完全可以写成一个类型工具：
+实际上，上面做得更加通用一些，就完全可以写成一个类型工具：
 
 ```typescript
 type PickByType<T, U> = {
@@ -1010,11 +1010,11 @@ const arr = [
 type T3 = Flatten<typeof arr>
 ```
 
-对比之前方括号运算符`T[number]`其实使用`infer`关键字之后，我们的类型代码更易读了。如果你不是对方括号运算符那么的熟悉，`T[number]`的写法本身就很具有迷惑性。
+对比之前方括号运算符 `T[number]`，实际上使用 `infer` 关键字之后，类型代码更易读了。如果对方括号运算符不是那么熟悉，`T[number]` 的写法本身就很具有迷惑性。
 
-`infer`，意为推断，如 `infer U` 中 `U` 就表示 **待推断的类型**，你完全可以先把这里的`infer U`看做`any`，当执行时，typescript 推导出具体的类型，并将类型赋值给`U`
+`infer`，意为推断，如 `infer U` 中 `U` 就表示 **待推断的类型**，完全可以先把这里的 `infer U` 看做 `any`，当执行时，TypeScript 推导出具体的类型，并将类型赋值给 `U`
 
-比如，我们希望获取数组第一个元素的类型：
+比如，希望获取数组第一个元素的类型：
 
 ```typescript
 type arr1 = ['a', 'b', 'c']
@@ -1024,27 +1024,27 @@ type F1 = First<arr1> // 'a'
 type F2 = First<arr2> //  3
 ```
 
-我们可以通过 infer 进行推断，把第一个元素和其他元素分开，再连成一个数组就好。
+可以通过 infer 进行推断，把第一个元素和其他元素分开，再连成一个数组即可。
 
 ```typescript
 type First<T extends any[]> = T extends [infer F, ...infer R] ? F : never
 ```
 
-当然，其实也可以用`T[K]`，使用方括号运算符
+当然，实际上也可以用 `T[K]`，使用方括号运算符
 
 ```typescript
 type First<T extends any[]> = T extends [] ? never : T[0]
 ```
 
-`T[0]`其实就是获取第 0 个位置上元素的类型，这里判断`T`和一个空元组的兼容性，也就是 T 不是一个空元组，那就得到第 0 个位置上元素的类型。
+`T[0]` 实际上就是获取第 0 个位置上元素的类型，这里判断 `T` 和一个空元组的兼容性，也就是 T 不是一个空元组，那就得到第 0 个位置上元素的类型。
 
-其实还能有下面的写法：
+实际上还能有下面的写法：
 
 ```typescript
 type First<T extends any[]> = T['length'] extends 0 ? never : T[0]
 ```
 
-`T['length']`可以获取 length 属性的类型，其实也就是数组长度，不是 0 的话，得到第 0 个位置上元素的类型
+`T['length']` 可以获取 length 属性的类型，实际上也就是数组长度，不是 0 的话，得到第 0 个位置上元素的类型
 
 ```typescript
 type ArrayLength<T extends any[]> = T['length']
@@ -1061,7 +1061,7 @@ type S1 = Swap<[1, 2]> // 符合元组结构，首尾元素替换[2, 1]
 type S2 = Swap<[1, 2, 3, 4]> // 不符合元组结构，直接返回原数组[1,2,3,4]
 ```
 
-当然，如果你希望无论如何数组的首位都进行交换，一样简单，加上**`...`操作符**即可
+当然，如果希望无论如何数组的首位都进行交换，一样简单，加上**`...`操作符**即可
 
 ```typescript
 type Swap<T extends any[]> = T extends [infer A, ...infer Rest, infer B] ? [B, ...Rest, A] : T
@@ -1080,18 +1080,18 @@ type B = GetReturnType<(n: number) => void>
 type C = GetReturnType<() => number>
 ```
 
-`GetReturnType`实际上是[`ReturnType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype)的具体实现
+`GetReturnType` 实际上是 [`ReturnType<Type>`](https://www.typescriptlang.org/docs/handbook/utility-types.html#returntypetype) 的具体实现
 
 ## 模板字符串类型
 
-TS 字符串模板类型的写法跟 JS 模板字符串非常类似
+TypeScript 字符串模板类型的写法跟 JavaScript 模板字符串非常类似
 
 ```typescript
 type World = 'world'
 type Greeting = `hello ${World}`
 ```
 
-除了前面的 `type` 跟 `JS` 不一样之外，后面就是一模一样了，通过 `${}` 包裹，里面可以直接传入类型变量，使用变量的模板字符串可以实现你意想不到的效果。
+除了前面的 `type` 跟 `JavaScript` 不一样之外，后面就是一模一样了，通过 `${}` 包裹，里面可以直接传入类型变量，使用变量的模板字符串可以实现意想不到的效果。
 
 ```typescript
 type Direction = 'left' | 'right' | 'top' | 'bottom'
@@ -1141,7 +1141,7 @@ type B = {
 // }
 ```
 
-但是如果想做的通用一点，也就是和泛型结合，会遇到问题：
+但是如果想做得通用一点，也就是和泛型结合，会遇到问题：
 
 ```typescript
 // 结合泛型使用，由于keyof T得到的是一个联合类型，不能直接用于模板字符串拼接
@@ -1153,7 +1153,7 @@ type AddID<T> = {
 type D = AddID<A>
 ```
 
-Typescript 官方也提供了很多内置的字符串工具[Intrinsic String Manipulation Types](https://www.typescriptlang.org/docs/handbook/utility-types.html#intrinsic-string-manipulation-types)，根据名字大概也能猜测出意思
+TypeScript 官方也提供了很多内置的字符串工具 [Intrinsic String Manipulation Types](https://www.typescriptlang.org/docs/handbook/utility-types.html#intrinsic-string-manipulation-types)，根据名字大概也能猜测出意思
 
 ```typescript
 type World = 'world'
@@ -1172,9 +1172,9 @@ type UnUpperCaseGreeting = Uncapitalize<UpperCaseGreeting>
 // type CapitalizeGreeting = "hELLO WORLD"
 ```
 
-这还仅仅是字符串模板的初级使用，结合这泛型编程，可以玩出很多花样
+这还仅仅是字符串模板的初级使用，结合泛型编程，可以玩出很多花样
 
-比如提供一个对象字面量类型，通过字符串模板直接得到 Getter 和 Setter 类型
+例如提供一个对象字面量类型，通过字符串模板直接得到 Getter 和 Setter 类型
 
 ```typescript
 type User = {name: string; age: number; address: string}
@@ -1191,7 +1191,7 @@ type UserGetter = AddGetter<User>
 type UserSetter = AddSetter<User>
 ```
 
-还可以处理的更通用一些：
+还可以处理得更通用一些：
 
 ```typescript
 type ObjectWithGetterSetter<T extends object> = T & AddGetter<T> & AddSetter<T>
@@ -1225,7 +1225,7 @@ let p: UserWithGetterSetter = {
 
 ## 递归复用
 
-现在有这么一个需求，需要将字符串字面量类型中的每个值类型取出，组成联合类型，类型于：
+现在有这样一个需求，需要将字符串字面量类型中的每个值类型取出，组成联合类型，类似于：
 
 ```typescript
 type A = '12345'
@@ -1233,7 +1233,7 @@ type A = '12345'
 type B = '1' | '2' | '3' | '4' | '5'
 ```
 
-如果字符串字符串长度不变，那我们可以直接使用`infer`进行类型推断
+如果字符串长度不变，那么可以直接使用 `infer` 进行类型推断
 
 ```typescript
 type A = '12345'
@@ -1245,13 +1245,13 @@ type StringToUnion<S extends string> = S extends `${infer One}${infer Two}${infe
 type B = StringToUnion<A>
 ```
 
-但是这仅仅才 5 个字符串，如果字符串较多的话，不是要`infer`推断一堆类型，比如来个九字真言，难道要`infer9`次？
+但是这仅仅才 5 个字符，如果字符串较多的话，不是要 `infer` 推断一堆类型，比如来个九字真言，难道要 `infer` 9 次？
 
 ```typescript
 type A = '临兵斗者皆阵列前行'
 ```
 
-这个时候我们就可以使用递归复用：**当处理数量较多的类型的时候，可以只处理一个类型，然后递归的调用自身处理下一个类型，直到结束条件**
+这个时候就可以使用递归复用：**当处理数量较多的类型的时候，可以只处理一个类型，然后递归地调用自身处理下一个类型，直到结束条件**
 
 ```typescript
 type NineMantra = '临兵斗者皆阵列前行'
@@ -1261,7 +1261,7 @@ type StringToUnion<S extends string> = S extends `${infer One}${infer Rest}` ? O
 type NineMantraUnion = StringToUnion<NineMantra>
 ```
 
-和字符串字面量类型很类似的，如果一个数组要做一些类似的类型处理，那一样可以递归，比如，我们要把数组中的元素类型倒序
+和字符串字面量类型很类似，如果一个数组要做一些类似的类型处理，那一样可以递归，比如，要把数组中的元素类型倒序
 
 ```typescript
 type ReverseArr<T extends any[]> = T extends [infer One, infer Two, infer Three, infer Four, infer Five]
@@ -1271,7 +1271,7 @@ type ReverseArr<T extends any[]> = T extends [infer One, infer Two, infer Three,
 type Reversed = ReverseArr<[1, 2, 3, 4, 5]> // [5, 4, 3, 2, 1]
 ```
 
-同样，我们使用递归复用：
+同样，使用递归复用：
 
 ```typescript
 type ReverseArr<T extends any[]> = T extends [infer One, ...infer Rest] ? [...ReverseArr<Rest>, One] : T // 注意结束之后返回的是数组
@@ -1279,13 +1279,13 @@ type ReverseArr<T extends any[]> = T extends [infer One, ...infer Rest] ? [...Re
 type Reversed = ReverseArr<[1, 2, 3, 4, 5]> // [5, 4, 3, 2, 1]
 ```
 
-再来一个，比如，我们现在通过编写一个类型工具，获取一个字符串字面量类型的长度
+再来一个，比如，现在通过编写一个类型工具，获取一个字符串字面量类型的长度
 
 ```typescript
 type S = LengthOfString<'12345'> // 5
 ```
 
-我们可以思考，之前我们讲过数组类型是不是可以获取长度，通过 T['length']，那我们能不能把字符串类型转成数组类型呢？完全可以，通过 infer 推断和递归复用：
+可以思考，之前讲过数组类型是不是可以获取长度，通过 T['length']，那么能不能把字符串类型转成数组类型呢？完全可以，通过 infer 推断和递归复用：
 
 ```typescript
 type LengthOfString<S extends string, T extends string[] = []> = S extends `${infer F}${infer R}`
@@ -1295,7 +1295,7 @@ type LengthOfString<S extends string, T extends string[] = []> = S extends `${in
 type S = LengthOfString<'12345'>
 ```
 
-通过递归复用，还能实现对索引映射类型的深递归，比如。我们希望将一个层级较深的对象类型全部属性转为`readonly`只读
+通过递归复用，还能实现对索引映射类型的深递归，比如，希望将一个层级较深的对象类型全部属性转为 `readonly` 只读
 
 ```typescript
 type User = {
@@ -1311,7 +1311,7 @@ type User = {
 }
 ```
 
-如果我们使用之前写的 MyReadonly 处理,仅仅只会把第一个层级的属性转变为`readonly`
+如果使用之前编写的 MyReadonly 处理，仅仅只会把第一个层级的属性转变为 `readonly`
 
 ```typescript
 type MyReadonly<T> = {
@@ -1321,7 +1321,7 @@ type MyReadonly<T> = {
 type ReadonlyUser = MyReadonly<User>
 ```
 
-这里我们简单使用递归就能实现想要的效果
+这里简单使用递归就能实现想要的效果
 
 ```typescript
 type DeepReadonly<T extends Record<string, any>> = {
@@ -1331,7 +1331,7 @@ type DeepReadonly<T extends Record<string, any>> = {
 type ReadonlyUser = DeepReadonly<User>
 ```
 
-不过这样不好看到最后转换的效果，因为 TS 为了保证性能，并不会做深层的计算。
+不过这样不好看到最后转换的效果，因为 TypeScript 为了保证性能，并不会做深层的计算。
 
 有一个比较实用的类型体操技能，就是在比较复杂的，特别是需要递归计算的类型体操计算外，包裹一层代码：
 
@@ -1341,7 +1341,7 @@ T extends any ?
 : never
 ```
 
-这样我们就可以看到最后计算完成的效果，比如把上面的代码换成:
+这样就可以看到最后计算完成的效果，比如把上面的代码换成：
 
 ```typescript
 type DeepReadonly<T extends Record<string, any>> = T extends any

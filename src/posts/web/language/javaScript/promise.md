@@ -36,7 +36,7 @@ Promise A+ 规定：
 
    ![](../../../../../src/.vuepress/public/assets/images/web/language/javaScript/promise/pic_3.png)
 
-4. 可以针对任务进行后续处理，针对完成状态的后续处理称之为onFulfilled，针对失败的后续处理称之为onRejected
+4. 可以针对任务进行后续处理，针对完成状态的后续处理称之为`onFulfilled`，针对失败的后续处理称之为`onRejected`
 
    ![](../../../../../src/.vuepress/public/assets/images/web/language/javaScript/promise/pic_4.png)
 
@@ -117,14 +117,14 @@ pro.then(处理1).then(处理2).catch(处理3)
 
 | 方法名                       | 含义                                                         |
 | ---------------------------- | ------------------------------------------------------------ |
-| Promise.resolve(data)        | 直接返回一个完成状态的任务                                   |
-| Promise.reject(reason)       | 直接返回一个拒绝状态的任务                                   |
-| Promise.all(任务数组)        | 返回一个任务<br />任务数组全部成功则成功<br />任何一个失败则失败 |
-| Promise.any(任务数组)        | 返回一个任务<br />任务数组任一成功则成功<br />任务全部失败则失败 |
-| Promise.allSettled(任务数组) | 返回一个任务<br />任务数组全部已决则成功<br />该任务不会失败 |
-| Promise.race(任务数组)       | 返回一个任务<br />任务数组任一已决则已决，状态和其一致       |
+| `Promise.resolve(data)`        | 直接返回一个完成状态的任务                                   |
+| `Promise.reject(reason)`       | 直接返回一个拒绝状态的任务                                   |
+| `Promise.all(任务数组)`        | 返回一个任务<br />任务数组全部成功则成功<br />任何一个失败则失败 |
+| `Promise.any(任务数组)`        | 返回一个任务<br />任务数组任一成功则成功<br />任务全部失败则失败 |
+| `Promise.allSettled(任务数组)` | 返回一个任务<br />任务数组全部已决则成功<br />该任务不会失败 |
+| `Promise.race(任务数组)`       | 返回一个任务<br />任务数组任一已决则已决，状态和其一致       |
 
-
+## 4. async 和 await
 
 ### 4.1 消除回调
 
@@ -136,7 +136,7 @@ ES7推出了两个关键字`async`和`await`，用于更加优雅的表达Promis
 
 ### 4.2 async
 
-async关键字用于修饰函数，被它修饰的函数，一定返回Promise
+`async`关键字用于修饰函数，被它修饰的函数，一定返回Promise
 
 ```js
 async function method1(){
@@ -231,12 +231,12 @@ method(); // 输出： 失败 123
 
 | 方法名                       | 含义                                                         |
 | ---------------------------- | ------------------------------------------------------------ |
-| Promise.resolve(data)        | 直接返回一个完成状态的任务                                   |
-| Promise.reject(reason)       | 直接返回一个拒绝状态的任务                                   |
-| Promise.all(任务数组)        | 返回一个任务<br />任务数组全部成功则成功<br />任何一个失败则失败 |
-| Promise.any(任务数组)        | 返回一个任务<br />任务数组任一成功则成功<br />任务全部失败则失败 |
-| Promise.allSettled(任务数组) | 返回一个任务<br />任务数组全部已决则成功<br />该任务不会失败 |
-| Promise.race(任务数组)       | 返回一个任务<br />任务数组任一已决则已决，状态和其一致       |
+| `Promise.resolve(data)`        | 直接返回一个完成状态的任务                                   |
+| `Promise.reject(reason)`       | 直接返回一个拒绝状态的任务                                   |
+| `Promise.all(任务数组)`        | 返回一个任务<br />任务数组全部成功则成功<br />任何一个失败则失败 |
+| `Promise.any(任务数组)`        | 返回一个任务<br />任务数组任一成功则成功<br />任务全部失败则失败 |
+| `Promise.allSettled(任务数组)` | 返回一个任务<br />任务数组全部已决则成功<br />该任务不会失败 |
+| `Promise.race(任务数组)`       | 返回一个任务<br />任务数组任一已决则已决，状态和其一致       |
 |                              |                                                              |
 
 ### 5.4 async和await

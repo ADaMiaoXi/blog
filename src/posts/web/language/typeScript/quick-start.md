@@ -34,15 +34,14 @@ npm i -g typescript
 let str: string = 'hello'
 ```
 
-但是，就是这么简单的代码，**编译之后却会报错。**
+但是这段简单的代码在编译后会出现错误。
 
-不用担心，这个错误，并不是我们的错误，原因是默认情况下，TS 会做出下面的几种假设：
+这个错误并非代码本身的问题，而是因为 TypeScript 默认情况下会做出以下假设：
 
-1、假设当前环境在 DOM 环境中
-2、如果代码中没有模块化语句，默认代码是全局执行的，所以变量就是全局变量
-要最简单的解决，就是用模块化
+1、假设当前环境为 DOM 环境
+2、如果代码中没有模块化语句，默认代码在全局作用域执行，因此变量为全局变量
 
-可以加上 TS 的**配置文件**，或者`tsc`命令行的选项参数
+最简单的解决方案是使用模块化，或者添加 TypeScript 的**配置文件**，也可以使用`tsc`命令行选项参数
 
 ### tsconfig.json 配置文件
 
@@ -93,7 +92,7 @@ npm i -g nodemon
 nodemon --exec ts-node src/index.ts
 ```
 
-当然，可以像之前一样，将这个代码放入到 `package.json` 的 `scripts` 属性中
+同样，可以将此代码添加到 `package.json` 的 `scripts` 属性中
 
 ```json
 "scripts": {
@@ -111,7 +110,7 @@ tsc --init
 
 ### 工程切换 Typescript
 
-如果本地工程中也安装了 typescript，并且希望相关类型引用指向本地 typescript，而不是 vscode 内置的 typescript，可以自行进行切换
+如果本地项目中安装了 TypeScript，并且希望相关类型引用指向本地 TypeScript 而非 VSCode 内置的 TypeScript，可以进行切换
 
 `Ctrl` (`Command` 在 macOS) + `Shift` + `P` 打开**命令面板**，输入`Select Typescript Version`，选择切换即可
 
@@ -123,7 +122,7 @@ tsc --init
 
 在 **「设置」**中，**「打开工作区设置」**，由于内容较多，可以使用搜索词：**typescript inlay hints**
 
-对于新手，推荐开启的配置项主要是这几个：
+对于初学者，建议开启以下配置项：
 
 -   Function Like Return Types，显示推导得到的函数返回值类型；
 -   Parameter Names，显示函数入参的名称；
@@ -144,7 +143,7 @@ tsc --init
 
 ![](../../../../.vuepress/public/assets/images/web/language/typeScript/quick-start/image-20231202114650921.png)
 
-> 当然，并不是所有人都习惯这样的显示方式，你可以根据自己的需要进行调整。
+> 并非所有开发者都习惯这种显示方式，可以根据个人需要进行调整。
 
 ### VS Code 插件
 
@@ -167,7 +166,7 @@ tsc --init
 
 ### `any`
 
-any 类型可以绕过类型检查，因此，any 类型的数据可以赋值给任意类型,当然如果没有约束，也没有类型推断
+any 类型可以绕过类型检查，因此 any 类型的数据可以赋值给任意类型。如果没有约束，也不会进行类型推断
 
 ### 字面量类型
 
@@ -207,7 +206,7 @@ const arr3: number[] = [1, 2, 3, 4, 5]
 const arr4: Array<number> = [1, 2, 3, 4, 5]
 ```
 
-空数组默认推断为`any[]`,不过这个和**相关类型检查机制有关联**
+空数组默认推断为`any[]`，这与**相关类型检查机制有关**
 
 ```typescript
 const arr5 = []
@@ -215,7 +214,7 @@ arr5.push(123)
 arr5.push('123')
 ```
 
-数组也能联合类型
+数组也支持联合类型
 
 ```typescript
 let arr6: (string | number)[] = [1, '2', 3, '4']
@@ -234,27 +233,27 @@ const tuple1: [number, number] = [1, 2]
 const tuple2: [number, string] = [1, '2']
 ```
 
-**场景:** 在地图中,使用经纬度坐标来标记位置信息
+**应用场景：** 在地图应用中，使用经纬度坐标来标记位置信息
 
-可以使用数组来记录坐标,那么,该数组中只有两个元素,并且这两个元素都是数值类型
+可以使用数组来记录坐标，该数组中只有两个元素，且这两个元素都是数值类型
 
 ```js
 let position: number[] = [39.5427, 116.2317]
 ```
 
-使用 **number[]** 的缺点: 不严谨,因为该类型的数组中可以出现任意多个数字
+使用 **number[]** 的缺点：不够严谨，因为该类型的数组中可以包含任意数量的数字
 
-**更好的方式:** 元组(Tuple)
+**更好的方式：** 元组(Tuple)
 
-元组类型时另一种类型的数组,他确切的知道包含多少个元素,以及特定索引对应的类型
+元组类型是另一种数组类型，它确切地知道包含多少个元素，以及特定索引对应的类型
 
 ```js
 let position: [number, number] = [39.5427, 116.2317]
 ```
 
-**解释:**
+**说明：**
 
-元组类型可以确切的标记处有多少个元素,以及每个元素的类型。示例中,元素有两个元素,每个元素的类型都是 number
+元组类型可以确切地标记有多少个元素，以及每个元素的类型。在示例中，元组有两个元素，每个元素的类型都是 number
 
 **容易混淆的赋值**
 
@@ -268,9 +267,9 @@ let value = [] // 这样才表示暂时的空数组，不过类型是any[]
 
 ### 函数
 
-和 js 的区别无非也就是多了参数和返回值类型的类型定义
+与 JavaScript 的区别在于需要添加参数和返回值的类型定义
 
-返回值类型可以进行推断，其实参数的类型也能够通过类型检查的`"noImplicitAny": false,`配置设定取消
+返回值类型可以进行推断，参数的类型也可以通过类型检查的`"noImplicitAny": false`配置来取消强制要求
 
 ```typescript
 function add(a: number, b: number): number {
@@ -530,7 +529,7 @@ const v6: D = {
 
 类型断言是一种告诉编译器“我知道我在做什么”的方式。允许你将一个变量指定为更具体或更宽松的类型。
 
-简单来说，TS 根据它的类型推测，并不能确定到底是什么类型。但是我们明确知道一个值的类型，那我们就人为的干涉一下。告诉 TS，这就是某种类型，别怕
+简而言之，TypeScript 根据类型推测无法确定具体类型时，而开发者明确知道某个值的类型，就可以通过类型断言来明确告诉 TypeScript 该值的具体类型
 
 **语法:**
 
@@ -543,7 +542,7 @@ const v6: D = {
 ```typescript
 let someValue: any = 'this is a string'
 let strLength1: number = (<string>someValue).length
-// 如果要写断言，建议用as，因为上面的形式在react中会有歧义。尖括号语法与JSX的标签语法相冲突
+// 建议使用 as 语法，因为尖括号语法在 React 中会与 JSX 标签语法产生冲突
 let strLength2: number = (someValue as string).length
 ```
 
@@ -598,7 +597,7 @@ createProduction(getBox() as Box)
 createProduction(getBox()!)
 ```
 
-比如常见的 dom 操作
+例如常见的 DOM 操作：
 
 ```typescript
 const inputDom = document.querySelector('input')
@@ -611,7 +610,7 @@ inputDom!.addEventListener('change', e => {
 
 ### 可选链操作符
 
-注意，可选链操作符是 ES2020 新的语法特性，并不是 TS 的新特性
+需要注意的是，可选链操作符是 ES2020 的新语法特性，并非 TypeScript 的特性
 
 可选链操作符 `?.` 使得我们在尝试访问一个对象的属性或调用一个方法时，如果该对象是 `undefined` 或 `null`，不会引发错误，而是会返回 `undefined`。这样可以避免使用冗长的条件语句来检查对象的每个层级。
 
@@ -644,7 +643,7 @@ console.log(street) // 输出 undefined
 
 ### 什么是类型声明文件
 
-在前面的代码中，我们说从 `typescript` 编译到 `Javascript` 的过程中，类型消失了，比如下面的代码：
+在前面的代码中，从 `TypeScript` 编译到 `JavaScript` 的过程中，类型信息会消失，如下面的代码所示：
 
 ```typescript
 const str = 'hello'
@@ -698,11 +697,11 @@ function addUser(u) {
 addUser(u)
 ```
 
-但是是真的消失了吗？其实并不是，如果大家留意之前我们在[Playground](https://www.typescriptlang.org/zh/play?#code/MYewdgzgLgBNBOMC8MBEALApgG2yVA3AFBQCeADpjAKoSaIoDeRMrMAlgCYBcMYArgFsARvRZswAQ0GZeCdmADm41hHQgA7gH5uACi7cBI+gBopM7vKUBKZAD4YANxBciAXyKhIsft1r1kGGY2Dh4ARhMVPmlZVEACfUBIOVRIkLVNfU4zGOtgkLYvCBBsTAA6PEUMrJlrKI8PAp86eAhuAEF4eElSAB5-eAcUAG0oxgMI81iAK0lgAGtUNxS2UZ4AJirY+BA6BaIAXSIAM34wYCh2cBhJTk4+3V8+nKiAemeYKBBObZKfqPhMKD8eBgd7wfiYYgea63Jr3awEIA)上编写代码，专门有一项就叫做`DTS`
+但类型信息是否真的完全消失了呢？实际上并非如此。如果留意之前在[Playground](https://www.typescriptlang.org/zh/play?#code/MYewdgzgLgBNBOMC8MBEALApgG2yVA3AFBQCeADpjAKoSaIoDeRMrMAlgCYBcMYArgFsARvRZswAQ0GZeCdmADm41hHQgA7gH5uACi7cBI+gBopM7vKUBKZAD4YANxBciAXyKhIsft1r1kGGY2Dh4ARhMVPmlZVEACfUBIOVRIkLVNfU4zGOtgkLYvCBBsTAA6PEUMrJlrKI8PAp86eAhuAEF4eElSAB5-eAcUAG0oxgMI81iAK0lgAGtUNxS2UZ4AJirY+BA6BaIAXSIAM34wYCh2cBhJTk4+3V8+nKiAemeYKBBObZKfqPhMKD8eBgd7wfiYYgea63Jr3awEIA)上编写代码时，会发现有一个专门的`DTS`选项。
 
-你会发现，我们写的代码都自动转换成了 typescript 类型声明。
+编写的代码会自动转换成 TypeScript 类型声明。
 
-当然，这在我们的 VS Code 编辑器中也能生成的。只需要在`tsconfig.json`文件中加上相关配置即可
+在 VS Code 编辑器中也可以生成类型声明文件，只需要在`tsconfig.json`文件中添加相关配置即可
 
 ```diff
 {
@@ -735,15 +734,15 @@ declare const users: Array<User>
 declare function addUser(u: User): boolean
 ```
 
-也就是说，类型并不是真的全部消失了，而是被放到了专门的类型声明文件里。
+也就是说，类型信息并未完全消失，而是被保存到了专门的类型声明文件中。
 
-`.d.ts`结尾的文件，就是类型声明文件。`d`的含义就是`declaration`
+以`.d.ts`结尾的文件就是类型声明文件，其中`d`表示`declaration`（声明）。
 
-其实`typescript`本身就包含**两种文件类型**
+实际上，`TypeScript`包含**两种文件类型**
 
-1、`.ts`文件：既包含类型信息，又包含可执行代码，可以被编译成`.js`文件后执行，主要是我们编写文件代码的地方
+1、`.ts`文件：既包含类型信息，又包含可执行代码，可以被编译成`.js`文件后执行，主要用于编写业务代码
 
-2、`.d.ts`文件：只包含类型信息的类型声明文件，不会被编译成`.js`代码，仅仅提供类型信息，所以类型文件的用途就是提供类型信息
+2、`.d.ts`文件：只包含类型信息的类型声明文件，不会被编译成`.js`代码，仅用于提供类型信息
 
 ### 类型声明文件的来源
 
@@ -777,7 +776,7 @@ declare function addUser(u: User): boolean
 
 #### **内置声明文件**
 
-安装 TypeScript 语言时，会同时安装一些内置的类型声明文件，主要是内置的全局对象（JavaScript 语言接口和运行环境 API）的类型声明。这也就是为什么 `string`，`number` 等等基础类型，Javascript 的 api 直接就有类型提示的原因
+安装 TypeScript 时，会同时安装一些内置的类型声明文件，主要包含内置全局对象（JavaScript 语言接口和运行环境 API）的类型声明。这就是为什么 `string`、`number` 等基础类型以及 JavaScript API 能够直接获得类型提示的原因
 
 内置声明文件位于 TypeScript 语言安装目录的 `lib` 文件夹内
 
@@ -785,19 +784,19 @@ declare function addUser(u: User): boolean
 
 这些内置声明文件的文件名统一为 **lib.[description].d.ts** 的形式，其中 `description` 部分描述了文件内容。比如，`lib.dom.d.ts` 这个文件就描述了 DOM 结构的类型。
 
-如果想了解对应的全局对象类型接口，可以去查看这些内置声明文件。
+如果需要了解对应的全局对象类型接口，可以查看这些内置声明文件。
 
-`tsconfig.json` 中的配置 `target` 和 `lib` 其实就和内置声明文件是有关系的。TypeScript 编译器会自动根据编译目标 `target` 的值，加载对应的内置声明文件，默认不需要特别的配置。我们也可以指定加载哪些内置声明文件，自定义配置 `lib` 属性即可:
+`tsconfig.json` 中的 `target` 和 `lib` 配置与内置声明文件相关。TypeScript 编译器会根据编译目标 `target` 的值自动加载对应的内置声明文件，默认无需特别配置。也可以通过自定义 `lib` 属性来指定加载哪些内置声明文件：
 
 ```typescript
 "lib":["es2020","dom","dom.iterable"]
 ```
 
-> **为什么我们没有安装 typescript 之前也有提示？**
+> **为什么在未安装 TypeScript 之前也有类型提示？**
 >
-> 这是由于我们的 `VS Code` 等 IDE 工具在安装或者更新的时候，已经内置了 typescript 的 lib。一般在 `VS Code安装路径` -> `resources` -> `app` -> `extensios` -> `node_modules` -> `typescript` 下
+> 这是因为 `VS Code` 等 IDE 工具在安装或更新时，已经内置了 TypeScript 的库文件。通常位于 `VS Code安装路径` -> `resources` -> `app` -> `extensions` -> `node_modules` -> `typescript` 目录下。
 >
-> 如果你的 `VS Code` 一直没有升级，就有可能导致本地 `VS Code` 的 `typescript` 版本跟不上的情况，如果你的项目目录下，也安装的的有 typescript，我们是可以进行切换的。
+> 如果 `VS Code` 长期未升级，可能导致本地 `VS Code` 的 `TypeScript` 版本过旧。如果项目目录下也安装了 TypeScript，可以进行版本切换。
 >
 > 在`VS Code`中使用快捷键`ctrl(command) + shift + P`，输入`TypeScript`
 >
@@ -807,7 +806,7 @@ declare function addUser(u: User): boolean
 >
 > ![](../../../../.vuepress/public/assets/images/web/language/typeScript/quick-start/image-20240102215516047.png)
 >
-> 你可以选择使用 `VS Code` 版本还是项目工作区的版本
+> 可以选择使用 `VS Code` 版本或项目工作区的版本
 
 #### **外部类型声明文件**
 
@@ -819,26 +818,26 @@ declare function addUser(u: User): boolean
 
 **3、没有类型声明文件**
 
-没有类型声明这个很容易理解，我们现在不纠结这种情况，而且大多数情况下，我们也不应该去纠结他，关键是 1,2 两点是什么意思？其实我们下载两个常用的第三方库就能很明显的看出问题。
+没有类型声明文件的情况比较容易理解，在此不做详细讨论，而且大多数情况下也不应该过分关注这种情况。关键是理解前两种情况的含义。通过下载两个常用的第三方库就能清楚地看出差异。
 
 ```shell
 npm i axios lodash
 ```
 
-> 注意：引入模块之前，涉及到模块的查找方式，因此在 tsconfig.json 中需要配置**[module](https://www.typescriptlang.org/tsconfig#module)**
+> 注意：引入模块前，需要考虑模块的查找方式，因此需要在 tsconfig.json 中配置**[module](https://www.typescriptlang.org/tsconfig#module)**
 >
-> 对于现代 **Node.js 项目**，我们可以配置 `NodeNext`，注意这个配置会影响下面的配置：
+> 对于现代 **Node.js 项目**，可以配置 `NodeNext`，此配置会影响以下设置：
 >
 > ```typescript
 > "moduleResolution": "NodeNext",
 > "esModuleInterop": true
 > ```
 >
-> 当然，**具体模块化的配置，不同的环境要求是不一样的，有一定的区别**，比如是 nodejs 环境，还是 webpack 的打包环境，或者说是在写一个第三方库的环境，对于模块化的要求是不一样的。而且还涉及到模块化解析方式等问题。这里就先不详细深入讲解了
+> **不同环境对模块化配置的要求有所差异**，例如 Node.js 环境、Webpack 打包环境或第三方库开发环境，对模块化的要求各不相同，还涉及模块化解析方式等问题。此处不做深入讲解
 >
-> 在 **nodejs** 环境下，我们先简单配置为`"module":"NodeNext"`
+> 在 **Node.js** 环境下，可以简单配置为`"module":"NodeNext"`
 >
-> 在 **webapck/vite** 等打包环境下，设置为：
+> 在 **Webpack/Vite** 等打包环境下，设置为：
 >
 > `"module": "ESNext"`
 >
@@ -848,11 +847,11 @@ npm i axios lodash
 
 ![](../../../../.vuepress/public/assets/images/web/language/typeScript/quick-start/image-20240103104705896.png)
 
-其实打开这两个库的源代码就能发现问题，axios 是有`.d.ts`文件的，而 lodash 没有，也就是说根本没有类型声明，那当然就和提示的错误一样，无法找到模块的声明文件。
+查看这两个库的源代码就能发现差异，axios 包含`.d.ts`文件，而 lodash 没有，也就是说 lodash 没有类型声明，因此会出现无法找到模块声明文件的错误提示。
 
-第三方库如果没有提供类型声明文件，社区往往会提供。TypeScript 社区主要使用 [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)，各种类型声明文件都会提交到那里，已经包含了几千个第三方库。上面代码提示的错误，其实就是让我们到 `@types` 名称空间去下载 lodash 对应的类型声明，如果存在的话。当然，你也可以到 [npm](https://www.npmjs.com/~types) 上进行搜索。几乎你知道的所有较大的库，都会在上面找到，所以一般来说也要下载或者搜索都比较简单，`@types` 开头，`/` 后面加上**第三方库原来的名字**即可，比如：
+如果第三方库没有提供类型声明文件，社区通常会提供。TypeScript 社区主要使用 [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)，各种类型声明文件都会提交到该仓库，已经包含了数千个第三方库。上述代码提示的错误实际上是建议到 `@types` 名称空间下载 lodash 对应的类型声明（如果存在的话）。也可以到 [npm](https://www.npmjs.com/~types) 上进行搜索。几乎所有知名的库都能在上面找到，因此下载或搜索都比较简单，格式为 `@types` 开头，`/` 后面加上**第三方库的原始名称**即可，例如：
 
-`@types/lodash`，`@types/jquery`，`@types/node`，`@types/react`，`@types/react-dom`等等
+`@types/lodash`、`@types/jquery`、`@types/node`、`@types/react`、`@types/react-dom`等
 
 ```typescript
 npm i --save-dev @types/lodash
@@ -883,7 +882,7 @@ console.log(result)
 
 也就是说，如果你要手动指定 `typeRoots` ，那就需要自己手动指定所有需要查找的目录，如果你的项目中有深层次的目录结构，并且你希望包含其中的类型声明，你需要确保这些目录都被明确地添加到 `typeRoots` 中。
 
-其实，nodejs 本身也没有 TypeScript 的类型声明，因此你会发现在 `.ts` 文件中直接引入 nodejs 相关的模块同样会报错
+实际上，Node.js 本身也没有 TypeScript 的类型声明，因此在 `.ts` 文件中直接引入 Node.js 相关的模块同样会报错
 
 ```typescript
 import path from 'path' // error 找不到模块"path"或其相应的类型声明
@@ -897,10 +896,10 @@ npm i @types/node -D
 
 ### 类型声明文件的用途
 
-我们自己当然也能编写类型声明文件，但是声明文件 `.d.ts` 大多数时候是第三方库一起使用的，我们写代码教学阶段在 nodejs 环境下，单独去声明 `.d.ts` 文件没有太大的意义，首先大家要知道这个问题。所以，要使用 `.d.ts` 声明文件的场景一般是：
+当然也可以自己编写类型声明文件，但声明文件 `.d.ts` 大多数时候是与第三方库一起使用的。在 Node.js 环境下的代码学习阶段，单独声明 `.d.ts` 文件意义不大，首先需要了解这一点。使用 `.d.ts` 声明文件的场景通常是：
 
-1、自己写了一个主要是 Javascript 代码的第三方库，需要给这写 Javascript 代码加上类型声明，以便用户使用的时候可以得到类型声明，方便调用 API。
+1、开发了一个主要由 JavaScript 代码组成的第三方库，需要为这些 JavaScript 代码添加类型声明，以便用户使用时能够获得类型提示，方便调用 API。
 
-2、自己下载了别人写的第三方库，但是没有 typescript 类型声明，在社区 [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped)中也没有找到对应的类型声明，但是我们一定要用这个库，可以手动为这个库添加一些简单的类型声明，以免我们自己项目在使用这个第三方库没有类型声明报出错误提示。
+2、使用了他人开发的第三方库，但该库没有 TypeScript 类型声明，在社区 [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) 中也没有找到对应的类型声明，但必须使用该库时，可以手动为该库添加一些简单的类型声明，以避免项目中使用该第三方库时出现类型声明缺失的错误提示。
 
-3、在做应用项目的时候，需要补充一些全局的类型声明的时候，我们可能需要自己动手写 `.d.ts` 文件，其实这种情况大多数还是和第 2 点有关系
+3、在开发应用项目时，需要补充一些全局的类型声明，这时可能需要自己编写 `.d.ts` 文件，这种情况大多数与第 2 点相关

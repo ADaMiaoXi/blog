@@ -8,25 +8,25 @@ category:
 
 ## 1.  `this` 指向总结
 
- `this` 关键字是一个非常重要的语法点。毫不夸张地说，不理解它的含义，大部分开发任务都无法完成。
+`this` 关键字是一个非常重要的语法点。毫不夸张地说，不理解它的含义，大部分开发任务都无法完成。
 
- `this` 可以用在构造函数之中，表示实例对象。除此之外， `this` 还可以用在别的场合。**但不管是什么场合，\*this\* 都有一个共同点：它总是返回一个对象**。
+`this` 可以用在构造函数之中，表示实例对象。除此之外，`this` 还可以用在别的场合。**但不管是什么场合，`this` 都有一个共同点：它总是返回一个对象**。
 
-关于  `this` 的指向，有一种广为流传的说法就是“谁调用它， `this` 就指向谁”。
+关于 `this` 的指向，有一种广为流传的说法就是"谁调用它，`this` 就指向谁"。
 
-这样的说法没有太大的问题，但是并不是太全面。总结起来， `this` 的指向规律有如下几条：
+这样的说法没有太大的问题，但是并不是太全面。总结起来，`this` 的指向规律有如下几条：
 
-- 在函数体中，非显式或隐式地简单调用函数时，在严格模式下，函数内的  `this` 会被绑定到  `undefined` 上，在非严格模式下则会被绑定到全局对象 *window/global* 上。
-- 一般使用  `new` 方法调用构造函数时，构造函数内的  `this` 会被绑定到新创建的对象上。
-- 一般通过 *call/apply/bind* 方法显式调用函数时，函数体内的  `this` 会被绑定到指定参数的对象上。
-- 一般通过上下文对象调用函数时，函数体内的  `this` 会被绑定到该对象上。
-- 在箭头函数中， `this` 的指向是由外层（函数或全局）作用域来决定的。
+- 在函数体中，非显式或隐式地简单调用函数时，在严格模式下，函数内的 `this` 会被绑定到 `undefined` 上，在非严格模式下则会被绑定到全局对象 `window`/`global` 上。
+- 一般使用 `new` 方法调用构造函数时，构造函数内的 `this` 会被绑定到新创建的对象上。
+- 一般通过 `call`/`apply`/`bind` 方法显式调用函数时，函数体内的 `this` 会被绑定到指定参数的对象上。
+- 一般通过上下文对象调用函数时，函数体内的 `this` 会被绑定到该对象上。
+- 在箭头函数中，`this` 的指向是由外层（函数或全局）作用域来决定的。
 
-当然，真实环境多种多样，下面我们就来根据实战例题逐一梳理。
+当然，真实环境多种多样，下面就来根据实战例题逐一梳理。
 
-### 1.1. 全局环境中的  `this`
+### 1.1. 全局环境中的 `this`
 
-例题 *1*：
+例题 1：
 
 ```js
 function f1() {
@@ -42,11 +42,11 @@ f1(); // window or global
 f2(); // undefined
 ```
 
-这种情况相对简单、直接，函数在浏览器全局环境下被简单调用，在非严格模式下  `this` 指向  `window`，在通过  `use strict` 指明严格模式的情况下指向  `undefined`。
+这种情况相对简单、直接，函数在浏览器全局环境下被简单调用，在非严格模式下 `this` 指向 `window`，在通过 `use strict` 指明严格模式的情况下指向 `undefined`。
 
 虽然上面的题目比较基础，但是需要注意上面题目的变种，例如
 
-例题 *2*：
+例题 2：
 
 ```js
 const foo = {
@@ -60,11 +60,11 @@ var fn1 = foo.fn;
 fn1();
 ```
 
-这里的  `this` 仍然指向  `window`。虽然  `fn` 函数在  `foo` 对象中作为该对象的一个方法，但是在赋值给 *fn1* 之后，*fn1* 仍然是在  `window` 的全局环境下执行的。因此上面的代码仍然会输出  `window` 和  `undefined`。
+这里的 `this` 仍然指向 `window`。虽然 `fn` 函数在 `foo` 对象中作为该对象的一个方法，但是在赋值给 `fn1` 之后，`fn1` 仍然是在 `window` 的全局环境下执行的。因此上面的代码仍然会输出 `window` 和 `undefined`。
 
 还是上面这道题目，如果改成如下的形式
 
-例题 *3*：
+例题 3：
 
 ```js
 const foo = {
@@ -77,11 +77,11 @@ const foo = {
 foo.fn();
 ```
 
-这时， `this` 指向的是最后调用它的对象，在 `foo.fn( )` 语句中，this 指向的是  `foo` 对象。
+这时，`this` 指向的是最后调用它的对象，在 `foo.fn()` 语句中，`this` 指向的是 `foo` 对象。
 
-### 1.2. 上下文对象调用中的  `this`
+### 1.2. 上下文对象调用中的 `this`
 
-例题 *4*：
+例题 4：
 
 ```js
 const student = {
@@ -93,11 +93,11 @@ const student = {
 console.log(student.fn() === student); // true
 ```
 
-在上面的代码中， `this` 指向当前的对象  `student`，所以最终会返回  `true`。
+在上面的代码中，`this` 指向当前的对象 `student`，所以最终会返回 `true`。
 
-当存在更复杂的调用关系时，如以下代码中的嵌套关系， `this` 将指向最后调用它的对象，例如
+当存在更复杂的调用关系时，如以下代码中的嵌套关系，`this` 将指向最后调用它的对象，例如
 
-例题 *5*：
+例题 5：
 
 ```js
 const student = {
@@ -112,11 +112,11 @@ const student = {
 console.log(student.son.fn()); // zhangxiaosan
 ```
 
-在上面的代码中， `this` 会指向最后调用它的对象，因此输出的是 *zhangxiaosan*。
+在上面的代码中，`this` 会指向最后调用它的对象，因此输出的是 `zhangxiaosan`。
 
-至此， `this` 的上下文对象调用已经介绍得比较清楚了。我们再来看一道比较高阶的题目
+至此，`this` 的上下文对象调用已经介绍得比较清楚了。再来看一道比较高阶的题目
 
-例题 *6*：
+例题 6：
 
 ```js
 const o1 = {
@@ -146,14 +146,13 @@ console.log(o2.fn()); // o1
 console.log(o3.fn()); // undefined
 ```
 
-答案是 *o1、o1、undefined*。
+答案是 `o1`、`o1`、`undefined`。
 
+### 1.3. `this` 指向绑定事件的元素
 
-### 1.3.  `this` 指向绑定事件的元素
+DOM 元素绑定事件时，事件处理函数里面的 `this` 指向绑定了事件的元素。
 
-*DOM* 元素绑定事件时，事件处理函数里面的  `this` 指向绑定了事件的元素。
-
-这个地方一定要注意它和 *target* 的区别，*target* 是指向触发事件的元素。
+这个地方一定要注意它和 `target` 的区别，`target` 是指向触发事件的元素。
 
 示例如下：
 
@@ -176,11 +175,11 @@ colorList.addEventListener("click", function (event) {
 })
 ```
 
-当我点击如下位置时打印出来的信息如下：
+当点击如下位置时打印出来的信息如下：
 
 ![](../../../../../src/.vuepress/public/assets/images/web/language/javaScript/this/pic_1.png)
 
-有些时候我们会遇到一些困扰，比如在 *div* 节点的事件函数内部，有一个局部的 *callback* 方法，该方法被作为普通函数调用时，*callback* 内部的  `this` 是指向全局对象  `window` 的
+有些时候会遇到一些困扰，比如在 `div` 节点的事件函数内部，有一个局部的 `callback` 方法，该方法被作为普通函数调用时，`callback` 内部的 `this` 是指向全局对象 `window` 的
 
 例如：
 
@@ -196,7 +195,7 @@ document.getElementById('div1').onclick = function(){
 }
 ```
 
-此时有一种简单的解决方案，可以用一个变量保存 *div* 节点的引用，如下：
+此时有一种简单的解决方案，可以用一个变量保存 `div` 节点的引用，如下：
 
 ```
 window.id = 'window';
@@ -210,15 +209,15 @@ document.getElementById('div1').onclick = function(){
 }
 ```
 
-### 1.4.  *call、apply、bind* 方法修改  `this` 指向
+### 1.4. call、apply、bind 方法修改 `this` 指向
 
-由于 *JavaScript* 中  `this` 的指向受函数运行环境的影响，指向经常改变，使得开发变得困难和模糊，所以在封装 *sdk* 或者写一些复杂函数的时候经常会用到  `this` 指向绑定，以避免出现不必要的问题。
+由于 JavaScript 中 `this` 的指向受函数运行环境的影响，指向经常改变，使得开发变得困难和模糊，所以在封装 sdk 或者写一些复杂函数的时候经常会用到 `this` 指向绑定，以避免出现不必要的问题。
 
-*call、apply、bind* 基本都能实现这一功能，起到确定  `this` 指向的作用
+`call`、`apply`、`bind` 基本都能实现这一功能，起到确定 `this` 指向的作用
 
-***Function.prototype.call( )***
+**Function.prototype.call()**
 
-*call* 方法可以指定  `this` 的指向（即函数执行时所在的的作用域），然后再指定的作用域中，执行函数。
+`call` 方法可以指定 `this` 的指向（即函数执行时所在的的作用域），然后再指定的作用域中，执行函数。
 
 ```js
 var obj = {};
@@ -229,11 +228,11 @@ console.log(f() === window);  // this 指向 window
 console.log(f.call(obj) === obj) // 改变this 指向 obj
 ```
 
-上面代码中，全局环境运行函数 *f* 时， `this` 指向全局环境（浏览器为  `window` 对象）；
+上面代码中，全局环境运行函数 `f` 时，`this` 指向全局环境（浏览器为 `window` 对象）；
 
-*call* 方法可以改变  `this` 的指向，指定  `this` 指向对象 *obj*，然后在对象 *obj* 的作用域中运行函数 *f*。
+`call` 方法可以改变 `this` 的指向，指定 `this` 指向对象 `obj`，然后在对象 `obj` 的作用域中运行函数 `f`。
 
-*call* 方法的参数，应该是对象 *obj*，如果参数为空或 *null、undefind*，则默认传参全局对象。
+`call` 方法的参数，应该是对象 `obj`，如果参数为空或 `null`、`undefined`，则默认传参全局对象。
 
 ```js
 var n = 123;
@@ -250,13 +249,13 @@ a.call(window) // 123
 a.call(obj) // 456
 ```
 
-上面代码中，*a* 函数中的  `this` 关键字，如果指向全局对象，返回结果为 *123*。
+上面代码中，`a` 函数中的 `this` 关键字，如果指向全局对象，返回结果为 `123`。
 
-如果使用 *call* 方法将  `this` 关键字指向 *obj* 对象，返回结果为 *456*。可以看到，如果 *call* 方法没有参数，或者参数为 *null* 或  `undefined`，则等同于指向全局对象。
+如果使用 `call` 方法将 `this` 关键字指向 `obj` 对象，返回结果为 `456`。可以看到，如果 `call` 方法没有参数，或者参数为 `null` 或 `undefined`，则等同于指向全局对象。
 
-如果 *call* 传参不是以上类型，则转化成对应的包装对象，然后传入方法。
+如果 `call` 传参不是以上类型，则转化成对应的包装对象，然后传入方法。
 
-例如，*5* 转成 *Number* 实例，绑定 *f* 内部  `this`
+例如，`5` 转成 `Number` 实例，绑定 `f` 内部 `this`
 
 ```js
 var f = function () {
@@ -266,7 +265,7 @@ var f = function () {
 f.call(5); // Number {[[PrimitiveValue]]: 5}
 ```
 
-*call* 可以接受多个参数，第一个参数是  `this` 指向的对象，之后的是函数回调所需的参数。
+`call` 可以接受多个参数，第一个参数是 `this` 指向的对象，之后的是函数回调所需的参数。
 
 ```js
 function add(a, b) {
@@ -276,7 +275,7 @@ function add(a, b) {
 add.call(this, 1, 2) // 3
 ```
 
-*call* 方法的一个应用是调用对象的原生方法。
+`call` 方法的一个应用是调用对象的原生方法。
 
 ```js
 var obj = {};
@@ -291,23 +290,23 @@ obj.hasOwnProperty('toString') // true
 Object.prototype.hasOwnProperty.call(obj, 'toString') // false
 ```
 
-上面代码中 *hasOwnProperty* 是 *obj* 继承来的方法，用来判断对象是否包含自身特点（非继承）属性，但是 *hasOwnProperty* 并不是保留字，如果被对象覆盖，会造成结果错误。
+上面代码中 `hasOwnProperty` 是 `obj` 继承来的方法，用来判断对象是否包含自身特点（非继承）属性，但是 `hasOwnProperty` 并不是保留字，如果被对象覆盖，会造成结果错误。
 
-*call* 方法可以解决这个问题，它将 *hasOwnProperty* 方法的原始定义放到 *obj* 对象上执行，这样无论 *obj* 上有没有同名方法，都不会影响结果。
+`call` 方法可以解决这个问题，它将 `hasOwnProperty` 方法的原始定义放到 `obj` 对象上执行，这样无论 `obj` 上有没有同名方法，都不会影响结果。
 
-***Function.prototype.apply( )***
+**Function.prototype.apply()**
 
-*apply* 和 *call* 作用类似，也是改变  `this` 指向，然后调用该函数，唯一区别是 *apply* 接收数组作为函数执行时的参数。语法如下：
+`apply` 和 `call` 作用类似，也是改变 `this` 指向，然后调用该函数，唯一区别是 `apply` 接收数组作为函数执行时的参数。语法如下：
 
 ```js
 func.apply(thisValue, [arg1, arg2, ...])
 ```
 
-*apply* 方法的第一个参数也是  `this` 所要指向的那个对象，如果设为 *null* 或  `undefined`，则等同于指定全局对象。
+`apply` 方法的第一个参数也是 `this` 所要指向的那个对象，如果设为 `null` 或 `undefined`，则等同于指定全局对象。
 
 第二个参数则是一个数组，该数组的所有成员依次作为参数，传入原函数。
 
-原函数的参数，在 *call* 方法中必须一个个添加，但是在 *apply* 方法中，必须以数组形式添加。
+原函数的参数，在 `call` 方法中必须一个个添加，但是在 `apply` 方法中，必须以数组形式添加。
 
 ```js
 function f(x, y){
@@ -325,16 +324,16 @@ var a = [24,30,2,33,1]
 Math.max.apply(null,a)  //33
 ```
 
-还可以将数组中的空值，转化成  `undefined`。
+还可以将数组中的空值，转化成 `undefined`。
 
-通过 *apply* 方法，利用 *Array* 构造函数将数组的空元素变成  `undefined`。
+通过 `apply` 方法，利用 `Array` 构造函数将数组的空元素变成 `undefined`。
 
 ```js
 var a = ['a',,'b'];
 Array.apply(null,a) //['a',undefind,'b']
 ```
 
-空元素与  `undefined` 的差别在于，数组的 *forEach* 方法会跳过空元素，但是不会跳过  `undefined`。因此，遍历内部元素的时候，会得到不同的结果。
+空元素与 `undefined` 的差别在于，数组的 `forEach` 方法会跳过空元素，但是不会跳过 `undefined`。因此，遍历内部元素的时候，会得到不同的结果。
 
 ```js
 var a = ['a', , 'b'];
@@ -353,7 +352,7 @@ Array.apply(null, a).forEach(print)
 // b
 ```
 
-配合数组对象的 *slice* 方法，可以将一个类似数组的对象（比如 *arguments* 对象）转为真正的数组。
+配合数组对象的 `slice` 方法，可以将一个类似数组的对象（比如 `arguments` 对象）转为真正的数组。
 
 ```js
 Array.prototype.slice.apply({0: 1, length: 1}) // [1]
@@ -362,15 +361,15 @@ Array.prototype.slice.apply({0: 1, length: 2}) // [1, undefined]
 Array.prototype.slice.apply({length: 1}) // [undefined]
 ```
 
-上面代码的 *apply* 方法的参数都是对象，但是返回结果都是数组，这就起到了将对象转成数组的目的。
+上面代码的 `apply` 方法的参数都是对象，但是返回结果都是数组，这就起到了将对象转成数组的目的。
 
-从上面代码可以看到，这个方法起作用的前提是，被处理的对象必须有 *length* 属性，以及相对应的数字键。
+从上面代码可以看到，这个方法起作用的前提是，被处理的对象必须有 `length` 属性，以及相对应的数字键。
 
-***Function.prototype.bind( )***
+**Function.prototype.bind()**
 
-*bind* 用于将函数体内的  `this` 绑定到某个对象，然后返回一个新函数
+`bind` 用于将函数体内的 `this` 绑定到某个对象，然后返回一个新函数
 
-```
+```js
 var d = new Date();
 d.getTime() // 1481869925657
 
@@ -378,7 +377,7 @@ var print = d.getTime;
 print() // Uncaught TypeError: this is not a Date object.
 ```
 
-报错是因为 *d.getTime* 赋值给 *print* 后，*getTime* 内部的  `this` 指向方式变化，已经不再指向 *date* 对象实例了。
+报错是因为 `d.getTime` 赋值给 `print` 后，`getTime` 内部的 `this` 指向方式变化，已经不再指向 `date` 对象实例了。
 
 解决方法：
 
@@ -387,7 +386,7 @@ var print = d.getTime.bind(d);
 print() // 1481869925657
 ```
 
-*bind* 接收的参数就是所要绑定的对象
+`bind` 接收的参数就是所要绑定的对象
 
 ```js
 var counter = {
@@ -420,7 +419,7 @@ func();
 obj.count // 101
 ```
 
-*bind* 还可以接收更多的参数，将这些参数绑定到原函数的参数
+`bind` 还可以接收更多的参数，将这些参数绑定到原函数的参数
 
 ```js
 var add = function (x, y) {
@@ -436,9 +435,9 @@ var newAdd = add.bind(obj, 5);
 newAdd(5) // 20
 ```
 
-上面代码中，*bind* 方法除了绑定  `this` 对象，还将 *add* 函数的第一个参数 *x* 绑定成 *5*，然后返回一个新函数 *newAdd*，这个函数只要再接受一个参数 *y* 就能运行了。
+上面代码中，`bind` 方法除了绑定 `this` 对象，还将 `add` 函数的第一个参数 `x` 绑定成 `5`，然后返回一个新函数 `newAdd`，这个函数只要再接受一个参数 `y` 就能运行了。
 
-如果 *bind* 方法的第一个参数是 *null* 或  `undefined`，等于将  `this` 绑定到全局对象，函数运行时  `this` 指向顶层对象（浏览器为  `window`）。
+如果 `bind` 方法的第一个参数是 `null` 或 `undefined`，等于将 `this` 绑定到全局对象，函数运行时 `this` 指向顶层对象（浏览器为 `window`）。
 
 ```js
 function add(x, y) {
@@ -449,21 +448,21 @@ var plus5 = add.bind(null, 5);
 plus5(10) // 15
 ```
 
-上面代码中，函数 *add* 内部并没有  `this`，使用 *bind* 方法的主要目的是绑定参数 *x*，以后每次运行新函数 *plus5*，就只需要提供另一个参数 *y* 就够了。
+上面代码中，函数 `add` 内部并没有 `this`，使用 `bind` 方法的主要目的是绑定参数 `x`，以后每次运行新函数 `plus5`，就只需要提供另一个参数 `y` 就够了。
 
-而且因为 *add* 内部没有  `this`，所以 *bind* 的第一个参数是 *null*，不过这里如果是其他对象，也没有影响。
+而且因为 `add` 内部没有 `this`，所以 `bind` 的第一个参数是 `null`，不过这里如果是其他对象，也没有影响。
 
-*bind* 方法有一些使用注意点。
+`bind` 方法有一些使用注意点。
 
 （1）每一次返回一个新函数
 
-*bind* 方法每运行一次，就返回一个新函数，这会产生一些问题。比如，监听事件的时候，不能写成下面这样。
+`bind` 方法每运行一次，就返回一个新函数，这会产生一些问题。比如，监听事件的时候，不能写成下面这样。
 
 ```js
 element.addEventListener('click', o.m.bind(o));
 ```
 
-上面代码中，*click* 事件绑定 *bind* 方法生成的一个匿名函数。这样会导致无法取消绑定，所以，下面的代码是无效的。
+上面代码中，`click` 事件绑定 `bind` 方法生成的一个匿名函数。这样会导致无法取消绑定，所以，下面的代码是无效的。
 
 ```js
 element.removeEventListener('click', o.m.bind(o));
@@ -480,7 +479,7 @@ element.removeEventListener('click', listener);
 
 （2）结合回调函数使用
 
-回调函数是 *JavaScript* 最常用的模式之一，但是一个常见的错误是，将包含  `this` 的方法直接当作回调函数。解决方法就是使用 *bind* 方法，将 *counter.inc* 绑定 *counter*。
+回调函数是 JavaScript 最常用的模式之一，但是一个常见的错误是，将包含 `this` 的方法直接当作回调函数。解决方法就是使用 `bind` 方法，将 `counter.inc` 绑定 `counter`。
 
 ```js
 var counter = {
@@ -499,9 +498,9 @@ callIt(counter.inc.bind(counter));
 counter.count // 1
 ```
 
-上面代码中，*callIt* 方法会调用回调函数。这时如果直接把 *counter.inc* 传入，调用时 *counter.inc* 内部的  `this` 就会指向全局对象。使用 *bind* 方法将 *counter.inc* 绑定 *counter* 以后，就不会有这个问题， `this` 总是指向 *counter*。
+上面代码中，`callIt` 方法会调用回调函数。这时如果直接把 `counter.inc` 传入，调用时 `counter.inc` 内部的 `this` 就会指向全局对象。使用 `bind` 方法将 `counter.inc` 绑定 `counter` 以后，就不会有这个问题，`this` 总是指向 `counter`。
 
-还有一种情况比较隐蔽，就是某些数组方法可以接受一个函数当作参数。这些函数内部的  `this` 指向，很可能也会出错。
+还有一种情况比较隐蔽，就是某些数组方法可以接受一个函数当作参数。这些函数内部的 `this` 指向，很可能也会出错。
 
 ```js
 var obj = {
@@ -518,9 +517,9 @@ obj.print()
 // 没有任何输出
 ```
 
-上面代码中，*obj.print* 内部 *this.times* 的  `this` 是指向 *obj* 的，这个没有问题。
+上面代码中，`obj.print` 内部 `this.times` 的 `this` 是指向 `obj` 的，这个没有问题。
 
-但是，*forEach* 方法的回调函数内部的 *this.name* 却是指向全局对象，导致没有办法取到值。稍微改动一下，就可以看得更清楚。
+但是，`forEach` 方法的回调函数内部的 `this.name` 却是指向全局对象，导致没有办法取到值。稍微改动一下，就可以看得更清楚。
 
 ```js
 obj.print = function () {
@@ -535,7 +534,7 @@ obj.print()
 // true
 ```
 
-解决这个问题，也是通过 *bind* 方法绑定  `this`。
+解决这个问题，也是通过 `bind` 方法绑定 `this`。
 
 ```js
 obj.print = function () {
@@ -550,26 +549,26 @@ obj.print()
 // 张三
 ```
 
-（3）结合 *call* 方法使用
+（3）结合 `call` 方法使用
 
-利用 *bind* 方法，可以改写一些 *JavaScript* 原生方法的使用形式，以数组的 *slice* 方法为例。
+利用 `bind` 方法，可以改写一些 JavaScript 原生方法的使用形式，以数组的 `slice` 方法为例。
 
-```
+```js
 [1, 2, 3].slice(0, 1) // [1]
 // 等同于
 Array.prototype.slice.call([1, 2, 3], 0, 1) // [1]
 ```
 
-上面的代码中，数组的 *slice* 方法从 *[1, 2, 3]* 里面，按照指定位置和长度切分出另一个数组。这样做的本质是在 *[1, 2, 3]* 上面调用 *Array.prototype.slice* 方法，因此可以用 *call* 方法表达这个过程，得到同样的结果。
+上面的代码中，数组的 `slice` 方法从 `[1, 2, 3]` 里面，按照指定位置和长度切分出另一个数组。这样做的本质是在 `[1, 2, 3]` 上面调用 `Array.prototype.slice` 方法，因此可以用 `call` 方法表达这个过程，得到同样的结果。
 
-*call* 方法实质上是调用 *Function.prototype.call* 方法，因此上面的表达式可以用 *bind* 方法改写。
+`call` 方法实质上是调用 `Function.prototype.call` 方法，因此上面的表达式可以用 `bind` 方法改写。
 
 ```js
 var slice = Function.prototype.call.bind(Array.prototype.slice);
 slice([1, 2, 3], 0, 1) // [1]
 ```
 
-上面代码的含义就是，将 *Array.prototype.slice* 变成 *Function.prototype.call* 方法所在的对象，调用时就变成了 *Array.prototype.slice.call*。类似的写法还可以用于其他数组方法。
+上面代码的含义就是，将 `Array.prototype.slice` 变成 `Function.prototype.call` 方法所在的对象，调用时就变成了 `Array.prototype.slice.call`。类似的写法还可以用于其他数组方法。
 
 ```js
 var push = Function.prototype.call.bind(Array.prototype.push);
@@ -583,7 +582,7 @@ pop(a)
 a // [1, 2, 3]
 ```
 
-如果再进一步，将 *Function.prototype.call* 方法绑定到 *Function.prototype.bind* 对象，就意味着 *bind* 的调用形式也可以被改写。
+如果再进一步，将 `Function.prototype.call` 方法绑定到 `Function.prototype.bind` 对象，就意味着 `bind` 的调用形式也可以被改写。
 
 ```js
 function f() {
@@ -595,15 +594,15 @@ var bind = Function.prototype.call.bind(Function.prototype.bind);
 bind(f, o)() // 123
 ```
 
-上面代码的含义就是，将 *Function.prototype.bind* 方法绑定在 *Function.prototype.call* 上面，所以 *bind* 方法就可以直接使用，不需要在函数实例上使用。
+上面代码的含义就是，将 `Function.prototype.bind` 方法绑定在 `Function.prototype.call` 上面，所以 `bind` 方法就可以直接使用，不需要在函数实例上使用。
 
-#### 1.5. 箭头函数的  `this` 指向
+#### 1.5. 箭头函数的 `this` 指向
 
-当我们的  `this` 是以函数的形式调用时， `this` 指向的是全局对象。
+当 `this` 是以函数的形式调用时，`this` 指向的是全局对象。
 
-不过对于箭头函数来讲，却比较特殊。箭头函数的  `this` 指向始终为外层的作用域。
+不过对于箭头函数来讲，却比较特殊。箭头函数的 `this` 指向始终为外层的作用域。
 
-先来看一个普通函数作为对象的一个方法被调用时， `this` 的指向，如下：
+先来看一个普通函数作为对象的一个方法被调用时，`this` 的指向，如下：
 
 ```js
 const obj = {
@@ -618,11 +617,11 @@ obj.test();
 // 10
 ```
 
-可以看到，普通函数作为对象的一个方法被调用时， `this` 指向当前对象。
+可以看到，普通函数作为对象的一个方法被调用时，`this` 指向当前对象。
 
-在上面的例子中，就是 *obj* 这个对象，*this.x* 的值为 *10*。
+在上面的例子中，就是 `obj` 这个对象，`this.x` 的值为 `10`。
 
-接下来是箭头函数以对象的方式被调用的时候的  `this` 的指向，如下：
+接下来是箭头函数以对象的方式被调用的时候的 `this` 的指向，如下：
 
 ```js
 var x = 20;
@@ -638,19 +637,19 @@ obj.test();
 // undefined
 ```
 
-这里的结果和上面不一样， `this` 打印出来为 { }，而 *this.x* 的值为  `undefined`。
+这里的结果和上面不一样，`this` 打印出来为 { }，而 `this.x` 的值为 `undefined`。
 
 为什么呢？
 
-实际上刚才我们有讲过，箭头函数的  `this` 指向与普通函数不一样，它的  `this` 指向始终是指向的外层作用域。所以这里的  `this` 实际上是指向的全局对象。
+实际上刚才有讲过，箭头函数的 `this` 指向与普通函数不一样，它的 `this` 指向始终是指向的外层作用域。所以这里的 `this` 实际上是指向的全局对象。
 
 如果证明呢？
 
-方法很简单，将这段代码放入浏览器运行，在浏览器中用 *var* 所声明的变量会成为全局对象  `window` 的一个属性，如下：
+方法很简单，将这段代码放入浏览器运行，在浏览器中用 `var` 所声明的变量会成为全局对象 `window` 的一个属性，如下：
 
 ![](../../../../../src/.vuepress/public/assets/images/web/language/javaScript/this/pic_2.png)
 
-接下来我们再来看一个例子，来证明箭头函数的  `this` 指向始终是指向的外层作用域。
+接下来再来看一个例子，来证明箭头函数的 `this` 指向始终是指向的外层作用域。
 
 ```js
 var name = "JavaScript";
@@ -668,7 +667,7 @@ const obj = {
 obj.test(); // JavaScript
 ```
 
-接下来我们将 i 函数修改为箭头函数，如下：
+接下来将 i 函数修改为箭头函数，如下：
 
 ```js
 var name = "JavaScript";

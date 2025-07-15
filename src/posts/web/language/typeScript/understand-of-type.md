@@ -10,7 +10,7 @@ category:
 
 ### `any`
 
-在 TS 中，编译时一切都要有类型，如果你和 TS 类型检查器无法确定类型是什么，默认为 `any` 。这是兜底的类型，是 TS 中所有类型的教父。
+在 TypeScript 中，编译时所有变量都必须具有类型，如果 TypeScript 类型检查器无法确定类型，则默认为 `any` 类型。这是兜底类型，是 TypeScript 中所有类型的顶级类型。
 
 ```javascript
 let a: any = 666
@@ -18,11 +18,11 @@ let b: any = ['danger']
 let c = a + b
 ```
 
-正常情况下，第三个语句应该在 TS 中报错才对（谁会去计算一个数字和一个数组之和呢？）
+正常情况下，第三个语句应该在 TypeScript 中报错（计算数字和数组之和没有意义）。
 
-但是如果显示声明了 `any` 标注，就不会报错，其实这里的做法就和原生 JS 的处理一模一样了。
+但是如果显式声明了 `any` 标注，就不会报错，此时的处理方式与原生 JavaScript 完全相同。
 
-换句话说，如果要使用 `any`，一定要显示标注，如果 TS 推导出值的类型为 `any`（例如忘记注解函数的参数，或者引入没有类型的 JavaScript 模块），将抛出运行时异常。
+换句话说，如果要使用 `any`，必须显式标注。如果 TypeScript 推导出值的类型为 `any`（例如忘记注解函数的参数，或者引入没有类型的 JavaScript 模块），将抛出运行时异常。
 
 ```javascript
 let foo // any
@@ -34,17 +34,17 @@ function func(foo, bar) {} // error 参数"foo","bar"隐式具有“any”类型
 >
 > `noImplcitAny` 隶属于 TSC 的 `strict` 标志家族，如果已经在 `tsconfig.json` 中启用了 `strict` ，那就不需要专门设置 `noImplcitAny` 标志了，效果是一样的。
 
-有时候我们可能确实需要一个表示任意类型的变量，特别是从 javascript 代码移植到 typescript 的时候。比较明显的比如 `console.log()` 方法就能接收任意类型的参数。
+有时候确实需要一个表示任意类型的变量，特别是从 JavaScript 代码移植到 TypeScript 的时候。例如 `console.log()` 方法就能接收任意类型的参数。
 
-当然默认情况下，你看到的应该是这样的
+默认情况下，看到的应该是这样的类型定义：
 
 ```javascript
  log(...data: any[]): void;
 ```
 
-我们现在能看到类型提示，这是由于 VS Code 编辑器结合着 `lib.dom.d.ts` 文件提供的 TS 支持。
+能够看到类型提示，这是由于 VS Code 编辑器结合 `lib.dom.d.ts` 文件提供的 TypeScript 支持。
 
-如果已经安装了 `@types/node`，可以得到 nodejs 对于 `console.log` 函数更加细致的提示：
+如果已经安装了 `@types/node`，可以得到 Node.js 对于 `console.log` 函数更加细致的提示：
 
 ```javascript
 log(message?: any, ...optionalParams: any[]): void;
@@ -66,7 +66,7 @@ log(message?: any, ...optionalParams: any[]): void;
 >
 > 这样上面代码`const fs = require('fs');`也找到的对应的类型支持，在 TS 文件中不会再报错了。
 
-总的来说，你可以在 `any` 类型变量上任意地进行操作，包括赋值、访问、方法调用等等，此时可以认为类型推导与检查是被完全禁用的：
+总的来说，可以在 `any` 类型变量上任意地进行操作，包括赋值、访问、方法调用等等，此时可以认为类型推导与检查被完全禁用：
 
 ```javascript
 let anyVar: any = null
@@ -74,13 +74,13 @@ anyVar.foo.bar.fn()
 anyVar[0][1][2].prop
 ```
 
-正如我们一开始就强调的 **【any 兜底的类型，是 TS 中所有类型的教父】**
+正如一开始就强调的 **【any 是兜底类型，是 TypeScript 中所有类型的顶级类型】**
 
 > **any 能兼容所有类型，也能够被所有类型兼容**
 
-这一作用其实也意味着类型世界给你开了一个外挂，无论什么时候，你都可以使用 `any` 类型跳过类型检查。当然，运行时出了问题就需要你自己负责了。
+这一作用实际上意味着类型系统提供了一个绕过类型检查的机制，无论什么时候，都可以使用 `any` 类型跳过类型检查。当然，运行时出现问题需要自己负责。
 
-`any` 类型的万能性也导致我们经常滥用它，比如类型不兼容了就 `any` 一下，类型不想写了也 `any` 一下，不确定可能会是啥类型还是 `any` 一下。此时的 `TypeScript` 就变成了令人诟病的 `AnyScript`。
+`any` 类型的万能性也导致容易滥用它，比如类型不兼容时使用 `any`，不想写类型时也使用 `any`，不确定可能的类型时还是使用 `any`。此时的 `TypeScript` 就变成了令人诟病的 `AnyScript`。
 
 ### `unknown`
 
@@ -105,12 +105,12 @@ if (typeof e === 'number') {
 }
 ```
 
-1. TS 不会把任何值推导为 `unknown` 类型，必须显式注解
+1. TypeScript 不会把任何值推导为 `unknown` 类型，必须显式注解
 2. `unknown` 类型的值可以比较
 3. `unknown` 类型的变量可以赋值给 `any` 或者 `unknown` 类型的其他变量
-4. 但是执行操作时不能假定 `unknown` 类型的值为某种特定的类型（比如上面的运算，注意和 `any` 的区别），必须先向 TS 证明一个值确实是某个类型，可以使用 `typeof`
+4. 但是执行操作时不能假定 `unknown` 类型的值为某种特定的类型（比如上面的运算，注意和 `any` 的区别），必须先向 TypeScript 证明一个值确实是某个类型，可以使用 `typeof`
 
-简单的说，**any 放弃了所有的类型检查，而 unknown 并没有**。
+简单地说，**any 放弃了所有的类型检查，而 unknown 并没有**。
 
 ```javascript
 let anyFn: any
@@ -120,13 +120,13 @@ anyFn.foo()
 unknownFn.foo() // error 对象的类型为"unknown"
 ```
 
-**在类型未知的情况下，更推荐使用 unknown 标注。**这相当于你使用额外的心智负担保证了类型在各处的结构，后续重构为具体类型时也可以获得最初始的类型信息，同时还保证了类型检查的存在。当然，`unknown` 用起来很麻烦。
+**在类型未知的情况下，更推荐使用 unknown 标注。**这相当于使用额外的心智负担保证了类型在各处的结构，后续重构为具体类型时也可以获得最初始的类型信息，同时还保证了类型检查的存在。当然，`unknown` 用起来比较麻烦。
 
-......如果本身就出现了不得不使用 `any` 或者 `unknown` 的情况，没必要太过于纠结使用 `any` 还是 `unknown`，归根结底，用哪个完全取决于你自己，毕竟语言只是工具
+如果本身就出现了不得不使用 `any` 或者 `unknown` 的情况，没必要过于纠结使用 `any` 还是 `unknown`，归根结底，使用哪个完全取决于具体需求，毕竟语言只是工具。
 
 ## boolean 与类型字面量
 
-`number`, `boolean`, `string`, `symbol`, bigint`这些 js 本身就支持的基础类型使用起来很简单，ts 的书写几乎感觉不到和 js 的差别，而且支持很多种书写的方式，当然中间还隐藏着一些很重要的细节。拿 boolean 举例来说：
+`number`、`boolean`、`string`、`symbol`、`bigint` 这些 JavaScript 本身就支持的基础类型使用起来很简单，TypeScript 的书写几乎感觉不到和 JavaScript 的差别，而且支持很多种书写的方式，当然中间还隐藏着一些很重要的细节。以 boolean 举例来说：
 
 ```typescript
 let a = true
@@ -138,14 +138,14 @@ let f: false = false
 //let g: true = false; // error 不能将类型false分配给类型true
 ```
 
-1. 可以让 TS 推导出值的类型为 `boolean`（`a`，`b`）
-2. 可以明确的告诉 TS，值的类型为 `boolean`（`d`）
-3. 可以明确的告诉 TS，值为某个具体的 `boolean` 值（`e`，`f` 和 `g`）
-4. 可以让 TS 推导出 (const) 值为某个具体的布尔值（`c`）
+1. 可以让 TypeScript 推导出值的类型为 `boolean`（`a`，`b`）
+2. 可以明确地告诉 TypeScript，值的类型为 `boolean`（`d`）
+3. 可以明确地告诉 TypeScript，值为某个具体的 `boolean` 值（`e`，`f` 和 `g`）
+4. 可以让 TypeScript 推导出 (const) 值为某个具体的布尔值（`c`）
 
-首先我们常见的写法是 1-4（行），要么使用 TS 自己的类型推导，要么我们自己定义好 `boolean` 类型，这是我们开始就介绍的方式。但是，5-7（行）的写法是什么意思？
+首先常见的写法是 1-4（行），要么使用 TypeScript 自己的类型推导，要么自己定义好 `boolean` 类型，这是一开始就介绍的方式。但是，5-7（行）的写法是什么意思？
 
-其实写法也很直观，我们大概也能猜到，**变量 `e` 和 `f` 不是普通的 `boolean` 类型，而是值只为 `true` 和 `false` 的 `boolean` 类型**
+其实写法也很直观，大概也能猜到，**变量 `e` 和 `f` 不是普通的 `boolean` 类型，而是值只为 `true` 和 `false` 的 `boolean` 类型**
 
 > 把类型设为某个值，就限制了 `e` 和 `f` 在所有布尔值中只能取指定的那个值。这个特性称为类型字面量（type literal）
 >
@@ -159,7 +159,7 @@ let g: true = false // error 不能将类型false分配给类型true
 
 特别注意一下第三行的代码：`const c = true;`，这里的变量 `c` 的类型是类型字面量 `true`。
 
-> 因为 const 声明的基本类型的值，赋值之后便无法修改，因此 TS 推导出的是范围最窄的类型
+> 因为 const 声明的基本类型的值，赋值之后便无法修改，因此 TypeScript 推导出的是范围最窄的类型
 
 ## 交叉（交集）类型 `&`
 
@@ -172,9 +172,9 @@ type User = Student & Teacher
 const user1: User = {name: 'jack', age: 18, subject: 'math'} // error 缺少属性"score"
 ```
 
-虽然有时候口头上经常会说交集类型，但是在教学的时候，我并不是太喜欢把 `&` 符号称为交集，叫做交叉应该更容易理解一些，不容易给大家造成思想误区。
+虽然有时候口头上经常会说交集类型，但是在教学的时候，并不太喜欢把 `&` 符号称为交集，叫做交叉应该更容易理解一些，不容易造成思想误区。
 
-就拿上面的类型来说，`A&B` ----> 一说交集应该是，`type C = {name:string}` 才对啊，最后得到的好像是我记忆中数学的联合类型啊？不用对你的记忆怀疑，你的记忆是对的，你可以把锅丢给翻译
+就拿上面的类型来说，`A&B` ----> 一说交集应该是，`type C = {name:string}` 才对，最后得到的好像是数学中的联合类型。不用对记忆怀疑，记忆是对的，可以把这个归因于翻译问题
 
 为了便于理解，你可以这样想：**C 既符合 A 也符合 B，所以是 A 和 B 的“交叉”**，有了这样的理解，下面出现的一些情况，我们才能更好的理解
 
@@ -226,9 +226,9 @@ const a: PT = {
 }
 ```
 
-不过我们可以使用交集类型的特性，达到一些我们需要的效果。
+不过可以使用交集类型的特性，达到一些需要的效果。
 
-比如，我们可能有一个联合类型，在实际开发中，可能这个联合类型我们并不知道有哪些，或者可能这个联合类型直接赋值给另外一个类型的时候会报错，我们可以使用`&`运算符对其进行约束
+比如，可能有一个联合类型，在实际开发中，可能这个联合类型并不知道有哪些，或者可能这个联合类型直接赋值给另外一个类型的时候会报错，可以使用`&`运算符对其进行约束
 
 ```typescript
 type params = string | number | boolean
@@ -283,7 +283,7 @@ const order: Order = {
 
 有了上面 `boolean` 类型的说明，其他的基本数据类型基本一致
 
-> `bigint` 是 ES11(ES2020) 新增的一种基本数据类型，在 JS 中，可以用 `Number` 表示的最大整数为 2^53 - 1，可以写为 `Number.MAX_SAFE_INTEGER`。如果超过了这个界限，那么就可以用 `BigInt` 来表示，它可以表示任意大的整数。
+> `bigint` 是 ES11(ES2020) 新增的一种基本数据类型，在 JavaScript 中，可以用 `Number` 表示的最大整数为 2^53 - 1，可以写为 `Number.MAX_SAFE_INTEGER`。如果超过了这个界限，那么就可以用 `BigInt` 来表示，它可以表示任意大的整数。
 >
 > 在一个整数字面量后面加 `n` 的方式定义一个 `bigint`，或者调用函数 `BigInt()`
 >
@@ -308,10 +308,10 @@ let g1: bigint = 100n
 let h1: 100n = 100n
 ```
 
-1. 可以让 TS 推导出值的类型为 `number`/`bigint`（`a`，`b`，`a1`，`b1`）
-2. 可以明确的告诉 TS，值的类型为 `number`/`bigint`（`e`，`f1`）
-3. 可以明确的告诉 TS，值为某个具体的 `number`/`bigint` 值（`e`，`f`，`g`，`g1`，`h1`）
-4. 可以让 TS 推导出 (`const`) 值为某个具体的 `number`/`bigint` 值（`c`，`b2`）
+1. 可以让 TypeScript 推导出值的类型为 `number`/`bigint`（`a`，`b`，`a1`，`b1`）
+2. 可以明确地告诉 TypeScript，值的类型为 `number`/`bigint`（`e`，`f1`）
+3. 可以明确地告诉 TypeScript，值为某个具体的 `number`/`bigint` 值（`e`，`f`，`g`，`g1`，`h1`）
+4. 可以让 TypeScript 推导出 (`const`) 值为某个具体的 `number`/`bigint` 值（`c`，`b2`）
 
 ### string
 
@@ -349,7 +349,7 @@ for (let key in obj) {
 >
 > symbol 属性不参与 `for..in` 循环。`Object.keys()`也会忽略他们
 
-当然 symbol 也能进行全局注册：
+当然 symbol 也可以进行全局注册：
 
 ```typescript
 let id1 = Symbol.for('id')
@@ -385,9 +385,9 @@ console.log(c === d) // error 此比较没有意义，类型 typeof c 和 typeof
 
 ## 类型拓宽
 
-类型拓宽（type widening）是理解 TS 类型推导机制的关键。
+类型拓宽（type widening）是理解 TypeScript 类型推导机制的关键。
 
-> 一般来说，TS 在推导类型的时候会放宽要求，故意推导出一个更宽泛的类型，而不限定为每个具体的类型。
+> 一般来说，TypeScript 在推导类型的时候会放宽要求，故意推导出一个更宽泛的类型，而不限定为每个具体的类型。
 
 声明变量时如果运行以后修改变量的值（例如使用 `let` 和 `var` 声明），变量类型将拓宽，从字面值放大到包含该字面量的基础类型
 
@@ -405,7 +405,7 @@ const b = 123 // 123
 const c = true // true
 ```
 
-我们当然可以显示的标注类型防止类型拓宽
+当然可以显式地标注类型防止类型拓宽
 
 ```typescript
 let a: 'x' = 'x' // 'x'
@@ -421,15 +421,15 @@ const obj = {
 }
 ```
 
-因为 Javascript 对象是可变的，所以在 Typescript 看来，创建对象之后你可能会更新对象
+因为 JavaScript 对象是可变的，所以在 TypeScript 看来，创建对象之后可能会更新对象
 
 ## null 与 undefined
 
-在 JavaScript 中，`null` 与 `undefined` 都表示缺少什么，Typescript 也支持这两个值，并且都有各自的类型，类型名称就是 `null` 与 `undefined`。
+在 JavaScript 中，`null` 与 `undefined` 都表示缺少什么，TypeScript 也支持这两个值，并且都有各自的类型，类型名称就是 `null` 与 `undefined`。
 
-这两个类型比较特殊，在 TS 中，`undefined`类型只有`undefined`一个值，`null`类型也只有`null`一个值。
+这两个类型比较特殊，在 TypeScript 中，`undefined`类型只有`undefined`一个值，`null`类型也只有`null`一个值。
 
-我们在写 JavaScript 的时候，这两个在语义上有细微的差别，`undefined`一般表示尚未定义，而`null`表示缺少值。
+在写 JavaScript 的时候，这两个在语义上有细微的差别，`undefined`一般表示尚未定义，而`null`表示缺少值。
 
 `null` 与 `undefined` 在**没有开启 `strictNullChecks` 检查的情况下**（tsconfig.json 中设置了 `strict:true` 默认开始，如果想关闭，可以设置 `strictNullChecks:false` ），**会被视为其他类型的子类型**，比如 string 类型会被认为包含了 `null` 与 `undefined`
 
@@ -477,9 +477,9 @@ function getUser(): User {
 <a href='javascript:void(0)'>点击</a>
 ```
 
-我们在界面经常这样写来表示阻止 a 标签的默认行为.
+在界面经常这样写来表示阻止 a 标签的默认行为。
 
-这里的 `void(0)` 等价于 `void 0`，即 `void expression` 的语法，我们可以使用它来执行一个立即执行函数（IIFE）
+这里的 `void(0)` 等价于 `void 0`，即 `void expression` 的语法，可以使用它来执行一个立即执行函数（IIFE）
 
 ```javascript
 void (function () {
@@ -487,7 +487,7 @@ void (function () {
 })()
 ```
 
-在 Typescript 中，`void` 也表示一种类型，用于描述一个内部没有 `return` 语句，或者没有显式 `return` 一个值的函数的返回值，如：
+在 TypeScript 中，`void` 也表示一种类型，用于描述一个内部没有 `return` 语句，或者没有显式 `return` 一个值的函数的返回值，如：
 
 ```javascript
 function fn1() {}
@@ -532,7 +532,7 @@ let v2: void = null // error 不能将类型null分配给类型void，关闭stri
 
 ## 对象字面量
 
-按照我们之前基础类型的惯性思维，在 Typescript 使用类型描述对象应该是下面这个样子：
+按照之前基础类型的惯性思维，在 TypeScript 使用类型描述对象应该是下面这个样子：
 
 ```javascript
 let a: object = {
@@ -548,15 +548,15 @@ console.log(a.b) //error 类型object上不存在属性"b"
 
 为什么把一个变量声明成 object 类型，却做不了任何操作呢？
 
-**其实 object 类型对值并不了解，就只能表示该值是一个 JavaScript 对象，仅此而已**。因此，当我们输入
+**其实 object 类型对值并不了解，就只能表示该值是一个 JavaScript 对象，仅此而已**。因此，当输入
 
 ```javascript
 a.
 ```
 
-Typescript 不会有任何提示。
+TypeScript 不会有任何提示。
 
-如果我们不显示注解，直接让 Typescript 推导
+如果不显式注解，直接让 TypeScript 推导
 
 ```javascript
 let a = {
@@ -567,7 +567,7 @@ console.log(a.b)
 
 ![](../../../../.vuepress/public/assets/images/web/language/typeScript/understand-of-type/image-20231206112616176.png)
 
-这其实就是**对象字面量**的语法，当然除了让 Typescript 推导出对象的解构，我们可以自己进行明确的描述
+这其实就是**对象字面量**的语法，当然除了让 TypeScript 推导出对象的结构，也可以自己进行明确的描述
 
 ```javascript
 const a: {b: string} = {
@@ -585,11 +585,11 @@ const user: {
 console.log(user.name)
 ```
 
-> 与前面讲的基本类型不同，使用**const 声明对象不会导致 Typescript 把推导的类型缩窄**。这是因为 JavaScript 对象是可变的，所以在 JavaScript 看来，创建对象之后你可能会更新对象的字段
+> 与前面讲的基本类型不同，使用**const 声明对象不会导致 TypeScript 把推导的类型缩窄**。这是因为 JavaScript 对象是可变的，所以在 TypeScript 看来，创建对象之后可能会更新对象的字段
 
 ## 可选符号 `?`
 
-默认情况下，Typescript 对对象的属性要求十分的严格，如果声明对象有个类型为 `string` 的属性 `name` 和类型为 `number` 的属性 `age`，Typescript 将预期对象有这么两个属性。而且有且仅有这两个属性，如果缺少 `name` 和 `age` 属性，或者多了其他属性，Typescript 将报错
+默认情况下，TypeScript 对对象的属性要求十分严格，如果声明对象有个类型为 `string` 的属性 `name` 和类型为 `number` 的属性 `age`，TypeScript 将预期对象有这么两个属性。而且有且仅有这两个属性，如果缺少 `name` 和 `age` 属性，或者多了其他属性，TypeScript 将报错
 
 ```typescript
 // 类型 "{ name: string; }" 中缺少属性 "age"，但类型 "{ name: string; age: number; }" 中需要该属性
@@ -605,7 +605,7 @@ let user: {
 user.sex = '男'
 ```
 
-我们可以通过可选符号修饰符 `?` 告诉 Typescript 某个属性是可选的
+可以通过可选符号修饰符 `?` 告诉 TypeScript 某个属性是可选的
 
 ```javascript
 let user: {
@@ -639,7 +639,7 @@ user.name = 'tom'; //error 无法为 "name" 赋值，因为它是只读属性
 
 ## 类型别名与接口
 
-我们使用 `let`，`const`，`var` 为某个值声明变量名，也就是这个值的别名，那么类似的，在 Typescript 中，可以为类型声明别名
+使用 `let`，`const`，`var` 为某个值声明变量名，也就是这个值的别名，那么类似的，在 TypeScript 中，可以为类型声明别名
 
 ```javascript
 type Age = number;
@@ -651,7 +651,7 @@ type Person = {
 
 `Age` 就是一个 `number`，因此可以让 `Person` 的解构定义更容易理解。**约定俗成的，一般类型别名的首字母大写**
 
-不过**Typescript 无法推导类型别名，因此必须显式注解**。
+不过**TypeScript 无法推导类型别名，因此必须显式注解**。
 
 和使用 let 声明变量一样，**同一种类型不能声明两次**
 
@@ -672,9 +672,9 @@ if (true) {
 let color: Color = 'red'
 ```
 
-当然，类型别名现在对我们最有用的地方就是减少重复输入复杂的类型。
+当然，类型别名现在最有用的地方就是减少重复输入复杂的类型。
 
-我们上面声明对象类型要么类型推导，要么使用对象字面量，但是使用类型字面量书写又难看，而且也不方便，如果有多个同样类型的对象，这太麻烦了，类型别名就很简单的解决了这个问题
+上面声明对象类型要么类型推导，要么使用对象字面量，但是使用类型字面量书写又难看，而且也不方便，如果有多个同样类型的对象，这太麻烦了，类型别名就很简单地解决了这个问题
 
 ```javascript
 type User = {
@@ -756,7 +756,7 @@ interface User {
 
 ## 结构化类型
 
-Typescript 的对象类型表示**对象的结构**。这是一种设计选择，JavaScript 采用的是**结构化类型**，Typescript 直接沿用，没有采取名义化类型
+TypeScript 的对象类型表示**对象的结构**。这是一种设计选择，JavaScript 采用的是**结构化类型**，TypeScript 直接沿用，没有采取名义化类型
 
 > 在**结构化类型**中，类型的兼容性是根据其结构或成员来确定的，而不是依赖于类型的名称或标识符。换句话说，如果两个对象具有相同的结构，即它们具有相同的属性和方法，那么它们可以被认为是相同类型或兼容的类型，即使它们的名称不同。在某些语言中也叫做**鸭子类型(鸭子辨型)**（意思是不以貌取人）
 >
@@ -827,19 +827,19 @@ a = b;
 
 ## 装箱与拆箱类型
 
-在写 javascript 的时候，如果暂时还不知道要给对象赋值什么属性，我们经常写成下面这个样子
+在写 JavaScript 的时候，如果暂时还不知道要给对象赋值什么属性，经常写成下面这个样子
 
 ```javascript
 let obj = {}
 ```
 
-在 typescript 中，`{}` 也可以用来表示类型，一般叫做空对象字面量表示
+在 TypeScript 中，`{}` 也可以用来表示类型，一般叫做空对象字面量表示
 
 ```typescript
 let obj: {}
 ```
 
-可能我们也会这么想，仅仅就只是声明一个对象，后面再给这个对象赋值具体的属性。
+可能也会这么想，仅仅就只是声明一个对象，后面再给这个对象赋值具体的属性。
 
 但是，`{}` 看似不起眼，实际上比之前的 object 作用范围还要大，object 至少规定了需要的是一个对象，而 `{}` 连基础类型都能复制，`{}` 其实和 `Object` 作用基本一样
 
@@ -851,7 +851,7 @@ let obj4: object = {name: 'John'}
 let obj5: object = 123 // Error
 ```
 
-JavaScript 原型链折磨过的同学应该记得，原型链的顶端是 `Object` 以及 `Function`，这也就意味着所有的原始类型与对象类型最终都指向 `Object`，在 TypeScript 中就表现为 `Object` 包含了所有的类型
+熟悉 JavaScript 原型链的开发者应该记得，原型链的顶端是 `Object` 以及 `Function`，这也就意味着所有的原始类型与对象类型最终都指向 `Object`，在 TypeScript 中就表现为 `Object` 包含了所有的类型
 
 ```typescript
 const temp1: Object = {name: 'jack'}
@@ -891,7 +891,7 @@ str2 = str5
 // str5 = str2; // Error
 ```
 
-> **在任何情况下，你都不应该使用这些装箱类型**
+> **在任何情况下，都不应该使用这些装箱类型**
 
 下图表示几种对象表示不同的值是否有效：
 
@@ -909,7 +909,7 @@ str2 = str5
 
 ## 联合(并集)类型 `|`
 
-有时候一个类型，可能会是 `string`，也有可能是 `number`，或者这个类型，并不仅仅就是一个类型字面量的值，我们希望可以限定是多个值，那这个时候我们应该怎么表示呢？
+有时候一个类型，可能会是 `string`，也有可能是 `number`，或者这个类型，并不仅仅就是一个类型字面量的值，希望可以限定是多个值，那这个时候应该怎么表示呢？
 
 ```javascript
 type Width = number | string
@@ -935,9 +935,9 @@ const person3: Person = {name: 'jack', age: 18, subject: 'math', score: 100}
 const person4: Person = {name: 'jack'} // error
 ```
 
-由于是联合，从上面的代码中就可以看出，`Person` 类型可以是 `Student` 类型的值，也可以是 `Teacher` 类型的值，甚至两者兼具结构合并之后的值也行。当然，你也不能两个都不是，所以 `person4` 报错
+由于是联合，从上面的代码中就可以看出，`Person` 类型可以是 `Student` 类型的值，也可以是 `Teacher` 类型的值，甚至两者兼具结构合并之后的值也行。当然，也不能两个都不是，所以 `person4` 报错
 
-但是使用对象的联合类型很容易让我们产生疑惑。上面的 person1 和 person2 对象都好说，取的是联合，所以我们可以要么是 Student，要么可以是 Teacher。要么其实我们可以两个都是，所以 `person3` 这样赋值是没有问题的。
+但是使用对象的联合类型很容易产生疑惑。上面的 person1 和 person2 对象都好说，取的是联合，所以可以要么是 Student，要么可以是 Teacher。要么其实可以两个都是，所以 `person3` 这样赋值是没有问题的。
 
 但是要取值的时候就会发生问题
 
@@ -953,7 +953,7 @@ console.log(person3.score) // error 类型Person上不存在属性score
 
 > 如果联合不相交，那么值只能属于联合类型中的某个成员，不能同时属于每个成员。
 
-联合类型我们非常常用，无论是在声明类型别名，对象字面量或者函数中都能用到
+联合类型非常常用，无论是在声明类型别名，对象字面量或者函数中都能用到
 
 ```typescript
 type Color = '黑色' | '白色' | '褐色' | '花色'
@@ -1115,17 +1115,17 @@ function parse(value: number | string | boolean | null | undefined) {
 }
 ```
 
-> 你可以把整个流程控制想象成一条河流，从上而下流过你的程序，随着代码的分支分出一条条支流，在最后重新合并为一条完整的河流。
+> 可以把整个流程控制想象成一条河流，从上而下流过程序，随着代码的分支分出一条条支流，在最后重新合并为一条完整的河流。
 >
 > **在类型控制流分析下，每流过一个 `if` 分支，后续联合类型的分支就会少一个，因为这个类型已经在这个分支处理过了，不会进入下一个分支**
 
 ### `typeof`:类型查询
 
-上面的代码中，我们使用了在 JavaScript 很常用的一个操作符`typeof`，在 JavaScript 中，我们常常用`typeof`来检查变量类型，通常会返回 `"string"`/`"number"`/`"boolean"`/`"function"`/`"object"` 等值。
+上面的代码中，使用了在 JavaScript 很常用的一个操作符`typeof`，在 JavaScript 中，常常用`typeof`来检查变量类型，通常会返回 `"string"`/`"number"`/`"boolean"`/`"function"`/`"object"` 等值。
 
-在 Typescript 中给 `typeof` 操作符还赋予了新的功能：**类型查询（Type Query Operator）**
+在 TypeScript 中给 `typeof` 操作符还赋予了新的功能：**类型查询（Type Query Operator）**
 
-简单来说，可以通过 `typeof` 获取自动推导的类型，给 `typeof` 一个值，就可以帮你推导出这个值的类型
+简单来说，可以通过 `typeof` 获取自动推导的类型，给 `typeof` 一个值，就可以推导出这个值的类型
 
 ```typescript
 let temp1 = 'hello1'
@@ -1219,7 +1219,7 @@ if ('a' in obj) {
 }
 ```
 
-在 Typescript 中，`in`**检查对象是否具有特定的属性，并使用该属性区分不同的类型**。**它通常返回一个布尔值，表示该属性是否存在于该对象中**。
+在 TypeScript 中，`in`**检查对象是否具有特定的属性，并使用该属性区分不同的类型**。**它通常返回一个布尔值，表示该属性是否存在于该对象中**。
 
 ```typescript
 type Circle = {
@@ -1285,9 +1285,9 @@ type UserEvent = {
 
 也就是当`value:number`的时候，`target`也可以选择`HTMLInputElement | HTMLButtonElement`
 
-因此，Typescript 需要一种更可靠的方式，明确对象的并集类型的具体情况。
+因此，TypeScript 需要一种更可靠的方式，明确对象的并集类型的具体情况。
 
-最常见的方式是，使用**字面量类型进行标记**，这样具体有值的情况下，就相当于在进行值的判断，这样 Typescript 就能很精确的推导出，具体的对象并集类型到底是哪个类型了
+最常见的方式是，使用**字面量类型进行标记**，这样具体有值的情况下，就相当于在进行值的判断，这样 TypeScript 就能很精确地推导出，具体的对象并集类型到底是哪个类型了
 
 ```typescript
 type UserTextEvent = {type: 'TextEvent'; value: string; target: HTMLInputElement}
@@ -1372,7 +1372,7 @@ function foo(input: string | number) {
 
 **类型收窄只能在同一的函数中**，如果在不同的函数中就不起作用。
 
-只要我们加上谓语动词：
+只要加上谓语动词：
 
 ```typescript
 function isString(input: any): input is string {
@@ -1391,7 +1391,7 @@ function foo(input: string | number) {
 }
 ```
 
-自定义类型守卫在我做一些比较复杂类型判断的时候比较有用
+自定义类型守卫在做一些比较复杂类型判断的时候比较有用
 
 ```typescript
 type Box = {
@@ -1420,7 +1420,7 @@ export function unref<T>(ref: MaybeRef<T> | ComputedRef<T>): T {
 }
 ```
 
-其实前面讲的`字面量的类型检查`，`typeof`，`instanceof`，`in`以及`自定义守卫`在 Typescript 中有统一的称呼，都叫做**类型守卫**，其目的其实都是在控制流分析的时候，帮助 typescript 收紧类型，便于推断
+其实前面讲的`字面量的类型检查`，`typeof`，`instanceof`，`in`以及`自定义守卫`在 TypeScript 中有统一的称呼，都叫做**类型守卫**，其目的其实都是在控制流分析的时候，帮助 TypeScript 收紧类型，便于推断
 
 ## `never`
 
@@ -1430,7 +1430,7 @@ export function unref<T>(ref: MaybeRef<T> | ComputedRef<T>): T {
 type A = string & number // never
 ```
 
-我们之前不是讲过有`null`，`undefined`和`void`类型吗？这三个都是有具体意义的，也表示具体的类型，`undefined`表示尚未定义，`null`表示缺少值，甚至是`void`就表示一个空类型，就像没有返回值的函数使用 void 来作为返回值类型标注一样。
+之前不是讲过有`null`，`undefined`和`void`类型吗？这三个都是有具体意义的，也表示具体的类型，`undefined`表示尚未定义，`null`表示缺少值，甚至是`void`就表示一个空类型，就像没有返回值的函数使用 void 来作为返回值类型标注一样。
 
 而 never 才是一个“什么都没有”的类型，它甚至不包括空的类型，严格来说，**never 类型不携带任何的类型信息**。
 
@@ -1440,19 +1440,19 @@ type A = string & number // never
 type Foo = string | number | boolean | undefined | null | void | never
 ```
 
-我们把常见的基础类型都放入到了联合声明中，但是将鼠标悬浮在类型别名之上，你会发现这里显示的类型是：`string | number | boolean | void | null | undefined`，`never`直接被无视掉了。
+把常见的基础类型都放入到了联合声明中，但是将鼠标悬浮在类型别名之上，会发现这里显示的类型是：`string | number | boolean | void | null | undefined`，`never`直接被无视掉了。
 
 > 注意：这个特性在以后的类型编程条件判断中经常会被用到，使用 never 来填充数据
 
-在 typescript 的类型系统中，`never` 类型被称为 **Bottom Type**，是**整个类型系统层级中最底层的类型**
+在 TypeScript 的类型系统中，`never` 类型被称为 **Bottom Type**，是**整个类型系统层级中最底层的类型**
 
 如果说`any`，`unknown`是其他每个类型的父类型，那么`never`就是其他每个类型的子类型。
 
 这意味着，**never 类型可以赋值给其他任何类型，但是反过来，却行不通**
 
-通常我们不会显式地声明一个 `never` 类型，这是没有任何意义的，它主要被类型检查所使用。
+通常不会显式地声明一个 `never` 类型，这是没有任何意义的，它主要被类型检查所使用。
 
-不过在实际工作中，特别是在团队开发中，我们可以利用 never 的特性与类型的控制流分析，让 typescript 做出更合理的处理
+不过在实际工作中，特别是在团队开发中，可以利用 never 的特性与类型的控制流分析，让 TypeScript 做出更合理的处理
 
 ```typescript
 type Method = 'GET' | 'POST'
@@ -1493,7 +1493,7 @@ function request(url: string, method: Method) {
 
 > 这种方式也叫做**穷举式检查**，积极的对不期望的情况进行错误处理，在编译时就捕获未处理的情况。而不是默默地忽略它们
 
-比如，前面的代码，我们也可以进行修改：
+比如，前面的代码，也可以进行修改：
 
 ```typescript
 type Circle = {kind: 'circle'; radius: number}
@@ -1627,7 +1627,7 @@ const users: {
 ]
 ```
 
-当然写成类型别名或者接口肯定可读性更高一些
+当然写成类型别名或者接口可读性更高一些
 
 ```typescript
 type User = {
@@ -1659,7 +1659,7 @@ arr.push('a')
 
 **注意：**当这样的数组离开定义时所在的作用域后，TypeScript 将最终确定一个类型，不再扩展。
 
-在实际工作中，可以很好的利用这一特性
+在实际工作中，可以很好地利用这一特性
 
 ```javascript
 function fn() {
@@ -1673,7 +1673,7 @@ const myArr = fn()
 // myArr.push(true); // error
 ```
 
-`readonly`修饰符也可以用来修饰数组，用于创建不可变的数组，只读数组和常规数组没有多大差别，只是不能就地更改。如果想创建只读数组，需要显示的注解类型。
+`readonly`修饰符也可以用来修饰数组，用于创建不可变的数组，只读数组和常规数组没有多大差别，只是不能就地更改。如果想创建只读数组，需要显式地注解类型。
 
 ```javascript
 const arr: readonly number[] = [1, 2, 3];
@@ -1693,7 +1693,7 @@ console.log(myArr3);
 
 在只读数组中，只能使用非变型方法，例如`concat`和`slice`，不能使用可变形方法，比如`push`和`splice`
 
-> **注意：**只读数组不可变的特性能让代码更易于理解，不过其背后提供支持的任然是常规的 Javascript 数组。这就意味着，即便只是对数组做很小的改动，也要复制整个原数组。
+> **注意：**只读数组不可变的特性能让代码更易于理解，不过其背后提供支持的仍然是常规的 JavaScript 数组。这就意味着，即便只是对数组做很小的改动，也要复制整个原数组。
 >
 > 对于小型数组来说，没什么影响，但是对于大型数组，可能会造成极大的影响。
 >
@@ -1701,7 +1701,7 @@ console.log(myArr3);
 
 **使用并集数组的细节**
 
-使用并集数组类型，我们一般有两种的声明方式，两种方式大体上一样，但是有一些细节上的区别
+使用并集数组类型，一般有两种声明方式，两种方式大体上一样，但是有一些细节上的区别
 
 ```typescript
 // 可以是number数组，可以是string，也可以是number和string类型混合的数组
@@ -1723,14 +1723,14 @@ const arr4: ArrType1 = [1, 'a', 3]
 
 **声明元组必须显式注解类型**，因为声明元组与数组的声明相同，都是使用方括号`[]`，因此默认推导出来的都是数组类型
 
-比如，在 Javascript 中，我们经常使用数组来表示一个坐标点。这种做法在 TS 中也没有任何问题，但是如果我们使用元祖类型，那么无论是提示还是代码严谨性，就更加的好
+比如，在 JavaScript 中，经常使用数组来表示一个坐标点。这种做法在 TypeScript 中也没有任何问题，但是如果使用元祖类型，那么无论是提示还是代码严谨性，就更加好
 
 ```typescript
 const pointer1: number[] = [10, 20]
 const pointer2: [number, number] = [20, 30]
 ```
 
-在 typescript4.0 中，甚至加入了`具名元祖`，让元祖类型的可读性更高
+在 TypeScript 4.0 中，甚至加入了`具名元祖`，让元祖类型的可读性更高
 
 ```typescript
 const pointer3: [x: number, y: number] = [20, 30]
@@ -1752,7 +1752,7 @@ pointer3.push(40)
 console.log(pointer3)
 ```
 
-因此，我们可以将元祖类型限制为可读`readonly`元祖
+因此，可以将元祖类型限制为可读`readonly`元祖
 
 ```typescript
 const pointer3: readonly [x: number, y: number] = [20, 30]
@@ -1760,7 +1760,7 @@ const pointer3: readonly [x: number, y: number] = [20, 30]
 
 ## 方括号运算符 `[]`
 
-数组当然需要使用 `[]`，在 Javascript 中我们经常使用 `[]` 来获取数组的值，或者动态引用获取对象属性的值
+数组当然需要使用 `[]`，在 JavaScript 中经常使用 `[]` 来获取数组的值，或者动态引用获取对象属性的值
 
 ```typescript
 const arr = ['a', 'b', 'c', 'd', 'e']
@@ -1774,7 +1774,7 @@ const obj = {
 console.log(obj[a]) // jack
 ```
 
-在 Typescript 中，方括号运算符 `[]` 用于类型计算，取出对象类型的键对应的值的类型，比如 `类型[键名]`，简写为 `T[K]` 会返回 `T` 类型的属性 `K` 的类型。
+在 TypeScript 中，方括号运算符 `[]` 用于类型计算，取出对象类型的键对应的值的类型，比如 `类型[键名]`，简写为 `T[K]` 会返回 `T` 类型的属性 `K` 的类型。
 
 ```typescript
 type Person = {
@@ -1998,13 +1998,13 @@ window.foo = 1 // 类型“Window & typeof globalThis”上不存在属性“foo
 >
 > 不过如果只是临时的增加 `foo` 属性，`as any` 会更加方便。
 >
-> 我的意思是，我们不能滥用 `as any`，但是也不要完全否定它的作用，我们需要在**类型的严格性和开发的便利性之间掌握平衡**。才能发挥出 TypeScript 最大的价值。
+> 也就是说，不能滥用 `as any`，但是也不要完全否定它的作用，需要在**类型的严格性和开发的便利性之间掌握平衡**。才能发挥出 TypeScript 最大的价值。
 
 #### 将 `any/unknown` 断言为一个具体的类型
 
-在日常的开发中，我们不可避免的需要处理 `any` 或者`unknown`类型的变量，它们可能是由于第三方库未能定义好自己的类型，也有可能是历史遗留问题，还可能是受到 TypeScript 类型系统的限制而无法精确定义类型的场景。
+在日常的开发中，不可避免地需要处理 `any` 或者`unknown`类型的变量，它们可能是由于第三方库未能定义好自己的类型，也有可能是历史遗留问题，还可能是受到 TypeScript 类型系统的限制而无法精确定义类型的场景。
 
-遇到 `any` 或者`unknown`类型的变量时，我们可以通过类型断言把 `any` 或者`unknown`断言为精确的类型。
+遇到 `any` 或者`unknown`类型的变量时，可以通过类型断言把 `any` 或者`unknown`断言为精确的类型。
 
 ```typescript
 // 第三方API或者历史遗留函数
@@ -2033,7 +2033,7 @@ let str = '123'
 let n = str as number // error
 ```
 
-两个完全没有关联的类型进行断言，这当然会报错，相信大家也能想的通，因此，什么情况下能断言，就很好理解了。
+两个完全没有关联的类型进行断言，这当然会报错，这是很容易理解的，因此，什么情况下能断言，就很好理解了。
 
 具体来说，若 `A` 兼容 `B`，那么 `A` 能够被断言为 `B`，`B` 也能被断言为 `A`。
 
@@ -2059,7 +2059,7 @@ b.eat()
 
 ### 非空断言
 
-当你确信某个值不是`null`或`undefined`时，可以使用非空断言
+当确信某个值不是`null`或`undefined`时，可以使用非空断言
 
 **语法:** `值!`，比如`someValue!`
 
@@ -2123,7 +2123,7 @@ let n = str as unknown as number
 console.log(typeof n)
 ```
 
-这样写很明显有类型安全的问题，类型断言并不等于类型转换，编译之后是没有类型的，所以通过 tsc 编译之后你会发现，其实就是把变量`str`赋值给了变量`n`
+这样写很明显有类型安全的问题，类型断言并不等于类型转换，编译之后是没有类型的，所以通过 tsc 编译之后会发现，其实就是把变量`str`赋值给了变量`n`
 
 ```typescript
 let str = '123Hello'
@@ -2178,7 +2178,7 @@ type Role = (typeof roles)[number] //"角色列表" | "用户删除" | "用户�
 
 ## satisfies
 
-`satisfies` 是一个类型操作符，它是 `TS4.9` 的新功能。和类型断言 `as` 功能比较类似，但是比类型断言更加安全也更加智能，因为他能在满足类型安全的前提下，自动帮我们做类型收窄和类型提示。
+`satisfies` 是一个类型操作符，它是 `TypeScript 4.9` 的新功能。和类型断言 `as` 功能比较类似，但是比类型断言更加安全也更加智能，因为它能在满足类型安全的前提下，自动做类型收窄和类型提示。
 
 ```typescript
 interface IConfig {
@@ -2374,7 +2374,7 @@ function checkStatus(status: StatusType) {
 }
 ```
 
-上面的代码虽然通过类型字面量的联合类型进行了判断，但是某一天要修改类型了，改成中文 `"成功"|"未找到"|"失败"`，或者直接改成数字，`200 | 404 | 500`，那么下面所有的判断都需要改。但是如果一开始就使用的是枚举，事情就简单了。就算要修改，把枚举对应的值，修改了就行了。
+上面的代码虽然通过类型字面量的联合类型进行了判断，但是某一天要修改类型了，改成中文 `"成功"|"未找到"|"失败"`，或者直接改成数字，`200 | 404 | 500`，那么下面所有的判断都需要改。但是如果一开始就使用的是枚举，事情就简单了。就算要修改，把枚举对应的值修改了就行了。
 
 ```typescript
 enum Status {
@@ -2414,7 +2414,7 @@ const upKey = Direction[0]
 console.log(upKey) // Up
 ```
 
-为什么可以这样，我们看一下编译后的产物就知道了
+为什么可以这样，看一下编译后的产物就知道了
 
 ```javascript
 var Direction
@@ -2455,13 +2455,13 @@ var Direction
 })(Direction || (Direction = {}))
 ```
 
-> 通过上面的代码，大家有没有发现，**枚举类型相当的特殊，既作为类型，也可以是值**。
+> 通过上面的代码，可以发现，**枚举类型相当特殊，既作为类型，也可以是值**。
 
 ### 枚举的一些问题
 
-> 在 Javascript 中，是没有 enum 枚举类型的，虽然有相关的[enum 提案](https://github.com/rbuckton/proposal-enum)，不过一直没有进展。所以对于枚举来说，实际上是有一些小坑在里面的。
+> 在 JavaScript 中，是没有 enum 枚举类型的，虽然有相关的[enum 提案](https://github.com/rbuckton/proposal-enum)，不过一直没有进展。所以对于枚举来说，实际上是有一些小坑在里面的。
 
-比如，从上面的编译结果可以看出，枚举类型在实际运行环境中编译成了一个**立即执行函数（IIFE）**。如果是普通业务，这不是什么问题。但如果这是一个 ts 写 npm 第三方库，需要提供给别人调用，就会发现因为枚举类型变成了立即执行函数（`IIFE`），无法被 `tree shaking` 优化掉，因为这个 `IIFE` 有副作用。
+比如，从上面的编译结果可以看出，枚举类型在实际运行环境中编译成了一个**立即执行函数（IIFE）**。如果是普通业务，这不是什么问题。但如果这是一个 TypeScript 写的 npm 第三方库，需要提供给别人调用，就会发现因为枚举类型变成了立即执行函数（`IIFE`），无法被 `tree shaking` 优化掉，因为这个 `IIFE` 有副作用。
 
 当然了，一般枚举的内容也不会太多，其实影响有限，但是这确确实实是枚举存在的一个问题，特别是现在特别鼓吹 ESM 浏览器模块化的今天，这个问题可能会被放大。
 
@@ -2478,14 +2478,14 @@ console.log(Direction[0]) // Up
 console.log(Direction[99]) // 不报错，undefined
 ```
 
-`Direction[99]` 这样的写法，在 Typescript 中竟然没有报错...或者这样写
+`Direction[99]` 这样的写法，在 TypeScript 中竟然没有报错...或者这样写
 
 ```typescript
 const n: number = 11
 const dir: Direction = n
 ```
 
-这样写，竟然也不会报错，当然这样写是能够理解的，因为我们有时候会使用枚举实现一些更加灵活的场景处理，比如下面的代码
+这样写，竟然也不会报错，当然这样写是能够理解的，因为有时候会使用枚举实现一些更加灵活的场景处理，比如下面的代码
 
 ```typescript
 enum AttackType {
@@ -2527,7 +2527,7 @@ console.log(Direction.Up) // 0
 ```
 
 1. 常量枚举不允许反向查找
-2. 常量枚举默认并不会生产任何 Javascript 代码，而是在用到枚举成员的时候直接插入对应的值
+2. 常量枚举默认并不会生产任何 JavaScript 代码，而是在用到枚举成员的时候直接插入对应的值
 
 ```typescript
 console.log(0 /* Direction.Up */) // 0
@@ -2537,4 +2537,4 @@ console.log(0 /* Direction.Up */) // 0
 
 ### `isolatedModules`
 
-如果在工程中使用枚举类型，务必要设置 tsconfig 的属性`isolatedModules:true`，因为有些打包工具并没有依赖 Typescript 的`tsc`进行类型检查和类型转译，像 `esbuild` 和 `Babel`这样的工具会单独编译每个文件，因此它们无法判断导入的名称是类型还是值。所以有一些 Typescript 的特性是容易产生错误的，比如`const enum`。这个内容在[vite](https://cn.vitejs.dev/guide/features.html#isolatedmodules)和[esbuild](https://esbuild.github.io/content-types/#isolated-modules)中都有相关的说明
+如果在工程中使用枚举类型，务必要设置 tsconfig 的属性`isolatedModules:true`，因为有些打包工具并没有依赖 TypeScript 的`tsc`进行类型检查和类型转译，像 `esbuild` 和 `Babel`这样的工具会单独编译每个文件，因此它们无法判断导入的名称是类型还是值。所以有一些 TypeScript 的特性是容易产生错误的，比如`const enum`。这个内容在[vite](https://cn.vitejs.dev/guide/features.html#isolatedmodules)和[esbuild](https://esbuild.github.io/content-types/#isolated-modules)中都有相关的说明
