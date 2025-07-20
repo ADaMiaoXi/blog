@@ -1,6 +1,6 @@
 ---
 title: 装饰器
-icon: fluent:code-ts-16-filled
+icon: oui:token-annotation
 order: 6
 category:
     - TypeScript

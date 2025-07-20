@@ -1,6 +1,6 @@
 ---
-title: 在模块化工程中的 TypeScript
-icon: fluent:code-ts-16-filled
+title: 工程化
+icon: streamline-freehand:module-three-boxes
 order: 7
 category:
     - TypeScript

@@ -14,7 +14,7 @@ export const zhNavbar = navbar([
             },
             {
                 text: '工程化',
-                icon: 'material-icon-theme:folder-webpack-open',
+                icon: 'streamline-ultimate:common-file-module-1',
                 link: 'frontend-engineering/'
             },
             {

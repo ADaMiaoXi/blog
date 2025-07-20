@@ -1,6 +1,6 @@
 ---
 title: 快速入门
-icon: fluent:code-ts-16-regular
+icon: material-symbols-light:input
 order: 1
 category:
     - TypeScript

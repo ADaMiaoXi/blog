@@ -1,6 +1,6 @@
 ---
 title: 函数和泛型
-icon: fluent:code-ts-16-regular
+icon: hugeicons:function-circle
 order: 3
 category:
     - TypeScript

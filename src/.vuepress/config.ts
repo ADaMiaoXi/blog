@@ -8,7 +8,7 @@ export default defineUserConfig({
     locales: {
         '/': {
             lang: 'zh-CN',
-            title: '大喵喜的技术杂货铺',
+            title: '大喵喜的杂货铺',
             description: '你发现了一块大喵喜的自留地！'
         }
     },

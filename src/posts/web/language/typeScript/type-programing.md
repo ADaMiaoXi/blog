@@ -1,6 +1,6 @@
 ---
 title: 类型编程
-icon: fluent:code-ts-16-regular
+icon: fluent:document-ts-16-regular
 order: 4
 category:
     - TypeScript

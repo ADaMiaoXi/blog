@@ -18,7 +18,7 @@ export const zhSidebar = sidebar({
                 },
                 {
                     text: '工程化',
-                    icon: 'material-icon-theme:folder-webpack-open',
+                    icon: 'streamline-ultimate:common-file-module-1',
                     prefix: 'frontend-engineering/',
                     collapsible: true,
                     children: 'structure'

@@ -1,6 +1,6 @@
 ---
 title: 类和接口
-icon: fluent:code-ts-16-filled
+icon: oui:token-class
 order: 5
 category:
     - TypeScript

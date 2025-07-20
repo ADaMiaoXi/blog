@@ -1,6 +1,6 @@
 ---
 title: 对类型的理解
-icon: fluent:code-ts-16-filled
+icon: iconamoon:type
 order: 2
 category:
     - TypeScript
