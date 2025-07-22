@@ -21,11 +21,6 @@ export const zhNavbar = navbar([
                 text: '框架',
                 icon: 'mdi:electron-framework',
                 link: 'framework/'
-            },
-            {
-                text: '状态管理工具',
-                icon: 'eos-icons:cluster-management-outlined',
-                link: 'state-management/'
             }
         ]
     },

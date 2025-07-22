@@ -1,6 +1,6 @@
 ---
 title: Reselect
-icon: /assets/images/web/state-management/reselct/logo.ico
+icon: /assets/images/web/framework/state-manager/reselct/logo.ico
 index: true
 order: 2
 category:

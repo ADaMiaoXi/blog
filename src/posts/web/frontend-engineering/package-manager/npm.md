@@ -290,9 +290,7 @@ npm uninstall [-g] <package-name>
 # uninstall 的别名有: remove、rm、r、un、unlink
 ```
 
-### NPM 配置
-
-NPM 的配置会对其他命令产生或多或少的影响。
+### NPM 配置项
 
 安装好 NPM 之后，最终会产生两个配置文件，一个是用户配置，一个是系统配置，当两个文件的配置项有冲突的时候，用户配置会覆盖系统配置。
 

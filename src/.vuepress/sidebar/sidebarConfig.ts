@@ -28,14 +28,29 @@ export const zhSidebar = sidebar({
                     icon: 'mdi:electron-framework',
                     prefix: 'framework/',
                     collapsible: true,
-                    children: 'structure'
-                },
-                {
-                    text: '状态管理工具',
-                    icon: 'eos-icons:cluster-management-outlined',
-                    prefix: 'state-management/',
-                    collapsible: true,
-                    children: 'structure'
+                    children: [
+                        {
+                            text: 'React',
+                            icon: 'skill-icons:react-dark',
+                            prefix: 'react/',
+                            collapsible: true,
+                            children: 'structure'
+                        },
+                        {
+                            text: 'Vue',
+                            icon: 'logos:vue',
+                            prefix: 'vue/',
+                            collapsible: true,
+                            children: 'structure'
+                        },
+                        {
+                            text: '状态管理工具',
+                            icon: 'eos-icons:cluster-management-outlined',
+                            prefix: 'state-manager/',
+                            collapsible: true,
+                            children: 'structure'
+                        }
+                    ]
                 }
             ]
         },

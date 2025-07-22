@@ -104,7 +104,7 @@ let Andy = new Person()
 Andy.gender = 'female'
 ````
 
-![](../../../.vuepress/public/assets/images/web/state-management/mobx/1648478322527.png)
+![](../../../../.vuepress/public/assets/images/web/framework/state-manager/mobx/1648478322527.png)
 
 
 
@@ -198,7 +198,7 @@ configure({
 
 必须使用 `action` 标记改变状态的函数。否则报错：
 
-![](../../../.vuepress/public/assets/images/web/state-management/mobx/1649241281475.png)
+![](../../../../.vuepress/public/assets/images/web/framework/state-manager/mobx/1649241281475.png)
 
 #### action.bound
 
@@ -218,7 +218,7 @@ configure({
 
 这意味着如果动作中存在 `setTimeout`、`setInterval`、`Promise.then` 或 `sync` 语句的时候，如果回调函数中某些状态发生了改变，这些回调函数也应该被包装在 `action` 中 ，否则会报错。
 
-![](../../../.vuepress/public/assets/images/web/state-management/mobx/1649250265500.png)
+![](../../../../.vuepress/public/assets/images/web/framework/state-manager/mobx/1649250265500.png)
 
 创建异步 action 有以下几种方式，没有哪个更好只说，只是阐述一些可以选择的做法：
 
