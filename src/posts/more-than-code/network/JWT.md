@@ -10,7 +10,7 @@ category:
 
 而这些产品线上的产品，它们可能有着各种终端设备，包括但不仅限于浏览器、桌面应用、移动端应用、平板应用、甚至智能家居
 
-![](../../../../src/.vuepress/public/assets/images/more-than-code/network/jwt/2.png)
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/JWT/2.png)
 
 > 实际上，不同的产品线通常有自己的服务器，产品内部的数据一般和自己的服务器交互。
 >
@@ -34,7 +34,7 @@ jwt 全称`Json Web Token`，强行翻译过来就是`json格式的互联网令�
 
 它要解决的问题，就是为多种终端设备，提供**统一的、安全的**令牌格式
 
-![](../../../../src/.vuepress/public/assets/images/more-than-code/network/jwt/1.png)
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/JWT/1.png)
 
 因此，jwt 只是一个令牌格式而已，你可以把它存储到 cookie，也可以存储到 localstorage，没有任何限制！
 
@@ -79,7 +79,7 @@ authorization: bearer jwt令牌
 
 它们的完整交互流程是非常简单清晰的
 
-![](../../../../src/.vuepress/public/assets/images/more-than-code/network/jwt/3.png)
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/JWT/3.png)
 
 ## 令牌的组成
 
@@ -254,7 +254,7 @@ jwt 的`signature`可以保证令牌不被伪造，那如何保证令牌不被�
 
 ## 令牌的验证
 
-![](../../../../src/.vuepress/public/assets/images/more-than-code/network/jwt/3.png)
+![](../../../../src/.vuepress/public/assets/images/more-than-code/network/JWT/3.png)
 
 令牌在服务器组装完成后，会以任意的方式发送到客户端
 
