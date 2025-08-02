@@ -1,12 +1,10 @@
 ---
-title: Yarn
+title: yarn
 icon: logos:yarn
 order: 2
 category:
     - Package manager
 ---
-
-## 简介
 
 Yarn 是由 Facebook、Google、Exponent 和 Tilde 联合推出的一个新的 JavaScript 包管理工具，**它仍然使用 NPM 的 registry**，但提供了全新的 CLI 来对包进行管理。
 
@@ -20,7 +18,7 @@ Yarn 是由 Facebook、Google、Exponent 和 Tilde 联合推出的一个新的 J
 -   执行指令困难： 早期 NPM 没有执行依赖包指令的工具，执行指令需要手动执行 `bin` 目录下的文件，需要写出完整路径。（没有 `npx`）
 -   工程移植问题：由于 NPM 的版本依赖可以是模糊的，可能导致工程移植后依赖的确切版本不一致。(没有 package.json 文件)
 
-针对上述问题，Yarn 从诞生之初就已经解决，其采用了以下手段：
+针对上述问题，yarn 从诞生之初就已经解决，其采用了以下手段：
 
 -   使用扁平的目录结构
 -   并行下载
@@ -28,7 +26,7 @@ Yarn 是由 Facebook、Google、Exponent 和 Tilde 联合推出的一个新的 J
 -   控制台仅输出关键信息
 -   使用 yarn.lock 文件记录确切依赖
 
-此外，Yarn 还优化了以下内容：
+此外，yarn 还优化了以下内容：
 
 -   增加了某些功能强大的命令
 -   让既有的命令更加语义化
@@ -46,3 +44,38 @@ Yarn 的出现给 NPM 带来了巨大的压力。很快，NPM 借鉴了 Yarn 的
 -   极大简化了控制台输出
 
 `npm@6` 之后，可以说 NPM 已经和 Yarn 非常接近，甚至没有差距。许多新项目又重新从 Yarn 转回到 NPM。
+
+## yarn 指令
+
+### 初始化项目
+
+```bash
+yarn init [--yes/-y]
+```
+
+### 安装包
+
+#### 安装指定包：
+
+```bash
+yarn [global] add [--dev/-D]  [--exact/-E] <package-name>[@<version>]
+```
+
+-   `global`：安装为全局包
+-   `--dev` / `-D`：安装为开发依赖
+-   `--exact` / `-E`：安装指定版本
+    ```bash
+    # 不使用 -E 参数，默认可能安装 ^1.2.3 版本范围
+    yarn add package-name@1.2.3
+    # 使用 -E 参数，精确安装 1.2.3 版本
+    yarn add package-name@1.2.3 -E
+    ```
+-   `@<version>`： 指定版本
+
+#### 安装 package.json 中的依赖
+
+```bash
+yarn install [--production/--prod]
+```
+
+-   `--production/--prod`：只安装生产环境依赖，当使用 `--production` 或 `--prod` 参数时，yarn 只会安装 package.json 中 `dependencies` 字段列出的依赖，而不会安装 `devDependencies` 字段中的开发依赖
