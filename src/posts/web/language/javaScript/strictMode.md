@@ -27,7 +27,7 @@ category:
 
 进入"严格模式"的标志，是下面这行语句：
 
-```js
+```JavaScript
 "use strict";
 ```
 
@@ -41,7 +41,7 @@ category:
 
 如果这行语句不在第一行，则无效，整个脚本以"正常模式"运行。如果不同模式的代码文件合并成一个文件，这一点需要特别注意。
 
-```js
+```JavaScript
 "use strict";
 console.log("这是严格模式。");
 ```
@@ -65,7 +65,7 @@ console.log("这是严格模式。");
 
 将 `"use strict"` 放在函数体的第一行，则整个函数以"严格模式"运行。
 
-```js
+```JavaScript
 function strict(){
   "use strict";
   return "这是严格模式。";
@@ -80,7 +80,7 @@ function notStrict() {
 
 因为第一种调用方法不利于文件合并，所以更好的做法是，借用第二种方法，将整个脚本文件放在一个立即执行的匿名函数之中。
 
-```js
+```JavaScript
 (function (){
   "use strict";
   // some code here
@@ -95,7 +95,7 @@ function notStrict() {
 
 在普通模式下，可以使用一个未声明的变量，此时该变量会成为一个全局变量。但是这种使用方式在严格模式下会报错。
 
-```js
+```JavaScript
 "use strict"
 a=10; // ReferenceError: a is not defined
 console.log(a)
@@ -112,7 +112,7 @@ sum()
 
 在严格模式下则会报错，例如：
 
-```js
+```JavaScript
 "use strict"
 var i = 10;
 delete i; // SyntaxError: Delete of an unqualified identifier in strict mode.
@@ -123,7 +123,7 @@ console.log(i); // 10
 
 在普通模式下，函数中两个形参名相同也不会报错，只不过后面的形参所接收到的值会覆盖前面的同名形参。
 
-```js
+```JavaScript
 function a(b,b){
     console.log(b); // 2
 }
@@ -132,7 +132,7 @@ a(1, 2)
 
 但是在严格模式下，相同的形参名会报错。
 
-```js
+```JavaScript
 "use strict"
 // SyntaxError: Duplicate parameter name not allowed in this context
 function a(b,b){
@@ -145,7 +145,7 @@ a(1, 2)
 
 正常模式下，如果对象有多个重名属性，最后赋值的那个属性会覆盖前面的值。严格模式下，这属于语法错误。
 
-```js
+```JavaScript
 "use strict";
 var o = {
   p: 1,
@@ -157,14 +157,14 @@ var o = {
 
 正常模式下，整数的第一位如果是 0，表示这是八进制数，比如 010 等于十进制的 8。
 
-```js
+```JavaScript
 var i = 010;
 console.log(i); // 8
 ```
 
 严格模式禁止这种表示法，整数第一位为 0，将报错。
 
-```js
+```JavaScript
 "use strict"
 var i = 010; // SyntaxError: Octal literals are not allowed in strict mode.
 console.log(i);
@@ -174,7 +174,7 @@ console.log(i);
 
 在普通模式下，函数中的 `this` 在以函数的形式被调用时，指向全局对象。而在严格模式中，得到的值为 `undefined`。
 
-```js
+```JavaScript
 "use strict"
 function a(){
     console.log(this); // undefined
@@ -192,7 +192,7 @@ a();
 
 严格模式下，`eval` 语句本身就是一个作用域，不再能够生成全局变量了，它所生成的变量只能用于 `eval` 内部。
 
-```js
+```JavaScript
 "use strict";
 var x = 2;
 console.info(eval("var x = 5; x")); // 5
@@ -203,7 +203,7 @@ console.info(x); // 2
 
 为了向将来 JavaScript 的新版本过渡，严格模式新增了一些保留字：`implements`, `interface`, `let`, `package`, `private`, `protected`, `public`, `static`, `yield`。使用这些词作为变量名将会报错。
 
-```js
+```JavaScript
 "use strict";
 var public = "hello world" // SyntaxError: Unexpected strict mode reserved word
 console.log(public);

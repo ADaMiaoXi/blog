@@ -20,7 +20,7 @@ category:
 
 基本包装类型，和其他引用类型一样，拥有内置的方法可以对数据进行额外操作。如下：
 
-````js
+````JavaScript
 var str = 'hello'; // string 基本类型
 var s2 = str.charAt(0);
 console.log(s2); // h
@@ -36,7 +36,7 @@ console.log(s2); // h
 
 用代码的方式解释就是如下：
 
-````js
+````JavaScript
 //我们平常写程序的过程：
 var str = 'hello'; // string 基本类型
 var s2 = str.charAt(0); // 在执行到这一句的时候 后台会自动完成以下动作 ：
@@ -55,7 +55,7 @@ console.log(str); // hello
 
 每当读取一个基本类型的值，也就是当我们需要从内存中获取到他的值时（这个访问过程称为读取模式），这时后台就会自动创建一个基本包装类型的对象。例如：
 
-````js
+````JavaScript
 var test = 'hhh'
 console.log(test) // 读取模式，后台自动创建基本包装类型对象
 var test2 = test // 赋值给变量 test2，也需要读取 test 的值，同上
@@ -65,7 +65,7 @@ var test2 = test // 赋值给变量 test2，也需要读取 test 的值，同上
 
 对于引用类型的数据，在执行流离开当前作用域之前都会保存在内存中，而对于自动创建的基本包装类型的对象，只存在于一行代码的执行瞬间，执行完毕就会立即被销毁。 如下：
 
-````js
+````JavaScript
 var str = 'test'
 str.test = 'hhh'
 console.log(str.test) //undefined
@@ -77,7 +77,7 @@ console.log(str.test) //undefined
 
 用代码的方式解释就是如下：
 
-````js
+````JavaScript
 var str = 'hello';
 str.number = 10; //假设我们想给字符串添加一个属性 number ，后台会有如下步骤
 (
@@ -97,7 +97,7 @@ console.log(str.number); // undefined  当执行到这一句的时候，因为�
 
 答案是在基本包装对象的原型下面添加，每个对象都有原型。
 
-````js
+````JavaScript
 //给字符串添加方法  要写到对应的包装对象的原型下才行
 var str = 'hello';
 String.prototype.last= fuction(){ 

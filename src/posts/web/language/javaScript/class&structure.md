@@ -9,7 +9,7 @@ category:
 
 - 根据下面 ES6 构造函数的书写方式，要求写出 ES5 的
 
-```js
+```JavaScript
 class Example { 
   constructor(name) { 
     this.name = name;
@@ -31,7 +31,7 @@ e.init();
 
 代码如下：
 
-```js
+```JavaScript
 class Computer {
     // 构造器
     constructor(name, price) {
@@ -53,7 +53,7 @@ class Computer {
 
 可以简单地实例化一个对象出来，例如：
 
-```js
+```JavaScript
 var apple = new Computer("苹果", 15000);
 console.log(apple.name); // 苹果
 console.log(apple.price); // 15000
@@ -69,7 +69,7 @@ Computer.comStruct(); // 电脑由显示器，主机，键鼠组成
 
 通过构造函数，然后将方法挂在原型上面。例如：
 
-```js
+```JavaScript
 function Computer(name, price){
     this.name = name;
     this.price = price;
@@ -98,7 +98,7 @@ Computer.comStruct(); // 电脑由显示器，主机，键鼠组成
 
 首先书写两个"类"，一个用 ES5 的构造函数书写，一个用 ES6 的类的写法来书写，如下：
 
-```js
+```JavaScript
 class Computer1 {
     // 构造器
     constructor(name, price) {
@@ -129,7 +129,7 @@ Computer2.comStruct = function(){
 
 构造函数也是函数，既然是函数，那么就可以通过函数调用的形式来调用该函数，例如：
 
-```js
+```JavaScript
 var i = Computer2();
 console.log(i); // undefined
 ```
@@ -138,7 +138,7 @@ console.log(i); // undefined
 
 但是如果这样来调用 ES6 书写的类，会直接报错：
 
-```js
+```JavaScript
 Computer1();
 // TypeError: Class constructor Computer1 cannot be invoked without 'new'
 ```
@@ -147,7 +147,7 @@ Computer1();
 
 接下来，针对两种写法，各自实例化一个对象，代码如下：
 
-```js
+```JavaScript
 var apple = new Computer2("苹果", 15000);
 for(var i in apple){
     console.log(i); 
@@ -161,7 +161,7 @@ for(var i in huawei){
 
 在上面的代码中，`apple` 对象是 ES5 构造函数的形式创建的实例，`huawei` 是 ES6 类的形式创建的实例。有了这两个对象后，遍历这两个对象的键，结果如下：
 
-```js
+```JavaScript
 name
 price
 showSth
@@ -174,7 +174,7 @@ price
 
 另外，ES6 的 `class` 中的所有代码均处于严格模式之下，这里也可以进行一个简单的验证。例如，对两种方式的 `showSth` 原型方法稍作修改，如下：
 
-```js
+```JavaScript
 class Computer1 {
     ...
     // 原型方法
@@ -197,7 +197,7 @@ Computer2.prototype.showSth = function(j,j){
 
 所以在运行代码时，ES6 的 `class` 声明方式会报错，错误信息如下：
 
-```js
+```JavaScript
 // SyntaxError: Duplicate parameter name not allowed in this context
 ```
 
@@ -205,7 +205,7 @@ Computer2.prototype.showSth = function(j,j){
 
 这里也可以做一个简单的测试，如下：
 
-```js
+```JavaScript
 function Computer2(name, price){
     this.name = name;
     this.price = price;
@@ -227,7 +227,7 @@ console.log(i); // {}
 
 但是如果是 ES6 形式所声明的类，上面的做法将不被允许。示例如下：
 
-```js
+```JavaScript
 class Computer1 {
     // 构造器
     constructor(name, price) {
@@ -256,7 +256,7 @@ console.log(i);
 
 这里，使用 Babel 对下面的代码进行转义，转义之前的代码如下：
 
-```js
+```JavaScript
 class Computer {
     // 构造器
     constructor(name, price) {
@@ -276,7 +276,7 @@ class Computer {
 
 转义后的代码如下：
 
-```js
+```JavaScript
 "use strict";
 function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -339,7 +339,7 @@ Computer.comStruct(); // 电脑由显示器，主机，键鼠组成
 
 首先整体来讲分为下面几块：
 
-```js
+```JavaScript
 "use strict";
 function _classCallCheck(instance, Constructor) { ... }
 
@@ -352,7 +352,7 @@ var Computer = /*#__PURE__*/function () { ... }();
 
 逐一来看。
 
-```js
+```JavaScript
 function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
         throw new TypeError("Cannot call a class as a function");
@@ -364,7 +364,7 @@ function _classCallCheck(instance, Constructor) {
 
 接下来是 `_defineProperties` 方法，对此方法稍作了修改，打印 `target` 和 `props` 的值
 
-```js
+```JavaScript
 function _defineProperties(target, props) {
     console.log("target:::",target);
     console.log("props:::",props);
@@ -381,7 +381,7 @@ function _defineProperties(target, props) {
 
 结果如下：
 
-```js
+```JavaScript
 target::: {}
 props::: [ { key: 'showSth', value: [Function: showSth] } ]
 target::: [Function: Computer]
@@ -392,7 +392,7 @@ props::: [ { key: 'comStruct', value: [Function: comStruct] } ]
 
 下一个是 `_createClass` 函数，仍然将三个参数打印出来
 
-```js
+```JavaScript
 function _createClass(Constructor, protoProps, staticProps) {
     console.log("Constructor::",Constructor);
     console.log("protoProps::",protoProps);
@@ -407,7 +407,7 @@ function _createClass(Constructor, protoProps, staticProps) {
 
 结果如下：
 
-```js
+```JavaScript
 Constructor:: [Function: Computer]
 protoProps:: [ { key: 'showSth', value: [Function: showSth] } ]
 staticProps:: [ { key: 'comStruct', value: [Function: comStruct] } ]
@@ -417,7 +417,7 @@ staticProps:: [ { key: 'comStruct', value: [Function: comStruct] } ]
 
 最后就是构造函数了：
 
-```js
+```JavaScript
 var Computer = /*#__PURE__*/function () {
     // 构造器
     function Computer(name, price) {
@@ -452,7 +452,7 @@ var Computer = /*#__PURE__*/function () {
 
 - 根据下面 ES6 构造函数的书写方式，要求写出 ES5 的
 
-```js
+```JavaScript
 class Example { 
   constructor(name) { 
     this.name = name;
@@ -468,7 +468,7 @@ e.init();
 
 > 参考答案：
 >
-> ```js
+> ```JavaScript
 > "use strict";
 > 
 > function _classCallCheck(instance, Constructor) {

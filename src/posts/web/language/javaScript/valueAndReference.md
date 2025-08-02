@@ -39,7 +39,7 @@ object
 
 下面是具体的代码示例：
 
-```js
+```JavaScript
 var str = "Hello World";
 var num = 10;
 var bol = true;
@@ -109,7 +109,7 @@ JavaScript 的最初版本是这样区分的：
 
 下面是具体的代码示例：
 
-```js
+```JavaScript
 // 原始数据类型
 var a1 = 0;
 var a2 = "this is str";
@@ -126,7 +126,7 @@ var d = {m: 20};
 
 原始数据类型是作为不可细化的值进行存储和使用的，引用它们会转移其值。
 
-```js
+```JavaScript
 var str = "Hello";
 var str2 = str;
 str = null;
@@ -137,7 +137,7 @@ console.log(str,str2); // null "Hello"
 
 引用数据类型是通过引用进行存储和操作的，而不是实际的值。创建一个包含复杂对象的变量时，其值是内存中的一个引用地址。引用一个复杂对象时，使用它的名称（即变量或对象属性）通过内存中的引用地址获取该对象值。
 
-```js
+```JavaScript
 var obj = {};
 var obj2 = obj;
 obj.name = "zhangsan";
@@ -151,7 +151,7 @@ console.log(obj2.name); // zhangsan
 
 示例 1:
 
-```js
+```JavaScript
 var a = 10;
 var b = 10;
 var c = new Number(10);
@@ -167,7 +167,7 @@ console.log(d === c); // false
 
 示例 2:
 
-```js
+```JavaScript
 var obj = {name : 'zhangsan'};
 var obj2 = {name : 'zhangsan'};
 console.log(obj == obj2); // false
@@ -182,7 +182,7 @@ console.log(obj3 === obj4); // ture
 
 对于引用数据类型，可以为其添加属性和方法，也可以改变和删除其属性和方法。但原始数据类型不可以：
 
-```js
+```JavaScript
 var str = 'test';
 str.abc = true;
 console.log(str.abc); // undefined
@@ -195,7 +195,7 @@ console.log(obj.abc); // true
 
 一个新变量指向现有的复杂对象，并没有复制该对象。这就是引用数据类型有时被称为引用值的原因。引用数据类型可以根据需求有任意多个引用，即使对象改变，它们也总是指向同一个对象
 
-```js
+```JavaScript
 var obj = {name : 'zhangsan'};
 var obj2 = obj;
 var obj3 = obj2;
@@ -210,7 +210,7 @@ console.log(obj.name, obj2.name, obj3.name);
 
 **直接赋值**
 
-```js
+```JavaScript
 var a = 3;
 var b = a;
 b = 5;
@@ -219,7 +219,7 @@ console.log(a); // 3
 
 **引用赋值**
 
-```js
+```JavaScript
 var a = {value : 1};
 var b = a;
 b.value = 10;

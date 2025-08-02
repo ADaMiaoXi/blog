@@ -28,7 +28,7 @@ ES5 中的作用域有：全局作用域、函数作用域，ES6 中新增了块
 
 1. 没有块级作用域的概念
 
-```js
+```JavaScript
 //Global Scope
 {
   var a = 10;
@@ -40,7 +40,7 @@ console.log(a);  //10
 
 2. 有全局作用域、函数作用域的概念
 
-```js
+```JavaScript
 //Global Scope
 var a = 10;
 function checkscope(){
@@ -57,7 +57,7 @@ console.log(b);  //ReferenceError: b is not defined
 
 3. 不初始化值默认为 `undefined`
 
-```js
+```JavaScript
 //Global Scope
 var a;
 console.log(a);  //undefined
@@ -67,7 +67,7 @@ console.log(a);  //undefined
 
 4. 存在变量提升
 
-```js
+```JavaScript
 //Global Scope
 console.log(a);  //undefined
 var a = 10;
@@ -88,7 +88,7 @@ function checkscope(){
 
 5. 全局作用域用 `var` 声明的变量会挂载到 `window` 对象下
 
-```js
+```JavaScript
 //Global Scope
 var a = 10;
 console.log(a);  //10
@@ -102,7 +102,7 @@ console.log(this.a);  //10
 
 6. 同一作用域中允许重复声明
 
-```js
+```JavaScript
 //Global Scope
 var a = 10;
 var a = 20;
@@ -123,7 +123,7 @@ function checkscope(){
 
 1. 有块级作用域的概念
 
-```js
+```JavaScript
 {
    //Block Scope
    let a = 10;
@@ -135,7 +135,7 @@ console.log(a);  //ReferenceError: a is not defined
 
 2. 不存在变量提升
 
-```js
+```JavaScript
 {
   //Block Scope
   console.log(a);  //ReferenceError: Cannot access 'a' before initialization
@@ -147,7 +147,7 @@ console.log(a);  //ReferenceError: a is not defined
 
 3. 暂时性死区
 
-```js
+```JavaScript
 {
   //Block Scope
   console.log(a);  //ReferenceError: Cannot access 'a' before initialization
@@ -188,7 +188,7 @@ ES6 标准中对 `let` / `const` 声明中的解释 ，有如下一段文字：
 
 4. 同一块作用域中不允许重复声明
 
-```js
+```JavaScript
 {
   //Block Scope
   let A;
@@ -210,7 +210,7 @@ ES6 标准中对 `let` / `const` 声明中的解释 ，有如下一段文字：
 
 1. 必须立即初始化，不能留到以后赋值
 
-```js
+```JavaScript
 // Block Scope 
 const a; // SyntaxError: Missing initializer in const declaration } 
 ```
@@ -219,7 +219,7 @@ const a; // SyntaxError: Missing initializer in const declaration }
 
 2. 常量的值不能改变
 
-```js
+```JavaScript
 //Block Scope 
 {
   const a = 10; 

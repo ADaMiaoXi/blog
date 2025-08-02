@@ -63,7 +63,7 @@ JavaScript 运行时首先会进入全局环境，对应会生成全局上下文
 
 下面来看一段具体的代码示例：
 
-```js
+```JavaScript
 function foo () { 
     function bar () {        
       return 'I am bar';
@@ -81,7 +81,7 @@ foo();
 
 执行上下文可存在多个，虽然没有明确的数量限制，但如果超出栈分配的空间，会造成堆栈溢出。常见于递归调用，没有终止条件造成死循环的场景。
 
-```js
+```JavaScript
 // 递归调用自身
 function foo() {
     foo();
@@ -117,7 +117,7 @@ foo();
 
 当处于执行上下文的建立阶段时，可以将整个上下文环境看作是一个对象。该对象拥有 3 个属性，如下：
 
-```js
+```JavaScript
 executionContextObj = {
     variableObject : {}, // 变量对象，里面包含 Arguments 对象，形式参数，函数和局部变量
     scopeChain : {},// 作用域链，包含内部上下文所有变量对象的列表
@@ -143,7 +143,7 @@ executionContextObj = {
 
 两个阶段要做的事情介绍完毕，接下来通过代码来演示一下这两个阶段做的每一件事以及变量对象是如何变化的。
 
-```js
+```JavaScript
 const foo = function(i){
     var a = "Hello";
     var b = function privateB(){};
@@ -154,7 +154,7 @@ foo(10);
 
 首先在建立阶段的变量对象如下：
 
-```js
+```JavaScript
 fooExecutionContext = {
     variavleObject : {
         arguments : {0 : 10,length : 1}, // 确定 Arguments 对象
@@ -172,7 +172,7 @@ fooExecutionContext = {
 
 一旦上述建立阶段结束，引擎就会进入代码执行阶段，这个阶段完成后，上述执行上下文对象如下，变量会被赋上具体的值。
 
-```js
+```JavaScript
 fooExecutionContext = {
     variavleObject : {
         arguments : {0 : 10,length : 1},
@@ -192,7 +192,7 @@ fooExecutionContext = {
 
 接下来再通过一段代码来加深对函数这两个阶段的过程的理解，代码如下：
 
-```js
+```JavaScript
 (function () {
     console.log(typeof foo);
     console.log(typeof bar);
@@ -210,7 +210,7 @@ fooExecutionContext = {
 
 这里，定义了一个 IIFE，该函数在建立阶段的变量对象如下：
 
-```js
+```JavaScript
 fooExecutionContext = {
     variavleObject : {
         arguments : {length : 0},
@@ -228,7 +228,7 @@ fooExecutionContext = {
 
 建立阶段完成之后，接下来进入代码执行阶段，开始一句一句的执行代码，结果如下：
 
-```js
+```JavaScript
 (function () {
     console.log(typeof foo); // function
     console.log(typeof bar); // undefined

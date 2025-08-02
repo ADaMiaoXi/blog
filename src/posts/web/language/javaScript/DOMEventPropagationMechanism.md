@@ -217,7 +217,7 @@ DOM 标准规定事件流包括三个阶段：**事件捕获阶段**、**处于�
 
 将事件监听器绑定到父元素 `ul` 上，这样即可对所有的 `li` 元素添加事件，如下：
 
-```js
+```JavaScript
 var colorList = document.getElementById("color-list");
 colorList.addEventListener("click",function(){
   alert("Hello");
@@ -234,7 +234,7 @@ colorList.addEventListener("click",function(){
 
 此时可以对点击的节点进行一个小小的判断，从而保证用户只在点击 `li` 的时候才触发事件，如下：
 
-```js
+```JavaScript
 var colorList = document.getElementById("color-list");
 colorList.addEventListener("click", function (event) {
   if (event.target.nodeName === 'LI') {

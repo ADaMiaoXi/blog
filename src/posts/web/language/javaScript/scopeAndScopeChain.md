@@ -14,7 +14,7 @@ category:
 
 下面通过一个例子来理解作用域的概念：
 
-```js
+```JavaScript
 function outFun2() {
     var inVariable = "内层变量2";
 }
@@ -38,7 +38,7 @@ ES6 的到来，为开发者提供了"块级作用域"，可通过新增命令 `
 
 - 最外层函数和在最外层函数外面定义的变量拥有全局作用域
 
-```js
+```JavaScript
 var outVariable = "我是最外层变量"; //最外层变量
 function outFun() { //最外层函数
     var inVariable = "内层变量";
@@ -55,7 +55,7 @@ innerFun(); // innerFun is not defined
 
 - 所有未定义直接赋值的变量自动声明为拥有全局作用域
 
-```js
+```JavaScript
 function outFun2() {
     variable = "未定义直接赋值的变量";
     var inVariable2 = "内层变量2";
@@ -71,7 +71,7 @@ console.log(inVariable2); //inVariable2 is not defined
 
 全局作用域有个弊端：如果编写了很多行 JavaScript 代码，变量定义都没有用函数包括，那么它们就全部都在全局作用域中。这样就会污染全局命名空间，容易引起命名冲突。
 
-```js
+```JavaScript
 // 张三写的代码中
 var data = {a: 100}
 
@@ -87,7 +87,7 @@ var data = {x: true}
 
 函数作用域，是指声明在函数内部的变量，和全局作用域相反，局部作用域一般只在固定的代码片段内可访问到，最常见的例如函数内部。
 
-```js
+```JavaScript
 function doSomething(){
     var stuName="zhangsan";
     function innerSay(){
@@ -113,7 +113,7 @@ innerSay(); // 脚本错误
 
 值得注意的是：**块语句（大括号"｛ ｝"中间的语句），如 `if` 和 `switch` 条件语句或 `for` 和 `while` 循环语句，不像函数，它们不会创建一个新的作用域**。在块语句中定义的变量将保留在它们已经存在的作用域中。
 
-```js
+```JavaScript
 if (true) {
     // 'if' 条件语句块不会创建一个新的作用域
     var name = 'Hammad'; // name 依然在全局作用域中
@@ -140,7 +140,7 @@ JavaScript 的初学者经常需要花点时间才能习惯变量提升，而如
 
 `let`、`const` 声明并不会被提升到当前代码块的顶部，因此需要手动将 `let`、`const` 声明放置到顶部，以便让变量在整个代码块内部可用。
 
-```js
+```JavaScript
 function getValue(condition) {
     if (condition) {
         let value = "blue";
@@ -157,7 +157,7 @@ function getValue(condition) {
 
 如果一个标识符已经在代码块内部被定义，那么在此代码块内使用同一个标识符进行 `let` 声明就会导致抛出错误。例如：
 
-```js
+```JavaScript
 var count = 30;
 let count = 40; // Uncaught SyntaxError: Identifier 'count' has already been declared
 ```
@@ -166,7 +166,7 @@ let count = 40; // Uncaught SyntaxError: Identifier 'count' has already been dec
 
 因为 `let` 不能在同一作用域内重复声明一个已有标识符，此处的 `let` 声明就会抛出错误。但如果在嵌套的作用域内使用 `let` 声明一个同名的新变量，则不会抛出错误。
 
-```js
+```JavaScript
 var count = 30;
 // 不会抛出错误
 if (condition) {
@@ -181,7 +181,7 @@ if (condition) {
 
 例如，以下代码在 JavaScript 中经常见到：
 
-```js
+```JavaScript
 <button>测试1</button>
 <button>测试2</button>
 <button>测试3</button>
@@ -201,7 +201,7 @@ for (var i = 0; i < btns.length; i++) {
 
 那该如何修改，最简单的是用 `let` 声明 `i`
 
-```js
+```JavaScript
 for (let i = 0; i < btns.length; i++) {
   btns[i].onclick = function () {
     console.log('第' + (i + 1) + '个')
@@ -221,7 +221,7 @@ for (let i = 0; i < btns.length; i++) {
 
 需要向父级作用域寻找（注意：这种说法并不严谨，下文会重点解释）。
 
-```js
+```JavaScript
 var a = 100
 function fn() {
     var b = 200
@@ -237,7 +237,7 @@ fn()
 
 再一层一层向上寻找，直到找到全局作用域还是没找到，就宣布放弃。这种一层一层的关系，就是作用域链。
 
-```js
+```JavaScript
 var a = 100
 function f1() {
     var b = 200
@@ -256,7 +256,7 @@ f1()
 
 关于自由变量的值，上文提到要到父作用域中取，其实有时候这种解释会产生歧义。
 
-```js
+```JavaScript
 var x = 10
 function fn() {
     console.log(x)
@@ -278,7 +278,7 @@ show(fn)
 
 再看一个例子：
 
-```js
+```JavaScript
 const food = "rice";
 const eat = function () {
     console.log(`eat ${food}`);
@@ -293,7 +293,7 @@ const eat = function () {
 
 如果将代码稍作修改，改成如下：
 
-```js
+```JavaScript
 const food = "rice";
 (function () {
     const food = "noodle";

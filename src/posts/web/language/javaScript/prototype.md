@@ -20,7 +20,7 @@ ES5 中提供了 `Object.create` 方法，可以用来克隆对象。
 
 示例如下：
 
-```js
+```JavaScript
 const person = {
     arms: 2,
     legs: 2,
@@ -47,7 +47,7 @@ console.log(zhangsan.__proto__ === person); // true
 
 通过这种方式，基于对象创建的新对象，可以继承祖辈对象的属性和方法，这其实就是一个继承的关系，看一个示例：
 
-```js
+```JavaScript
 const person = {
     arms: 2,
     legs: 2,
@@ -96,7 +96,7 @@ console.log(person.isPrototypeOf(zhangxiaosan)); // true
 
 看下面的例子：
 
-```js
+```JavaScript
 function Computer(name, price) {
     // 属性写在类里面 
     this.name = name;
@@ -141,7 +141,7 @@ huawei.showSth(); // 这是一台华为电脑
 
 实践才是检验真理的唯一标准。接下来在代码中来验证一下：
 
-```js
+```JavaScript
 function Computer(name, price) {
     // 属性写在类里面 
     this.name = name;
@@ -162,7 +162,7 @@ console.log(apple.__proto__.constructor === Computer); // true
 
 接下来还可以来验证内置的构造函数是不是也是这样的关系，如下：
 
-```js
+```JavaScript
 function Computer(name, price) {
     // 属性写在类里面 
     this.name = name;
@@ -203,7 +203,7 @@ console.log(Computer.__proto__); // {}
 
 可以在上面代码的基础上，继续进行验证，如下：
 
-```js
+```JavaScript
 function Computer(name, price) {
     // 属性写在类里面 
     this.name = name;
@@ -229,7 +229,7 @@ console.log(apple.__proto__.__proto__ === Object.prototype); // true
 
 下面可以简单验证一下，如下：
 
-```js
+```JavaScript
 // 自定义构造函数函数
 function Computer() {}
 

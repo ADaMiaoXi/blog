@@ -46,7 +46,7 @@ ES6提供了一套API，实现了Promise A+规范
 
 基本使用如下：
 
-```js
+```JavaScript
 // 创建一个任务对象，该任务立即进入 pending 状态
 const pro = new Promise((resolve, reject) => {
   // 任务的具体执行流程，该函数会立即被执行
@@ -92,7 +92,7 @@ pro.then(
 
 由于链式任务的存在，异步代码拥有了更强的表达力
 
-```js
+```JavaScript
 // 常见任务处理代码
 
 /*
@@ -138,7 +138,7 @@ ES7推出了两个关键字`async`和`await`，用于更加优雅的表达Promis
 
 `async`关键字用于修饰函数，被它修饰的函数，一定返回Promise
 
-```js
+```JavaScript
 async function method1(){
   return 1; // 该函数的返回值是Promise完成后的数据
 }
@@ -162,7 +162,7 @@ method3(); // Promise { <rejected> Error(1) }
 
 `await`关键字表示等待某个Promise完成，**它必须用于`async`函数中**
 
-```js
+```JavaScript
 async function method(){
   const n = await Promise.resolve(1);
   console.log(n); // 1
@@ -181,7 +181,7 @@ function method(){
 
 `await`也可以等待其他数据
 
-```js
+```JavaScript
 async function method(){
   const n = await 1; // 等同于 await Promise.resolve(1)
 }
@@ -189,7 +189,7 @@ async function method(){
 
 如果需要针对失败的任务进行处理，可以使用`try-catch`语法
 
-```js
+```JavaScript
 async function method(){
   try{
     const n = await Promise.reject(123); // 这句代码将抛出异常
@@ -251,7 +251,7 @@ ES7推出了两个关键字`async`和`await`，用于更加优雅的表达Promis
 
 `async` 关键字用于修饰函数，被它修饰的函数，一定返回Promise
 
-```js
+```JavaScript
 async function method1(){
   return 1; // 该函数的返回值是Promise完成后的数据
 }
@@ -275,7 +275,7 @@ method3(); // Promise { <rejected> Error(1) }
 
 `await`关键字表示等待某个Promise完成，**它必须用于`async`函数中**
 
-```js
+```JavaScript
 async function method(){
   const n = await Promise.resolve(1);
   console.log(n); // 1
@@ -294,7 +294,7 @@ function method(){
 
 `await`也可以等待其他数据
 
-```js
+```JavaScript
 async function method(){
   const n = await 1; // 等同于 await Promise.resolve(1)
 }
@@ -302,7 +302,7 @@ async function method(){
 
 如果需要针对失败的任务进行处理，可以使用`try-catch`语法
 
-```js
+```JavaScript
 async function method(){
   try{
     const n = await Promise.reject(123); // 这句代码将抛出异常
@@ -330,7 +330,7 @@ method(); // 输出： 失败 123
 
 1. 下面代码的输出结果是什么
 
-   ```js
+   ```JavaScript
    const promise = new Promise((resolve, reject) => {
        console.log(1); 
        resolve(); 
@@ -346,7 +346,7 @@ method(); // 输出： 失败 123
 
 2. 下面代码的输出结果是什么
 
-   ```js
+   ```JavaScript
    const promise = new Promise((resolve, reject) => {
        console.log(1); 
        setTimeout(()=>{
@@ -365,7 +365,7 @@ method(); // 输出： 失败 123
 
 3. 下面代码的输出结果是什么
 
-   ```js
+   ```JavaScript
    const promise1 = new Promise((resolve, reject) => {
    	setTimeout(() => {
        resolve()
@@ -386,7 +386,7 @@ method(); // 输出： 失败 123
 
 4. 下面代码的输出结果是什么
 
-   ```js
+   ```JavaScript
    async function m(){
      const n = await 1;
      console.log(n);
@@ -398,7 +398,7 @@ method(); // 输出： 失败 123
 
 5. 下面代码的输出结果是什么
 
-   ```js
+   ```JavaScript
    async function m(){
      const n = await 1;
      console.log(n);
@@ -416,7 +416,7 @@ method(); // 输出： 失败 123
 
 6. 下面代码的输出结果是什么
 
-   ```js
+   ```JavaScript
    async function m1(){
      return 1;
    }
@@ -444,7 +444,7 @@ method(); // 输出： 失败 123
 
 7. 下面代码的输出结果是什么
 
-   ```js
+   ```JavaScript
    Promise.resolve(1)	
      .then(2)
      .then(Promise.resolve(3))
@@ -453,7 +453,7 @@ method(); // 输出： 失败 123
 
 8. 下面代码的输出结果是什么
 
-   ```js
+   ```JavaScript
    var a;
    var b = new Promise((resolve, reject) => {
      console.log('promise1');
@@ -483,7 +483,7 @@ method(); // 输出： 失败 123
 
 9. 下面代码的输出结果是什么
 
-   ```js
+   ```JavaScript
    async function async1() {
        console.log('async1 start');
        await async2();

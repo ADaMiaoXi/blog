@@ -30,7 +30,7 @@ JavaScript 中的函数大多数情况下都是由用户主动调用触发的，
 
 再考虑一个页面上的场景，页面上的某些事件触发频率非常高，比如滚动条滚动、窗口尺寸变化、鼠标移动等，如果需要注册这类事件，不得不考虑效率问题，又特别是事件处理中涉及到了大量的操作，比如：
 
-```js
+```JavaScript
 window.onresize = function(){
     // 大量的 DOM 操作
 }
@@ -70,7 +70,7 @@ window.onresize = function(){
 
 下面就来封装这么一个函数防抖的通用函数：
 
-```js
+```JavaScript
 /**
  * 函数防抖
  * @param {function} func 一段时间后，要调用的函数
@@ -94,7 +94,7 @@ function debounce(func, wait) {
 
 下面来进行一个测试，测试如下：
 
-```js
+```JavaScript
 <input type="text" id="txt">
 var txt = document.getElementById("txt");
 // 调用 debounce 函数来将事件处理函数变为一个防抖函数
@@ -130,7 +130,7 @@ txt.onkeyup = (event)=>{
 
 下面是封装使用时间戳的函数节流的通用函数：
 
-```js
+```JavaScript
 /**
  * 
  * @param {要进行节流的函数} func 
@@ -176,7 +176,7 @@ txt.onkeyup = (event) => {
 
 下面是封装使用定时器的函数节流的通用函数：
 
-```js
+```JavaScript
 /**
  * 
  * @param {要节流执行的函数} func 
@@ -214,7 +214,7 @@ function throttle(func, wait) {
 >
 > 具体实现如下：
 >
-> ```js
+> ```JavaScript
 > /**
 >  * 函数防抖
 >  * @param {function} func 一段时间后，要调用的函数
@@ -242,7 +242,7 @@ function throttle(func, wait) {
 >
 > 下面是使用时间戳方式的具体实现：
 >
-> ```js
+> ```JavaScript
 > /**
 >  * 
 >  * @param {要进行节流的函数} func 

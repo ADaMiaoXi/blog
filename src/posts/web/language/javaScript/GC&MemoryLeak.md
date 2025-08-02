@@ -24,7 +24,7 @@ category:
 
 下面是一段示例代码：
 
-```js
+```JavaScript
 function fn1() {
     var obj = {name: 'zhangsan', age: 10};
 }
@@ -61,7 +61,7 @@ JavaScript 中最常用的垃圾回收方式就是标记清除。
 
 而当变量离开环境时，则将其标记为"离开环境"。
 
-```js
+```JavaScript
 function test(){
   var a = 10 ; // 被标记 ，进入环境 
   var b = 20 ; // 被标记 ，进入环境
@@ -87,7 +87,7 @@ test(); // 执行完毕 之后 a、b 又被标离开环境，被回收。
 
 这样，当垃圾回收器下次再运行时，它就会释放那些引用次数为 0 的值所占用的内存。
 
-```js
+```JavaScript
 function test() {
     var a = {};	// a 指向对象的引用次数为 1
     var b = a;	// a 指向对象的引用次数加 1，为 2
@@ -100,7 +100,7 @@ Netscape Navigator3 是最早使用引用计数策略的浏览器，但很快它
 
 循环引用指的是对象 A 中包含一个指向对象B的指针，而对象 B 中也包含一个指向对象 A 的引用。
 
-```js
+```JavaScript
 function fn() {
     var a = {};
     var b = {};

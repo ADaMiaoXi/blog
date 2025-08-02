@@ -40,7 +40,7 @@ category:
 
 该属性为只读属性。返回 `true` 时，表示可以取消。否则，表示不可取消。
 
-```js
+```JavaScript
 <a id="test" href="https://www.baidu.com">百度</a>
 var test = document.getElementById("test");
 test.onclick = function (event) {
@@ -56,7 +56,7 @@ test.onclick = function (event) {
 
 `preventDefault` 方法是 DOM 中最常见，也是最标准的取消浏览器默认行为的方式，无返回值。
 
-```js
+```JavaScript
 var test = document.getElementById("test");
 test.onclick = function(event){
   event.preventDefault();
@@ -73,7 +73,7 @@ test.onclick = function(event){
 
 该属性最早在 IE 的事件对象中实现了这种取消默认行为的方式，但现在大多数浏览器都支持该方式。
 
-```js
+```JavaScript
 var test = document.getElementById("test");
 test.onclick = function(event){
   event.returnValue = false;
@@ -86,7 +86,7 @@ test.onclick = function(event){
 
 需要注意的是，如果该语句写在 jQuery 代码中，能够同时阻止默认行为和阻止冒泡，但在原生 JavaScript 中只能阻止默认行为。
 
-```js
+```JavaScript
 var test = document.getElementById("test");
 test.onclick = function(){
   return false;
@@ -97,7 +97,7 @@ test.onclick = function(){
 
 `defaultPrevented` 属性也是 `event` 对象上的一个属性。该属性表示默认行为是否被阻止，返回 `true` 表示被阻止，返回 `false` 表示未被阻止。
 
-```js
+```JavaScript
 var test = document.getElementById("test");
 test.onclick = function (event) {
   // 采用两种不同的方式来阻止浏览器默认行为，这是为了兼容性考虑
@@ -121,7 +121,7 @@ test.onclick = function (event) {
 
 > 参考答案：
 >
-> ```js
+> ```JavaScript
 > // 方法一：全支持
 > event.preventDefault();
 > // 方法二：该特性已经从 Web 标准中删除，虽然一些浏览器目前仍然支持它，但也许会在未来的某个时间停止支持，请尽量不要使用该特性。

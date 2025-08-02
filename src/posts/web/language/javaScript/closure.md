@@ -84,7 +84,7 @@ category:
 
 看下面的例子：
 
-```js
+```JavaScript
 function eat(){
     var food = "beef";
     console.log(food);
@@ -101,7 +101,7 @@ JavaScript 引擎会创建一个 `eat` 函数的执行上下文，其中声明 `
 
 但是将此代码稍作修改：
 
-```js
+```JavaScript
 function eat(){
     var food = 'beef';
     return function(){
@@ -126,7 +126,7 @@ look(); // beef
 
 例如：
 
-```js
+```JavaScript
 var name = "GlobalName";
 // 全局变量
 var init = (function () {
@@ -165,7 +165,7 @@ initSuper(); // initSuperName
 
 聊完了闭包，接下来看一个闭包的经典问题。
 
-```js
+```JavaScript
 for (var i = 1; i <= 3; i++) {
     setTimeout(function () {
         console.log(i);
@@ -181,7 +181,7 @@ for (var i = 1; i <= 3; i++) {
 
 要解决这个问题，可以让 `setTimeout` 中的匿名函数不再访问外部变量，而是访问自己内部的变量，如下：
 
-```js
+```JavaScript
 for (var i = 1; i <= 3; i++) {
     (function (index) {
         setTimeout(function () {
@@ -197,7 +197,7 @@ for (var i = 1; i <= 3; i++) {
 
 它声明的变量有块作用域，如果将它放在循环中，那么每次循环都会有一个新的变量 `i`，这样即使有闭包也没问题，因为每个闭包保存的都是不同的 `i` 变量，那么刚才的问题也就迎刃而解。
 
-```js
+```JavaScript
 for (let i = 1; i <= 3; i++) {
     setTimeout(function () {
         console.log(i);
