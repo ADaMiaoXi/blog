@@ -171,6 +171,24 @@ npm config ls [-l] [--json]
     npm config delete <key>
     ```
 
+### NPM 包的缓存
+
+npm 缓存目录默认是 C 盘用户目录下的 `\AppData\Local\npm-cache` 文件夹
+
+1. 缓存目录查询
+
+    ```bash
+    npm config get cache
+    ```
+2. 缓存目录设置
+    ```bash
+    npm config set cache <path>
+    ```
+3. 清理缓存
+    ```bash
+    npm cache clean [--force]
+    ```
+
 ## 包的配置文件
 
 NPM 将每个使用 NPM 的工程本身都看作是一个包，包的信息需要通过一个名称固定的配置文件来描述，这个配置文件就是 **`package.json`**。

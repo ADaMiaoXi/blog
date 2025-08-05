@@ -79,3 +79,61 @@ yarn install [--production/--prod]
 ```
 
 -   `--production/--prod`：只安装生产环境依赖，当使用 `--production` 或 `--prod` 参数时，yarn 只会安装 package.json 中 `dependencies` 字段列出的依赖，而不会安装 `devDependencies` 字段中的开发依赖
+
+### 运行脚本/本地 CLI
+
+-   运行脚本：
+
+    ```bash
+    yarn run <script-name> [-- <args>]
+    ```
+
+-   运行本地 CLI 工具：
+    yarn 运行 CLI （`.bin` 文件下命令）不用像 npm 一样使用 `npx`，直接使用 `yarn run`
+    ```bash
+    yarn run cli
+    ```
+
+### 查询
+
+查看 bin 目录路径：
+
+```bash
+yarn [global] bin
+```
+
+-   `global`：查看全局 `bin` 目录的路径
+
+查询包信息：
+
+```bash
+yarn info 包名 [子字段]
+```
+
+列举已安装的依赖：
+
+```bash
+yarn [global] list [--depth=依赖深度]
+```
+
+yarn 的 list 命令和 npm 的 list 不同，yarn 输出的信息更加丰富，包括顶级目录结构、每个包的依赖版本号
+
+### 更新包
+
+列举需要更新的包：
+
+```bash
+yarn outdated
+```
+
+更新包：
+
+```bash
+yarn [global] upgrade [包名]
+```
+
+### 卸载包
+
+```bash
+yarn remove 包名
+```
