@@ -18,7 +18,7 @@ Yarn 是由 Facebook、Google、Exponent 和 Tilde 联合推出的一个新的 J
 -   执行指令困难： 早期 NPM 没有执行依赖包指令的工具，执行指令需要手动执行 `bin` 目录下的文件，需要写出完整路径。（没有 `npx`）
 -   工程移植问题：由于 NPM 的版本依赖可以是模糊的，可能导致工程移植后依赖的确切版本不一致。(没有 package.json 文件)
 
-针对上述问题，yarn 从诞生之初就已经解决，其采用了以下手段：
+yarn 采用了以下手段解决了上述问题：
 
 -   使用扁平的目录结构
 -   并行下载
@@ -26,7 +26,7 @@ Yarn 是由 Facebook、Google、Exponent 和 Tilde 联合推出的一个新的 J
 -   控制台仅输出关键信息
 -   使用 yarn.lock 文件记录确切依赖
 
-此外，yarn 还优化了以下内容：
+yarn 还优化了以下内容：
 
 -   增加了某些功能强大的命令
 -   让既有的命令更加语义化
@@ -116,7 +116,7 @@ yarn info 包名 [子字段]
 yarn [global] list [--depth=依赖深度]
 ```
 
-yarn 的 list 命令和 npm 的 list 不同，yarn 输出的信息更加丰富，包括顶级目录结构、每个包的依赖版本号
+yarn 的 `list` 命令和 npm 的 `list` 不同，yarn 输出的信息更加丰富，包括顶级目录结构、每个包的依赖版本号
 
 ### 更新包
 
@@ -136,4 +136,46 @@ yarn [global] upgrade [包名]
 
 ```bash
 yarn remove 包名
+```
+
+### 特有指令
+
+```bash
+yarn check
+```
+
+验证 package.json 文件的依赖记录和 lock 文件是否一致，用于防篡改。
+
+```bash
+yarn audit
+```
+
+检查本地安装的包有哪些已知漏洞，以表格的形式列出
+漏洞级别如下：
+`INFO`：信息级别
+`LOW`: 低级别
+`MODERATE`：中级别
+`HIGH`：高级别
+`CRITICAL`：关键级别
+
+```bash
+yarn why 包名
+```
+
+在控制台打印出安装这个包的原因，哪些包会用到它
+
+```bash
+yarn create
+```
+
+由于大部分脚手架工具都是以 `create-xxx` 的方式命名的，比如 React 的官方脚手架名称为 `create-react-app`
+
+可以使用 `yarn create` 命令来一步完成安装和搭建
+
+```bash
+yarn create react-app my-app
+
+# 等同于下面的两条命令
+yarn global add create-react-app
+create-react-app my-app
 ```
