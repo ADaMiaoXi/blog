@@ -1,12 +1,12 @@
 ---
-title: NPM
+title: npm
 icon: iconoir:npm
 order: 1
 category:
     - Package manager
 ---
 
-NPM（**N**ode **P**ackage **M**anager）是 Node.js 的包管理工具，用于管理 Node.js 项目中的依赖包。它会随着 Node.js 的安装一同被安装。
+**NPM**（**N**ode **P**ackage **M**anager）是 Node.js 的包管理工具，用于管理 Node.js 项目中的依赖包。它会随着 Node.js 的安装一同被安装。
 
 ## 包的安装
 
@@ -139,9 +139,9 @@ npm uninstall [-g] <package-name>
 # uninstall 的别名有: remove、rm、r、un、unlink
 ```
 
-### NPM 配置项
+### npm 配置项
 
-安装好 NPM 之后，最终会产生两个配置文件，一个是用户配置，一个是系统配置，当两个文件的配置项有冲突的时候，用户配置会覆盖系统配置。
+安装好 npm 之后，最终会产生两个配置文件，一个是用户配置，一个是系统配置，当两个文件的配置项有冲突的时候，用户配置会覆盖系统配置。
 
 通常，我们更关心最终生效的配置，而不是具体的配置文件。
 
@@ -171,7 +171,7 @@ npm config ls [-l] [--json]
     npm config delete <key>
     ```
 
-### NPM 包的缓存
+### npm 包的缓存
 
 npm 缓存目录默认是 C 盘用户目录下的 `\AppData\Local\npm-cache` 文件夹
 
@@ -180,6 +180,7 @@ npm 缓存目录默认是 C 盘用户目录下的 `\AppData\Local\npm-cache` 文
     ```bash
     npm config get cache
     ```
+
 2. 缓存目录设置
     ```bash
     npm config set cache <path>
@@ -191,7 +192,7 @@ npm 缓存目录默认是 C 盘用户目录下的 `\AppData\Local\npm-cache` 文
 
 ## 包的配置文件
 
-NPM 将每个使用 NPM 的工程本身都看作是一个包，包的信息需要通过一个名称固定的配置文件来描述，这个配置文件就是 **`package.json`**。
+npm 将每个使用 npm 的工程本身都看作是一个包，包的信息需要通过一个名称固定的配置文件来描述，这个配置文件就是 **`package.json`**。
 
 ### `package.json` 的创建
 
@@ -206,7 +207,7 @@ NPM 将每个使用 NPM 的工程本身都看作是一个包，包的信息需�
     -   `补丁版本号`：仅当解决了一些 bug 或进行了一些局部优化时更新，如修复了某个函数的 bug、提升了某个函数的运行效率。
 -   `description`：包的描述。
 -   `homepage`：官网地址。
--   `author`：包的作者，必须是有效的 NPM 账户名，书写规范是 `account <mail>`，例如：`zhangsan <zhangsan@gmail.com>`，不正确的账号和邮箱可能导致发布包时失败。
+-   `author`：包的作者，必须是有效的 npm 账户名，书写规范是 `account <mail>`，例如：`zhangsan <zhangsan@gmail.com>`，不正确的账号和邮箱可能导致发布包时失败。
 -   `repository`：包的仓储地址，通常指 Git 或 SVN 的地址，它是一个对象。
 -   `type`：仓储类型，`git` 或 `svn`。
 -   `url`：地址。
@@ -291,13 +292,13 @@ npm i -D <package-name>
 -   部署工程命令（一些第三方包提供的 CLI 命令）
 -   测试工程命令（一些第三方包提供的 CLI 命令）
 
-NPM 支持定义脚本，只需要在 `package.json` 中配置 `scripts` 字段，即可配置各种脚本名称。
+npm 支持定义脚本，只需要在 `package.json` 中配置 `scripts` 字段，即可配置各种脚本名称。
 
 运行方式： `npm run <script-name>`
 
 脚本中可以省略 `npx`，因为 `npm run` 的时候会临时将 `node_modules/.bin` 目录加入环境变量，脚本结束之后再恢复原环境变量。
 
-NPM 还对一些常用的脚本名称进行了简化，以下三个脚本名称可以省略 `run`：
+npm 还对一些常用的脚本名称进行了简化，以下三个脚本名称可以省略 `run`：
 
 -   `start`
     -   `start` 脚本有默认值：`node server.js`
@@ -318,9 +319,9 @@ NPM 还对一些常用的脚本名称进行了简化，以下三个脚本名称�
 
 当移植工程时，如果移植了 `package-lock.json` 文件，恢复安装时，会按照 `package-lock.json` 文件中的确切依赖进行安装，最大限度地避免了差异。
 
-## NPM 对差异版本处理
+## npm 对差异版本处理
 
-NPM 会将不同层级的依赖打平放到 `node_modules` 目录下，但是如果两个包依赖同一个包的不同版本，如下图：
+npm 会将不同层级的依赖打平放到 `node_modules` 目录下，但是如果两个包依赖同一个包的不同版本，如下图：
 
 ![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/2019-12-17-15-17-47.png)
 
@@ -370,7 +371,7 @@ node_modules/lodash/<entry-file>
 > 在 Node.js 中，还可以手动指定路径来导入相应的文件，
 > 例如：
 >
-> ```js
+> ```JavaScript
 > const get = require('lodash/get')
 > ```
 >
@@ -444,13 +445,13 @@ Node.js 中有一个全局环境变量 `global`，该变量类似于浏览器环
 ### 准备工作
 
 1. 移除所有镜像源
-2. 注册一个 NPM 账号，并完成邮箱认证
+2. 注册一个 npm 账号，并完成邮箱认证
 3. 本地使用 npm cli 进行登录
     1. 使用命令 `npm login` 登录
     2. 使用命令 `npm whoami` 可以查看当前登录的账号
     3. 使用命令 `npm logout` 可以注销当前登录
 4. 创建工程根目录
-5. 使用 npm init 初始化项目
+5. 使用 `npm init` 初始化项目
 
 ### 发布
 
