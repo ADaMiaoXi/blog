@@ -1,14 +1,14 @@
 ---
-title: Babel Plugins
+title: Plugins
 icon: nonicons:babel-16
 order: 3
 category:
   - Babel
 ---
 
-## Usages
+## 插件的使用
 
-### 1. Using a Plugin
+### 1. 使用一个插件
 
 如果插件在 npm 中，你可以通过向 Babel 配置文件中的 plugins 配置项传递参数来实现插件的使用。配置项的值是一个数组，只需要将插件名作为数组的项传入到数组中即可。
 
@@ -119,7 +119,7 @@ category:
 
 
 
-## Ⅰ. Plugins for ES3
+## Plugins for ES3
 
 ### 1. member-expression-literals
 
@@ -324,7 +324,7 @@ category:
 
     
 
-## Ⅱ. Plugins for ES5
+## Plugins for ES5
 
 ### 1. property-mutators
 
@@ -407,7 +407,7 @@ category:
 
     
 
-## Ⅲ. Plugins for ES6 (ES2015)
+## Plugins for ES6 (ES2015)
 
 ### 1. arrow-function
 

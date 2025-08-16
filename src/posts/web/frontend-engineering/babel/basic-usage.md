@@ -1,5 +1,5 @@
 ---
-title: Babel的使用
+title: 基础使用
 icon: mdi:babel
 order: 1
 category:

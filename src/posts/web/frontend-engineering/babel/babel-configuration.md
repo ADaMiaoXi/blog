@@ -1,5 +1,5 @@
 ---
-title: Babel Configuration
+title: 配置文件
 icon: simple-icons:babel
 order: 2
 category:
@@ -36,7 +36,7 @@ Babel 可以使用 Node.js 原生支持的任何文件拓展名的文件进行�
   由于 `babel.config.json` 和 `.babelrc.json` 是静态文件，它允许其他使用 Babel 的工具，如 bundlers 可以安全地缓存 Babel 的结果，这对于巨大构建行为来说是一个巨大的胜利。
 
 - `babel.config.cjs` 和 `.babelrc.cjs` 让你能够按照 CommonJS 的方式定义配置文件，使用 `module.exports`导出。仅在 `v7.7.0` 之后被支持。
-- `babel.config.mjs` 和 `。babelrc.mjs` 使用原生 ECMAScript 模块化语法。仅在 Node.js 13.2 以上的版本被支持。需要注意的是原生 `ECMAScript` 模块时异步的（这就是为什么 `import()`常常返回一个 promise 对象），因为这个原因， `.mjs` 配置文件在同步调用 Babel 是被抛弃(throw ?)。仅在 `v7.8.0` 之后被支持。
+- `babel.config.mjs` 和 `.babelrc.mjs` 使用原生 ECMAScript 模块化语法。仅在 Node.js 13.2 以上的版本被支持。需要注意的是原生 `ECMAScript` 模块时异步的（这就是为什么 `import()`常常返回一个 promise 对象），因为这个原因， `.mjs` 配置文件在同步调用 Babel 是被抛弃(throw ?)。仅在 `v7.8.0` 之后被支持。
 - `babel.config.js` 和 `.babelrc.js` 当 你的 `package.json` 文件包含 `"type": "module"` 选项是行为同 `.mjs` 结尾的文件，否则则同 `.cjs` 结尾的文件。
 
 JavaScript 配置文件可以 export 一个对象（object） 或者一个被调用时返回生成配置的函数（function），返回函数的配置文件被赋予了一些特殊的功能，因为函数能够访问Babel自身暴露的API。参考 [配置函数API](https://www.babeljs.cn/docs/config-files#config-function-api) 获取更多信息。
