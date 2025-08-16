@@ -3,7 +3,7 @@ import {navbar} from 'vuepress-theme-hope'
 export const zhNavbar = navbar([
     '/',
     {
-        text: 'web 客户端',
+        text: 'Web 客户端',
         prefix: '/posts/web/',
         icon: 'fluent:card-ui-24-regular',
         children: [
@@ -13,9 +13,9 @@ export const zhNavbar = navbar([
                 link: 'language/'
             },
             {
-                text: '工程化',
+                text: '项目构建',
                 icon: 'streamline-ultimate:common-file-module-1',
-                link: 'frontend-engineering/'
+                link: 'project-builds/'
             },
             {
                 text: '框架',

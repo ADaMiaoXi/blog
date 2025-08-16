@@ -84,7 +84,7 @@ compilation 对象代表一次资源的构建，compilation 实例能够访问�
 
 ### 生命周期简图
 
-![Webpack 插件生命周期](../../../../../.vuepress/public/assets/images/web/frontend-engineering/webpack/plugin.jpg)
+![Webpack 插件生命周期](../../../../../../.vuepress/public/assets/images/web/project-builds/module-bundler/webpack/plugin.jpg)
 
 ## 开发一个插件
 

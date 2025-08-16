@@ -4,7 +4,7 @@ export const zhSidebar = sidebar({
     '/': [
         '',
         {
-            text: 'web 客户端',
+            text: 'Web 客户端',
             icon: 'fluent:card-ui-24-regular',
             prefix: 'posts/web/',
             collapsible: true,
@@ -17,11 +17,33 @@ export const zhSidebar = sidebar({
                     children: 'structure'
                 },
                 {
-                    text: '工程化',
+                    text: '项目构建',
                     icon: 'streamline-ultimate:common-file-module-1',
-                    prefix: 'frontend-engineering/',
+                    prefix: 'project-builds/',
                     collapsible: true,
-                    children: 'structure'
+                    children: [
+                        {
+                            text: '包管理器',
+                            icon: 'catppuccin:package-json',
+                            prefix: 'package-manager/',
+                            collapsible: true,
+                            children: 'structure'
+                        },
+                        {
+                            text: '语言预处理器',
+                            icon: 'tdesign:file-transmit',
+                            prefix: 'pre-processor/',
+                            collapsible: true,
+                            children: 'structure'
+                        },
+                        {
+                            text: '模块打包工具',
+                            icon: 'clarity:bundle-solid',
+                            prefix: 'module-bundler/',
+                            collapsible: true,
+                            children: 'structure'
+                        }
+                    ]
                 },
                 {
                     text: '框架',

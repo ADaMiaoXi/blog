@@ -24,7 +24,7 @@ NPM 可以同时安装多个包，如 `npm i <package-name-1> <package-name-2> <
 -   安装一个包的时候，NPM 会自动管理依赖，它会下载该包的依赖包到 `node_modules` 目录中。
 -   如果本地安装的包带有命令行工具（CLI），NPM 会将它的 CLI 脚本文件放置到 `node_modules/.bin` 下，使用命令 `npx <command-name>` 即可调用。
 
-    ![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/bin.png)
+    ![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/bin.png)
 
     例如 `npx acorn` 就会执行 `node_modules/.bin/acorn` 或者 `node_modules/acorn/bin/acorn.cmd`。
 
@@ -36,7 +36,7 @@ NPM 可以同时安装多个包，如 `npm i <package-name-1> <package-name-2> <
 
 使用命令 `npm install --global <package-name>` 或 `npm i -g <package-name>` 全局安装包。
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/get_prefix.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/get_prefix.png)
 
 重要：**全局安装的包并非在所有工程中都可用，它主要用于提供全局的命令行工具（CLI）。**
 
@@ -48,13 +48,13 @@ NPM 可以同时安装多个包，如 `npm i <package-name-1> <package-name-2> <
 
 全局安装的的包会将其可执行文件放在 `npm config get prefix` 的目录下。
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/install_yarn.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/install_yarn.png)
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/yarn_in_package.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/yarn_in_package.png)
 
 并且 `npm config get prefix` 对应路径已经添加到了系统的 `PATH` 环境变量中，因此可以直接在全局任意位置的命令行中执行对应命令。
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/yarn_env_path.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/yarn_env_path.png)
 
 ### 精确安装
 
@@ -323,7 +323,7 @@ npm 还对一些常用的脚本名称进行了简化，以下三个脚本名称�
 
 npm 会将不同层级的依赖打平放到 `node_modules` 目录下，但是如果两个包依赖同一个包的不同版本，如下图：
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/2019-12-17-15-17-47.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/2019-12-17-15-17-47.png)
 
 `node_modules` 目录中就不会使用扁平的目录结构，而会形成嵌套的目录，如下图：
 
@@ -394,7 +394,7 @@ Node.js 中有一个全局环境变量 `global`，该变量类似于浏览器环
 
 `global` 里有一个属性 `process`，该属性是一个包含当前 Node.js 程序运行计算机的信息，其中就包含 `env`，就是系统中的所有环境变量。
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/env.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/env.png)
 
 通常项目中会使用系统环境变量 `NODE_ENV` 的值，来判断 Node.js 程序正运行的环境。
 
@@ -402,10 +402,10 @@ Node.js 中有一个全局环境变量 `global`，该变量类似于浏览器环
 
 -   **永久设置**
     直接在系统环境变量中添加新变量 `NODE_ENV`：
-    ![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/env_3.png)
-    ![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/env_2.png)
-    ![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/env_1.png)
-    ![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/npm/env_4.png)
+    ![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/env_3.png)
+    ![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/env_2.png)
+    ![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/env_1.png)
+    ![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/npm/env_4.png)
 -   **临时设置**
     使用指令临时设置环境变量 `NODE_ENV`：
     ```shell

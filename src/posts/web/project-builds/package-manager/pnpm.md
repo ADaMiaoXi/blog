@@ -30,23 +30,23 @@ npm install -g pnpm
 
 操作系统中，文件实际上是一个指针，其指向一个外部存储地址（硬盘、U 盘、网络...）：
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/pnpm/file_1.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/pnpm/file_1.png)
 
 删除文件时，删除的实际上是指针：
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/pnpm/file_2.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/pnpm/file_2.png)
 
 #### 文件的拷贝
 
 复制一个文件，是将该文件指针指向的内容进行复制，然后产生一个新文件指向新的内容：
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/pnpm/copy_file.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/pnpm/copy_file.png)
 
 #### 硬链接（hard link）
 
 硬链接的概念来自于 Unix 操作系统，它是指将一个文件 A 指针复制到另一个文件 B 指针中，文件 B 就是文件 A 的硬链接
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/pnpm/hard_link.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/pnpm/hard_link.png)
 
 创建硬链接不会产生额外的磁盘占用，两个文件指向同一个磁盘内容。
 
@@ -65,7 +65,7 @@ mklink /h link_file_path original_file_path
 
 符号链接又称为软连接，如果为某个文件或文件夹 A 创建符号连接 B，则 B 指向 A：
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/pnpm/symbol_link.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/pnpm/symbol_link.png)
 
 Windows 从 Vista 版本开始支持创建符号链接的操作，在 cmd 中使用以下指令创建硬链接：
 
@@ -101,7 +101,7 @@ pnpm 使用**符号链接**和**硬链接**来构建 `node_modules` 目录。
 
 假设两个包 `a` 和 `b`，`a` 依赖 `b`：
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/pnpm/pnpm_1.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/pnpm/pnpm_1.png)
 
 假设工程为 proj，其直接依赖 `a`，项目安装依赖的时候 pnpm 会做以下处理：
 
@@ -109,15 +109,15 @@ pnpm 使用**符号链接**和**硬链接**来构建 `node_modules` 目录。
 2. 查看 `a` 和 `b` 是否已经有缓存，如果没有，下载到缓存中，如果有，则进入下一步。
 3. 创建 `node_modules` 目录，并对目录进行结构初始化：
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/pnpm/pnpm_2.png) 
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/pnpm/pnpm_2.png) 
 
 4.从缓存的对应包中使用硬链接放置文件到相应包代码目录中：
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/pnpm/pnpm_3.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/pnpm/pnpm_3.png)
 
 5.使用符号链接，将每个包的直接依赖放置到自己的目录中：
 
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/pnpm/pnpm_4.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/pnpm/pnpm_4.png)
 这样做是为了保证 `a` 的代码在执行过程中，可以读取到它们的直接依赖。
 
 6. pnpm 为了解决一些书写不规范的包（读取间接依赖）的问题，又将所有的工程非直接依赖，使用符号链接加入到了 `.pnpm/node_modules` 中。
@@ -126,4 +126,4 @@ pnpm 使用**符号链接**和**硬链接**来构建 `node_modules` 目录。
     > 直接使用绝对路径引用以来的写法，pnpm 没办法支持。
 
 7. 在工程的 `node_modules` 目录中使用符号链接，放置直接依赖:
-![](../../../../.vuepress/public/assets/images/web/frontend-engineering/package-manager/pnpm/pnpm_5.png)
+![](../../../../.vuepress/public/assets/images/web/project-builds/package-manager/pnpm/pnpm_5.png)

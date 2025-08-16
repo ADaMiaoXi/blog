@@ -17,7 +17,7 @@ category:
 
 - react 提供了一个用于创建 react 项目的脚手架库：create-react_app
 - 项目的整体技术架构为：React + Webpack  + ES6 + ESLint
-- 使用脚手架开发的项目的特点：模块化，组件化，工程化
+- 使用脚手架开发的项目的特点：模块化，组件化，项目构建
 
 ### 创建项目并启动
 
